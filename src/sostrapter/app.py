@@ -10,8 +10,7 @@ file_path = os.path.expanduser("~/.var/app/org.vinegarhq.Sober/config/sober/conf
 
 try:
     with open(file_path, 'r') as f:
-        data = json.load(f)
-    sober_config = json.dumps(data)
+        sober_config = json.load(f)
 except FileNotFoundError:
     st.sidebar.error(f"Error: The file '{file_path}' was not found.")
     print(f"Error: The file '{file_path}' was not found.")
@@ -32,19 +31,41 @@ def update_fflag(flag_name, flag_value):
         st.success(f"fflags['{flag_name}'] set to {flag_value}")
     except Exception as e:
         st.error(f"Failed to update fflags: {e}")
-
-
+def UpdateSoberConfig(key, value):
+    file_path = os.path.expanduser("~/.var/app/org.vinegarhq.Sober/config/sober/config.json")
+    try:
+        with open(file_path, "r") as f:
+            config = json.load(f)
+        config[key] = value
+        with open(file_path, "w") as f:
+            json.dump(config, f, indent=4)
+        st.success(f"Config['{key}'] set to {value}")
+    except Exception as e:
+        st.error(f"Failed to update config: {e}")
+        
 def success():
     """Display a success message."""
     st.susccess('', icon="✅")
 
-def apply_changes(fpslimit, lightingtech):
+def apply_changes(fpslimit, lightingtech, oof1, rpc1):
     """Apply changes based on user input."""
-    data = {
-        "fpslimit": fpslimit,
-        "lightingtech": lightingtech
-    }
-    print(json.dumps(data))
+    # Lighting Tech
+    if lightingtech == "Voxel Lighting (Phase 1)" : 
+        update_fflag("DFFlagDebugRenderForceTechnologyVoxel",True)
+    if lightingtech == "Shadowmap Lighting (Phase 2)" :
+        update_fflag("FFlagDebugForceFutureIsBrightPhase2",True)
+    if lightingtech == "Future Lighting (Phase 3)" :
+        update_fflag("FFlagDebugForceFutureIsBrightPhase3",True)
+    # FPS limit
+    update_fflag("DFIntTaskSchedulerTargetFps",fpslimit)
+    update_fflag("FFlagGameBasicSettingsFramerateCap5",False)
+    update_fflag("FFlagTaskSchedulerLimitTargetFpsTo2402",False)
+    #Bringbackoof - ts is a hashtag lol 🥀
+    UpdateSoberConfig("bring_back_oof",oof1)
+    # Disnabel Discord RPC
+    UpdateSoberConfig("discord_rpc_enabled",rpc1)
+
+
 
 if "page" not in st.session_state:
     st.session_state.page = "Mods"
@@ -63,8 +84,14 @@ if st.sidebar.button("About"):
 page = st.session_state.page
 
 # Set default values so they're always defined
-fpslimit = "60"
-lightingtech = "potato"
+if "fpslimit" not in st.session_state:
+    st.session_state.fpslimit = "60"
+if "lightingtech" not in st.session_state:
+    st.session_state.lightingtech = "Voxel Lighting (Phase 1)"
+if "oof" not in st.session_state:
+    st.session_state.oof = False
+if "rpc" not in st.session_state:
+    st.session_state.rpc = False
 
 if page == "Mods":
     st.header("Mods")
@@ -73,14 +100,13 @@ if page == "Mods":
 
 elif page == "Fast Flags":
     st.header("Fast Flags")
-    oof = st.toggle("Bring back oof")
-    rpc = st.toggle("Disable Discord Rich Presence")
-    oldavatarbk = st.toggle("Use Old Avatar Background")    
-    fpslimit = st.text_input("FPS Limit", fpslimit, max_chars=3)
-    lightingtech = st.selectbox(
+    st.session_state.oof = st.toggle("Bring back oof", value=st.session_state.oof)
+    st.session_state.rpc = st.toggle("Disable Discord Rich Presence", value=st.session_state.rpc)
+    st.session_state.fpslimit = st.text_input("FPS Limit", st.session_state.fpslimit, max_chars=3)
+    st.session_state.lightingtech = st.selectbox(
         "Preferred Lighting Technology",
-        ["potato", "low", "test"],
-        index=["potato", "low", "test"].index(lightingtech)
+        ["Voxel Lighting (Phase 1)", "Shadowmap Lighting (Phase 2)", "Future Lighting (Phase 3)"],
+        index=["Voxel Lighting (Phase 1)", "Shadowmap Lighting (Phase 2)", "Future Lighting (Phase 3)"].index(st.session_state.lightingtech)
     )
 
 elif page == "Appearance":
@@ -97,9 +123,21 @@ elif page == "About":
 elif page == "Apply Changes & Config":
     st.download_button(
         label="Download Config",
-        data=json.dumps({"fpslimit": fpslimit, "lightingtech": lightingtech}),
+        data=json.dumps({
+            "fpslimit": st.session_state.fpslimit,
+            "lightingtech": st.session_state.lightingtech
+        }),
         file_name="config.json",
         mime="application/json"
     )
     data = st.file_uploader("Upload Config", type=["json"], key="config_uploader")
-    st.button("Apply Changes", on_click=apply_changes, args=(fpslimit, lightingtech))
+    st.button(
+        "Apply Changes",
+        on_click=apply_changes,
+        args=(
+            st.session_state.fpslimit,
+            st.session_state.lightingtech,
+            st.session_state.oof,
+            st.session_state.rpc
+        )
+    )
