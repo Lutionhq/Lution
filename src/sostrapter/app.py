@@ -17,29 +17,44 @@ def apply_changes(fpslimit, lightingtech):
     }
     print(json.dumps(data))
 
-modstab , apprtab,ff, applychg, about, = st.tabs(["Mods", "Apppearance", "Fast Flags","Apply Changes & Config","About"])
+if "page" not in st.session_state:
+    st.session_state.page = "Mods"
 
-# Mods Tab
-with modstab:
+if st.sidebar.button("Mods"):
+    st.session_state.page = "Mods"
+if st.sidebar.button("Appearance"):
+    st.session_state.page = "Appearance"
+if st.sidebar.button("Fast Flags"):
+    st.session_state.page = "Fast Flags"
+if st.sidebar.button("Apply Changes & Config"):
+    st.session_state.page = "Apply Changes & Config"
+if st.sidebar.button("About"):
+    st.session_state.page = "About"
+
+page = st.session_state.page
+
+# Set default values so they're always defined
+fpslimit = "60"
+lightingtech = "potato"
+
+if page == "Mods":
     st.header("Mods")
     st.write("This is the Mods tab. You can add your mods here.")
     st.button("Add Mod", on_click=success)
-    
 
-# Fast Flags Tab
-with ff:
+elif page == "Fast Flags":
     st.header("Fast Flags")
     oof = st.toggle("Bring back oof")
     rpc = st.toggle("Disable Discord Rich Presence")
     oldavatarbk = st.toggle("Use Old Avatar Background")    
-    fpslimit = st.text_input("FPS Limit","60",max_chars=3)
+    fpslimit = st.text_input("FPS Limit", fpslimit, max_chars=3)
     lightingtech = st.selectbox(
         "Preferred Lighting Technology",
-        ["potato", "low", "test"]
+        ["potato", "low", "test"],
+        index=["potato", "low", "test"].index(lightingtech)
     )
 
-# Appearance Tab
-with apprtab:
+elif page == "Appearance":
     st.header("Appearance")
     st.markdown("""
     Maybe not possible,Sober itself is not very customizable, but you can wait to Vinegarhq-
@@ -47,13 +62,10 @@ with apprtab:
     (Aka Sober team) to add a api to change the appearance of the launcher.
     """)
 
-
-# About Tab
-with about:
+elif page == "About":
     st.markdown(aboutmd)
 
-# Apply Changes & Config Tab
-with applychg:
+elif page == "Apply Changes & Config":
     st.download_button(
         label="Download Config",
         data=json.dumps({"fpslimit": fpslimit, "lightingtech": lightingtech}),
@@ -61,5 +73,4 @@ with applychg:
         mime="application/json"
     )
     data = st.file_uploader("Upload Config", type=["json"], key="config_uploader")
-    
     st.button("Apply Changes", on_click=apply_changes, args=(fpslimit, lightingtech))
