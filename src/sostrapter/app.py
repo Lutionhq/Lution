@@ -22,9 +22,30 @@ except Exception as e:
     st.sidebar.error(f"An unexpected error occurred: {e}")
     print(f"An unexpected error occurred: {e}")
 
+def ReadSoberConfig(key):
+    """Read a top-level value from the Sober config (outside fflags)."""
+    file_path = os.path.expanduser("~/.var/app/org.vinegarhq.Sober/config/sober/config.json")
+    try:
+        with open(file_path, "r") as f:
+            config = json.load(f)
+        return config.get(key, None)
+    except Exception as e:
+        st.error(f"Failed to read setting '{key}': {e}")
+        return None
 
+def ReadFflagsConfig(flag_name):
+    """Read a value from the fflags section of the Sober config."""
+    file_path = os.path.expanduser("~/.var/app/org.vinegarhq.Sober/config/sober/config.json")
+    try:
+        with open(file_path, "r") as f:
+            config = json.load(f)
+        fflags = config.get("fflags", {})
+        return fflags.get(flag_name, None)
+    except Exception as e:
+        st.error(f"Failed to read fflag '{flag_name}': {e}")
+        return None
 
-def update_fflag(flag_name, flag_value):
+def UpdateFflags(flag_name, flag_value):
     try:
         if "fflags" not in sober_config or not isinstance(sober_config["fflags"], dict):
             sober_config["fflags"] = {}
@@ -57,15 +78,15 @@ def apply_changes(fpslimit, lightingtech, oof1, rpc1):
     """Apply changes based on user input."""
     # Lighting Tech
     if lightingtech == "Voxel Lighting (Phase 1)" : 
-        update_fflag("DFFlagDebugRenderForceTechnologyVoxel",True)
+        UpdateFflags("DFFlagDebugRenderForceTechnologyVoxel",True)
     if lightingtech == "Shadowmap Lighting (Phase 2)" :
-        update_fflag("FFlagDebugForceFutureIsBrightPhase2",True)
+        UpdateFflags("FFlagDebugForceFutureIsBrightPhase2",True)
     if lightingtech == "Future Lighting (Phase 3)" :
-        update_fflag("FFlagDebugForceFutureIsBrightPhase3",True)
+        UpdateFflags("FFlagDebugForceFutureIsBrightPhase3",True)
     # FPS limit
-    update_fflag("DFIntTaskSchedulerTargetFps",fpslimit)
-    update_fflag("FFlagGameBasicSettingsFramerateCap5",False)
-    update_fflag("FFlagTaskSchedulerLimitTargetFpsTo2402",False)
+    UpdateFflags("DFIntTaskSchedulerTargetFps",fpslimit)
+    UpdateFflags("FFlagGameBasicSettingsFramerateCap5",False)
+    UpdateFflags("FFlagTaskSchedulerLimitTargetFpsTo2402",False)
     #Bringbackoof - ts is a hashtag lol 🥀
     UpdateSoberConfig("bring_back_oof",oof1)
     # Disnabel Discord RPC
@@ -91,13 +112,16 @@ page = st.session_state.page
 
 # Set default values so they're always defined
 if "fpslimit" not in st.session_state:
-    st.session_state.fpslimit = "60"
-if "lightingtech" not in st.session_state:
+    fpslimit = ReadFflagsConfig("DFIntTaskSchedulerTargetFps")
+    st.session_state.fpslimit = fpslimit
+if "lightingtech" not in st.session_state: # nah im lazy ass
     st.session_state.lightingtech = "Voxel Lighting (Phase 1)"
 if "oof" not in st.session_state:
-    st.session_state.oof = False
+    oof = ReadSoberConfig("bring_back_oof")
+    st.session_state.oof = oof
 if "rpc" not in st.session_state:
-    st.session_state.rpc = False
+    drpc = ReadSoberConfig("discord_rpc_enabled")
+    st.session_state.rpc = drpc
 
 if page == "Mods":
     st.header("Mods")
@@ -107,7 +131,7 @@ if page == "Mods":
 elif page == "Fast Flags":
     st.header("Fast Flags")
     st.session_state.oof = st.toggle("Bring back oof", value=st.session_state.oof)
-    st.session_state.rpc = st.toggle("Disable Discord Rich Presence", value=st.session_state.rpc)
+    st.session_state.rpc = st.toggle("Enable Discord Rich Presence", value=st.session_state.rpc)
     st.session_state.fpslimit = st.text_input("FPS Limit", st.session_state.fpslimit, max_chars=3)
     st.session_state.lightingtech = st.selectbox(
         "Preferred Lighting Technology",
