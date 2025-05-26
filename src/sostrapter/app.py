@@ -8,6 +8,7 @@ aboutmd = open(os.path.join(os.path.dirname(__file__), 'markdown/about.md')).rea
 
 file_path = os.path.expanduser("~/.var/app/org.vinegarhq.Sober/config/sober/config.json")
 
+
 try:
     with open(file_path, 'r') as f:
         sober_config = json.load(f)
@@ -21,6 +22,8 @@ except Exception as e:
     st.sidebar.error(f"An unexpected error occurred: {e}")
     print(f"An unexpected error occurred: {e}")
 
+
+
 def update_fflag(flag_name, flag_value):
     try:
         if "fflags" not in sober_config or not isinstance(sober_config["fflags"], dict):
@@ -31,6 +34,9 @@ def update_fflag(flag_name, flag_value):
         st.success(f"fflags['{flag_name}'] set to {flag_value}")
     except Exception as e:
         st.error(f"Failed to update fflags: {e}")
+
+
+
 def UpdateSoberConfig(key, value):
     file_path = os.path.expanduser("~/.var/app/org.vinegarhq.Sober/config/sober/config.json")
     try:
