@@ -19,16 +19,19 @@ def apply_changes(fpslimit, lightingtech):
 
 modstab , apprtab,ff, applychg, about, = st.tabs(["Mods", "Apppearance", "Fast Flags","Apply Changes & Config","About"])
 
-
 # Mods Tab
 with modstab:
     st.header("Mods")
     st.write("This is the Mods tab. You can add your mods here.")
     st.button("Add Mod", on_click=success)
+    
 
 # Fast Flags Tab
 with ff:
     st.header("Fast Flags")
+    oof = st.toggle("Bring back oof")
+    rpc = st.toggle("Disable Discord Rich Presence")
+    oldavatarbk = st.toggle("Use Old Avatar Background")    
     fpslimit = st.text_input("FPS Limit","60",max_chars=3)
     lightingtech = st.selectbox(
         "Preferred Lighting Technology",
@@ -38,8 +41,12 @@ with ff:
 # Appearance Tab
 with apprtab:
     st.header("Appearance")
-    st.write("This is the Appearance tab. You can customize the appearance here.")
-    st.button("Change Appearance", on_click=success)
+    st.markdown("""
+    Maybe not possible,Sober itself is not very customizable, but you can wait to Vinegarhq-
+    
+    (Aka Sober team) to add a api to change the appearance of the launcher.
+    """)
+
 
 # About Tab
 with about:
