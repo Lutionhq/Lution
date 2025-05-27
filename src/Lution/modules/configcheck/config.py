@@ -3,6 +3,9 @@ from modules.json.json import UpdateFflags, UpdateSoberConfig,ReadFflagsConfig, 
 from modules.configcheck.fontreplacer import *
 import os
 import shutil
+import os
+import subprocess
+import platform
 
 def apply_changes(fpslimit, lightingtech, oof1, rpc1, rendertech, bbchat, cusfont):
     """Apply changes based on user input."""
@@ -70,9 +73,17 @@ def OverlaySetup():
     os.makedirs(dest_dir, exist_ok=True)
 
     if os.path.isdir(src_dir):
-        for filename in os.listdir(src_dir):
-            src_file = os.path.join(src_dir, filename)
-            dest_file = os.path.join(dest_dir, filename)
-            if os.path.isfile(src_file):
-                shutil.copy2(src_file, dest_file)
+        for item in os.listdir(src_dir):
+            s = os.path.join(src_dir, item)
+            d = os.path.join(dest_dir, item)
+            if os.path.isdir(s):
+                shutil.copytree(s, d)
+            else:
+                shutil.copy2(s, d)
 
+def open_folder(path):
+    OverlaySetup()
+    if platform.system() == "Darwin":  # macOS shiz
+        subprocess.Popen(["open", path])
+    else:  # Linux and others
+        subprocess.Popen(["xdg-open", path])
