@@ -1,0 +1,16 @@
+{
+    "lution.tab.mods": "Mods",
+    "lution.tab.appearance": "Appearance",
+    "lution.tab.fflags": "Fast Flags",
+    "lution.tab.apply": "Apply Changes & Config",
+    "lution.tab.about": "About",
+    "lution.mods.button.addmod": "Add Mod",
+    "lution.fflags.toggle.bringbackoof": "Bring back oof",
+    "lution.fflags.toggle.rpc": "Enable Discord Rich Presence",
+    "lution.fflags.toggle.bbchat": "Disable Chat",
+    "lution.fflags.textbox.fpslimit": "FPS Limit",
+    "lution.fflags.mutichoices.render": "Preferred Render Technology",
+    "lution.fflags.mutichoices.lighting": "Preferred Lighting Technology",
+    "lution.save.button.downloadcf": "Download Config",
+    "lution.save.button.apply": "Apply Changes"
+}
