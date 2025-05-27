@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="https://raw.githubusercontent.com/triisdang/Lution/refs/heads/main/src/sostrapter/files/lutiontext.svg" width="420">
+  <img src="https://raw.githubusercontent.com/triisdang/Lution/77dfac23a07292341e01d938baea38fe1232dd37/src/sostrapter/files/lutiontext.svg?token=A3ZN6CKPE3RE3OWX6QIT6UDIGVVII" width="420">
 </p>
 
 ----
