@@ -1,4 +1,7 @@
 {
+    "lution.message.error.unknown" : "An unexpected error occurred: {e}",
+    "lution.message.error.jsondecode":"Error: Could not decode JSON from the file '{file_path}'.",
+    "lution.message.error.filenotfound":"Error: The file '{file_path}' was not found.",
     "lution.tab.mods": "Mods",
     "lution.tab.appearance": "Appearance",
     "lution.tab.fflags": "Fast Flags",
