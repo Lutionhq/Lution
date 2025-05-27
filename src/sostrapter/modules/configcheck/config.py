@@ -1,7 +1,8 @@
 #src/sostrapter/modules/json/json.py
 from modules.json.json import UpdateFflags, UpdateSoberConfig,ReadFflagsConfig, ReadSoberConfig
+from modules.configcheck.fontreplacer import *
 
-def apply_changes(fpslimit, lightingtech, oof1, rpc1, rendertech, bbchat):
+def apply_changes(fpslimit, lightingtech, oof1, rpc1, rendertech, bbchat, cusfont):
     """Apply changes based on user input."""
     # Lighting Tech
     if lightingtech == "Voxel Lighting (Phase 1)" : 
@@ -31,6 +32,8 @@ def apply_changes(fpslimit, lightingtech, oof1, rpc1, rendertech, bbchat):
         UpdateSoberConfig("use_opengl", False)
     # Bubble Chat
     UpdateSoberConfig("FFlagEnableBubbleChatFromChatService", bbchat)
+    # Custom Font
+    UpdateSoberConfig("custom_font", "~/Documents/font test")
 
 
 def LoadLightTechConfig():
@@ -54,3 +57,15 @@ def UsingOpenGl():
         return True
     else:
         return False
+
+def OverlaySetup():
+    dest_dir = os.path.expanduser("~/.var/app/org.vinegarhq.Sober/data/sober/asset_overlay/content/fonts")
+    src_dir = os.path.expanduser("~/.var/app/org.vinegarhq.Sober/data/sober/assets/content/fonts")
+    os.makedirs(dest_dir, exist_ok=True)
+
+    for filename in os.listdir(src_dir):
+        src_file = os.path.join(src_dir, filename)
+        dest_file = os.path.join(dest_dir, filename)
+        if os.path.isfile(src_file):
+            shutil.copy2(src_file, dest_file) 
+

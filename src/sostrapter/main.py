@@ -6,6 +6,11 @@ from pathlib import Path
 from modules.json.json import *
 from modules.basic.messages import *
 from modules.configcheck.config import *
+from modules.configcheck.fontreplacer import Replace
+
+
+
+
 lutiontext = os.path.join(os.path.dirname(__file__), "files/lutiontext.svg")
 with open(lutiontext, "r") as f:
     lutionlogo = f.read()
@@ -13,9 +18,42 @@ with open(lutiontext, "r") as f:
 
 st.logo(lutionlogo, size="large")
 
+st.sidebar.markdown("<h2>Lution</h2>", unsafe_allow_html=True)
+st.sidebar.markdown(":orange-badge[⚠️ BETA]", unsafe_allow_html=True)
+st.sidebar.caption("Version 0.1.0")
 
 aboutmd = open(os.path.join(os.path.dirname(__file__), 'markdown/about.md')).read()
 
+
+def OverwriteEmoji(dest_dir):
+    src_file = os.path.join(os.path.dirname(__file__), 'files/RobloxEmoji.ttf')
+    os.makedirs(dest_dir, exist_ok=True) 
+    dest_file = os.path.join(dest_dir, os.path.basename(src_file))
+    shutil.copy2(src_file, dest_file)     
+
+
+def applyfont():
+    with st.spinner("Applying custom font..."):
+        if st.session_state.customfont:
+            # setup the overlay
+            OverlaySetup()
+            font_dir = os.path.expanduser("~/.var/app/org.vinegarhq.Sober/data/sober/asset_overlay/content/fonts")
+            os.makedirs(font_dir, exist_ok=True)
+            font_path = os.path.join(font_dir, st.session_state.customfont.name)
+            with open(font_path, "wb") as f:
+                f.write(st.session_state.customfont.getbuffer())
+            Replace(
+                font_path,
+                os.path.expanduser("~/.var/app/org.vinegarhq.Sober/data/sober/asset_overlay/content/fonts")
+            )
+            try:
+                os.remove(font_path)
+            except Exception as e:
+                st.warning(f"Could not delete temp font: {e}")
+            OverwriteEmoji(os.path.expanduser("~/.var/app/org.vinegarhq.Sober/data/sober/asset_overlay/content/fonts"))
+            st.success("Custom font applied successfully!")
+        else:
+            st.warning("No custom font uploaded.")
 
 file_path = os.path.expanduser("~/.var/app/org.vinegarhq.Sober/config/sober/config.json")
 LANG_DIR = os.path.join(os.path.dirname(__file__), "files/languagues")
@@ -55,8 +93,6 @@ except Exception as e:
     print(f"An unexpected error occurred: {e}")
 
 
-st.sidebar.markdown("<h2>Lution</h2>", unsafe_allow_html=True)
-
 
 if "page" not in st.session_state:
     st.session_state.page = "Mods"
@@ -92,6 +128,8 @@ if "render" not in st.session_state:
 if "disablechat" not in st.session_state:
     disablechat = ReadFflagsConfig("FFlagEnableBubbleChatFromChatService")
     st.session_state.disablechat = disablechat
+if "customfont" not in st.session_state:
+    st.session_state.customfont = None
 if "language" not in st.session_state:
     st.session_state.language = "en"
 
@@ -123,6 +161,17 @@ elif page == "Fast Flags":
     )
 
 elif page == "Appearance":
+    st.header("Appearance")
+    st.session_state.customfont = st.file_uploader(
+        "Upload Custom Font",
+        type=["ttf", "otf"],
+        key="custom_font_uploader"
+    )
+    st.button(
+        "Apply Custom Font",
+        on_click=applyfont
+    )
+        
     st.header(LANG["lution.tab.appearance"])
 
     st.markdown("""**Laucher Appearance Customization**""")
@@ -155,6 +204,7 @@ elif page == "Apply Changes & Config":
             st.session_state.oof,
             st.session_state.rpc,
             st.session_state.render,
-            st.session_state.disablechat
+            st.session_state.disablechat,
+            st.session_state.customfont if st.session_state.customfont else None
         )
     )
