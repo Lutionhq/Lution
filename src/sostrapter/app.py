@@ -5,6 +5,9 @@ import json
 from pathlib import Path
 from modules.json.json import *
 from modules.basic.messages import *
+from modules.configcheck.config import *
+
+
 
 aboutmd = open(os.path.join(os.path.dirname(__file__), 'markdown/about.md')).read()
 
@@ -48,13 +51,16 @@ if "fpslimit" not in st.session_state:
     fpslimit = ReadFflagsConfig("DFIntTaskSchedulerTargetFps")
     st.session_state.fpslimit = fpslimit
 if "lightingtech" not in st.session_state: # nah im lazy ass
-    st.session_state.lightingtech = "Voxel Lighting (Phase 1)"
+    tech = LoadLightTechConfig()
+    st.session_state.lightingtech = tech
 if "oof" not in st.session_state:
     oof = ReadSoberConfig("bring_back_oof")
     st.session_state.oof = oof
 if "rpc" not in st.session_state:
     drpc = ReadSoberConfig("discord_rpc_enabled")
     st.session_state.rpc = drpc
+if "render" not in st.session_state:
+    st.session_state.render = UsingOpenGl()
 
 if page == "Mods":
     st.header("Mods")
@@ -66,6 +72,11 @@ elif page == "Fast Flags":
     st.session_state.oof = st.toggle("Bring back oof", value=st.session_state.oof)
     st.session_state.rpc = st.toggle("Enable Discord Rich Presence", value=st.session_state.rpc)
     st.session_state.fpslimit = st.text_input("FPS Limit", st.session_state.fpslimit, max_chars=3)
+    st.session_state.render = st.selectbox(
+        "Render Technology",
+        ["OpenGL", "Vulkan"],
+        index=0 if st.session_state.render else 1
+    )
     st.session_state.lightingtech = st.selectbox(
         "Preferred Lighting Technology",
         ["Voxel Lighting (Phase 1)", "Shadowmap Lighting (Phase 2)", "Future Lighting (Phase 3)"],
@@ -74,6 +85,8 @@ elif page == "Fast Flags":
 
 elif page == "Appearance":
     st.header("Appearance")
+
+    st.markdown("""**Laucher Appearance Customization**""")
     st.markdown("""
     Maybe not possible,Sober itself is not very customizable, but you can wait to Vinegarhq-
     
@@ -101,6 +114,7 @@ elif page == "Apply Changes & Config":
             st.session_state.fpslimit,
             st.session_state.lightingtech,
             st.session_state.oof,
-            st.session_state.rpc
+            st.session_state.rpc,
+            st.session_state.render
         )
     )

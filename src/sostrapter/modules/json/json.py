@@ -25,8 +25,12 @@ def ReadFflagsConfig(flag_name):
     except Exception as e:
         st.error(f"Failed to read fflag '{flag_name}': {e}")
         return None
+
 def UpdateFflags(flag_name, flag_value):
+    file_path = os.path.expanduser("~/.var/app/org.vinegarhq.Sober/config/sober/config.json")
     try:
+        with open(file_path, "r") as f:
+            sober_config = json.load(f)
         if "fflags" not in sober_config or not isinstance(sober_config["fflags"], dict):
             sober_config["fflags"] = {}
         sober_config["fflags"][flag_name] = flag_value
