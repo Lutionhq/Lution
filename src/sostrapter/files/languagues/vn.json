@@ -1,0 +1,23 @@
+{
+    "lution.spinner.applyfont" : "Đang áp dụng phông chữ tùy chỉnh...",
+    "lution.message.error.unknown" : "Đã xảy ra lỗi không mong muốn: {e}",
+    "lution.message.error.jsondecode":"Lỗi: Không thể giải mã JSON từ tệp '{file_path}'.",
+    "lution.message.error.filenotfound":"Lỗi: Không tìm thấy tệp '{file_path}'.",
+    "lution.tab.mods": "Bản Mod",
+    "lution.tab.appearance": "Giao diện",
+    "lution.tab.fflags": "Flags",
+    "lution.tab.apply": "Áp dụng thay đổi & Cấu hình",
+    "lution.tab.about": "Về chúng tôi",
+    "lution.mods.button.addmod": "Thêm bản Mod",
+    "lution.fflags.toggle.bringbackoof": "Mang tiếng 'oof' trở lại",
+    "lution.fflags.toggle.rpc": "Bật Discord Rich Presence",
+    "lution.fflags.toggle.bbchat": "Tắt trò chuyện",
+    "lution.fflags.textbox.fpslimit": "Giới hạn FPS",
+    "lution.fflags.mutichoices.render": "Công nghệ kết xuất ưa thích",
+    "lution.fflags.mutichoices.lighting": "Công nghệ chiếu sáng ưa thích",
+    "lution.appearance.uploader.customfont": "Tải lên phông chữ tùy chỉnh",
+    "lution.appearance.button.apply": "Áp dụng phông chữ tùy chỉnh",
+    "lution.appearance.text.laucher": "**Tùy chỉnh giao diện Laucher**",
+    "lution.save.button.downloadcf": "Tải xuống cấu hình",
+    "lution.save.button.apply": "Áp dụng thay đổi"
+}

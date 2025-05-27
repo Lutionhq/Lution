@@ -1,4 +1,5 @@
 {
+    "lution.spinner.applyfont" : "Applying Custom Font...",
     "lution.message.error.unknown" : "An unexpected error occurred: {e}",
     "lution.message.error.jsondecode":"Error: Could not decode JSON from the file '{file_path}'.",
     "lution.message.error.filenotfound":"Error: The file '{file_path}' was not found.",
@@ -14,6 +15,10 @@
     "lution.fflags.textbox.fpslimit": "FPS Limit",
     "lution.fflags.mutichoices.render": "Preferred Render Technology",
     "lution.fflags.mutichoices.lighting": "Preferred Lighting Technology",
+    "lution.appearance.uploader.customfont": "Upload Custom Font",
+    "lution.appearance.button.apply": "Apply Custom Font",
+    "lution.appearance.text.laucher": "**Laucher Appearance Customization**",
     "lution.save.button.downloadcf": "Download Config",
     "lution.save.button.apply": "Apply Changes"
+    
 }
