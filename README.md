@@ -1,3 +1,3 @@
-# Sostrapter
+# Lution
 A boostrapter for Sober.
 # **WIP**
