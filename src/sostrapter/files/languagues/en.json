@@ -1,0 +1,24 @@
+{
+    "lution.spinner.applyfont" : "Applying Custom Font...",
+    "lution.message.error.unknown" : "An unexpected error occurred: {e}",
+    "lution.message.error.jsondecode":"Error: Could not decode JSON from the file '{file_path}'.",
+    "lution.message.error.filenotfound":"Error: The file '{file_path}' was not found.",
+    "lution.tab.mods": "Mods",
+    "lution.tab.appearance": "Appearance",
+    "lution.tab.fflags": "Fast Flags",
+    "lution.tab.apply": "Apply Changes & Config",
+    "lution.tab.about": "About",
+    "lution.mods.button.addmod": "Add Mod",
+    "lution.fflags.toggle.bringbackoof": "Bring back oof",
+    "lution.fflags.toggle.rpc": "Enable Discord Rich Presence",
+    "lution.fflags.toggle.bbchat": "Disable Chat",
+    "lution.fflags.textbox.fpslimit": "FPS Limit",
+    "lution.fflags.mutichoices.render": "Preferred Render Technology",
+    "lution.fflags.mutichoices.lighting": "Preferred Lighting Technology",
+    "lution.appearance.uploader.customfont": "Upload Custom Font",
+    "lution.appearance.button.apply": "Apply Custom Font",
+    "lution.appearance.text.laucher": "**Laucher Appearance Customization**",
+    "lution.save.button.downloadcf": "Download Config",
+    "lution.save.button.apply": "Apply Changes"
+    
+}
