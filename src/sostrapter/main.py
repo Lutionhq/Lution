@@ -107,18 +107,18 @@ elif page == "Fast Flags":
     st.session_state.disablechat = st.toggle(LANG["lution.fflags.toggle.bbchat"], value=st.session_state.disablechat)
     st.session_state.fpslimit = st.text_input(LANG["lution.fflags.textbox.fpslimit"], st.session_state.fpslimit, max_chars=3)
     st.session_state.render = st.selectbox(
-        "Render Technology",
+        LANG["lution.fflags.mutichoices.render"],
         ["OpenGL", "Vulkan"],
         index=0 if st.session_state.render else 1
     )
     st.session_state.lightingtech = st.selectbox(
-        "Preferred Lighting Technology",
+        LANG["lution.fflags.mutichoices.lighting"],
         ["Voxel Lighting (Phase 1)", "Shadowmap Lighting (Phase 2)", "Future Lighting (Phase 3)"],
         index=["Voxel Lighting (Phase 1)", "Shadowmap Lighting (Phase 2)", "Future Lighting (Phase 3)"].index(st.session_state.lightingtech)
     )
 
 elif page == "Appearance":
-    st.header("Appearance")
+    st.header(LANG["lution.tab.appearance"])
 
     st.markdown("""**Laucher Appearance Customization**""")
     st.markdown("""
@@ -132,7 +132,7 @@ elif page == "About":
 
 elif page == "Apply Changes & Config":
     st.download_button(
-        label="Download Config",
+        label=LANG["lution.save.button.downloadcf"],
         data=json.dumps({
             "fpslimit": st.session_state.fpslimit,
             "lightingtech": st.session_state.lightingtech
@@ -142,7 +142,7 @@ elif page == "Apply Changes & Config":
     )
     data = st.file_uploader("Upload Config", type=["json"], key="config_uploader")
     st.button(
-        "Apply Changes",
+        LANG["lution.save.button.downloadcf"],
         on_click=apply_changes,
         args=(
             st.session_state.fpslimit,
