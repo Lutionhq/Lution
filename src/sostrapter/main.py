@@ -50,7 +50,7 @@ page = st.session_state.page
 if "fpslimit" not in st.session_state:
     fpslimit = ReadFflagsConfig("DFIntTaskSchedulerTargetFps")
     st.session_state.fpslimit = fpslimit
-if "lightingtech" not in st.session_state: # nah im lazy ass
+if "lightingtech" not in st.session_state: 
     tech = LoadLightTechConfig()
     st.session_state.lightingtech = tech
 if "oof" not in st.session_state:
@@ -61,6 +61,10 @@ if "rpc" not in st.session_state:
     st.session_state.rpc = drpc
 if "render" not in st.session_state:
     st.session_state.render = UsingOpenGl()
+if "disablechat" not in st.session_state:
+    disablechat = ReadFflagsConfig("FFlagEnableBubbleChatFromChatService")
+    st.session_state.disablechat = disablechat
+
 
 if page == "Mods":
     st.header("Mods")
@@ -71,6 +75,7 @@ elif page == "Fast Flags":
     st.header("Fast Flags")
     st.session_state.oof = st.toggle("Bring back oof", value=st.session_state.oof)
     st.session_state.rpc = st.toggle("Enable Discord Rich Presence", value=st.session_state.rpc)
+    st.session_state.disablechat = st.toggle("Disable Chat", value=st.session_state.disablechat)
     st.session_state.fpslimit = st.text_input("FPS Limit", st.session_state.fpslimit, max_chars=3)
     st.session_state.render = st.selectbox(
         "Render Technology",
@@ -115,6 +120,7 @@ elif page == "Apply Changes & Config":
             st.session_state.lightingtech,
             st.session_state.oof,
             st.session_state.rpc,
-            st.session_state.render
+            st.session_state.render,
+            st.session_state.disablechat
         )
     )

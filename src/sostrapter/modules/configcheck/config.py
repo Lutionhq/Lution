@@ -1,7 +1,7 @@
 #src/sostrapter/modules/json/json.py
 from modules.json.json import UpdateFflags, UpdateSoberConfig,ReadFflagsConfig, ReadSoberConfig
 
-def apply_changes(fpslimit, lightingtech, oof1, rpc1,rendertech):
+def apply_changes(fpslimit, lightingtech, oof1, rpc1, rendertech, bbchat):
     """Apply changes based on user input."""
     # Lighting Tech
     if lightingtech == "Voxel Lighting (Phase 1)" : 
@@ -29,6 +29,8 @@ def apply_changes(fpslimit, lightingtech, oof1, rpc1,rendertech):
         UpdateSoberConfig("use_opengl", True)
     elif rendertech == "Vulkan":
         UpdateSoberConfig("use_opengl", False)
+    # Bubble Chat
+    UpdateSoberConfig("FFlagEnableBubbleChatFromChatService", bbchat)
 
 
 def LoadLightTechConfig():
