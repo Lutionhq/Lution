@@ -4,12 +4,50 @@
 
 ----
 
+# What is Lution?
+
+Lution is a third-party application designed to enhance your experience with Sober by providing quality-of-life improvements and additional features. Similar to other bootstrappers like [Lucem](https://github.com/xTrayambak/lucem) and [Bloxstrap](https://github.com/bloxstraplabs/bloxstrap), Lution stands out because it's built entirely with **Python**.
+
+-----
+
+# Get Started (Install or Contribute)
+
+Ready to try Lution or contribute to its development? Follow these simple steps:
+
+### 1\. Get Python
+
+Make sure you have **Python** installed on your system.
+
+### 2\. Clone the Project
+
+Open your terminal or command prompt and run:
+
+```bash
+git clone https://github.com/triisdang/Lution.git
+cd Lution
+```
+
+### 3\. Create a New Environment
+
+It's good practice to create a virtual environment to manage dependencies:
+
+```bash
+python3 -m venv venv
+source venv/bin/activate 
+```
+
+### 4\. Install Requirements
+
+Install all necessary packages:
+
+```bash
+pip install -r requirements.txt
+```
+
+### 5\. Run Lution
 
 
-# What is this?
-Lution is a third-party app provide you some QoL improvements & features to Sober.
-Like any others bootstrappers ([Lucem](https://github.com/xTrayambak/lucem),[Bloxstrap](https://github.com/bloxstraplabs/bloxstrap)) but write in python.
-
-# Install
-
-wip
+```bash
+cd src/strapter
+python3 streamlit run main.py
+```
