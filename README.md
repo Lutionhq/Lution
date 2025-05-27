@@ -12,9 +12,4 @@ Like any others bootstrappers ([Lucem](https://github.com/xTrayambak/lucem),[Blo
 
 # Install
 
-Get python
-
-Clone the project
-```
-    $ git clone https://github.com/triisdang/Lution.git
-```
+wip
