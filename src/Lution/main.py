@@ -33,7 +33,7 @@ def OverwriteEmoji(dest_dir):
 
 
 def applyfont():
-    with st.spinner(LANG["lution.applyfont.spinner"]):
+    with st.spinner(LANG["lution.spinner.applyfont"]):
         if st.session_state.customfont:
             # setup the overlay
             OverlaySetup()
@@ -56,7 +56,7 @@ def applyfont():
             st.warning("No custom font uploaded.")
 
 file_path = os.path.expanduser("~/.var/app/org.vinegarhq.Sober/config/sober/config.json")
-LANG_DIR = os.path.join(os.path.dirname(__file__), "files/languagues")
+LANG_DIR = os.path.join(os.path.dirname(__file__), "files/languages")  
 lang_files = [f for f in os.listdir(LANG_DIR) if f.endswith(".json")]
 LANG_CODES = [os.path.splitext(f)[0] for f in lang_files]
 LANG_NAMES = {
@@ -104,6 +104,8 @@ if st.sidebar.button(LANG["lution.tab.fflags"]):
     st.session_state.page = "Fast Flags"
 if st.sidebar.button(LANG["lution.tab.apply"]):
     st.session_state.page = "Apply Changes & Config"
+if st.sidebar.button("Lution Settings"):
+    st.session_state.page = "Lution Settings"
 if st.sidebar.button(LANG["lution.tab.about"]):
     st.session_state.page = "About"
 
@@ -180,6 +182,9 @@ elif page == "Appearance":
     
     (Aka Sober team) to add a api to change the appearance of the launcher.
     """)
+
+elif page == "Lution Settings":
+    st.markdown("""Should we add something? **Feature in the [isuess](https://github.com/triisdang/Lution/issues) page!**""")
 
 elif page == "About":
     st.markdown(aboutmd)
