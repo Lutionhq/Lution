@@ -6,7 +6,12 @@ from pathlib import Path
 from modules.json.json import *
 from modules.basic.messages import *
 from modules.configcheck.config import *
-st.logo("https://vinegarhq.org/vinegar.svg")
+lutiontext = os.path.join(os.path.dirname(__file__), "files/lutiontext.svg")
+with open(lutiontext, "r") as f:
+    lutionlogo = f.read()
+
+
+st.logo(lutionlogo, size="large")
 
 
 aboutmd = open(os.path.join(os.path.dirname(__file__), 'markdown/about.md')).read()
