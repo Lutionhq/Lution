@@ -6,7 +6,7 @@ from pathlib import Path
 from modules.json.json import *
 from modules.basic.messages import *
 from modules.configcheck.config import *
-
+st.logo("https://vinegarhq.org/vinegar.svg")
 
 
 aboutmd = open(os.path.join(os.path.dirname(__file__), 'markdown/about.md')).read()
@@ -28,11 +28,11 @@ except Exception as e:
     print(f"An unexpected error occurred: {e}")
 
 
+st.sidebar.markdown("<h2>Lution</h2>", unsafe_allow_html=True)
 
 
 if "page" not in st.session_state:
     st.session_state.page = "Mods"
-
 if st.sidebar.button("Mods"):
     st.session_state.page = "Mods"
 if st.sidebar.button("Appearance"):
@@ -43,6 +43,7 @@ if st.sidebar.button("Apply Changes & Config"):
     st.session_state.page = "Apply Changes & Config"
 if st.sidebar.button("About"):
     st.session_state.page = "About"
+
 
 page = st.session_state.page
 
