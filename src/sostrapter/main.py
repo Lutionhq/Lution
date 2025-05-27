@@ -33,7 +33,7 @@ def OverwriteEmoji(dest_dir):
 
 
 def applyfont():
-    with st.spinner("Applying custom font..."):
+    with st.spinner(LANG["lution.applyfont.spinner"]):
         if st.session_state.customfont:
             # setup the overlay
             OverlaySetup()
@@ -139,7 +139,7 @@ if "language" not in st.session_state:
 
 
 if page == "Mods":
-    st.header("Mods")
+    st.header(LANG["lution.tab.mods"])
     st.write("This is the Mods tab. You can add your mods here.")
     st.button("Add Mod", on_click=success)
 
@@ -163,18 +163,18 @@ elif page == "Fast Flags":
 elif page == "Appearance":
     st.header("Appearance")
     st.session_state.customfont = st.file_uploader(
-        "Upload Custom Font",
+        LANG["lution.appearance.uploader.customfont"],
         type=["ttf", "otf"],
         key="custom_font_uploader"
     )
     st.button(
-        "Apply Custom Font",
+        LANG["lution.appearance.button.apply"],
         on_click=applyfont
     )
         
     st.header(LANG["lution.tab.appearance"])
 
-    st.markdown("""**Laucher Appearance Customization**""")
+    st.markdown(LANG["lution.appearance.text.laucher"])
     st.markdown("""
     Maybe not possible,Sober itself is not very customizable, but you can wait to Vinegarhq-
     
@@ -196,7 +196,7 @@ elif page == "Apply Changes & Config":
     )
     data = st.file_uploader("Upload Config", type=["json"], key="config_uploader")
     st.button(
-        LANG["lution.save.button.downloadcf"],
+        LANG["lution.save.button.apply"],
         on_click=apply_changes,
         args=(
             st.session_state.fpslimit,
