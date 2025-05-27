@@ -1,6 +1,8 @@
 #src/sostrapter/modules/json/json.py
 from modules.json.json import UpdateFflags, UpdateSoberConfig,ReadFflagsConfig, ReadSoberConfig
 from modules.configcheck.fontreplacer import *
+import os
+import shutil
 
 def apply_changes(fpslimit, lightingtech, oof1, rpc1, rendertech, bbchat, cusfont):
     """Apply changes based on user input."""
@@ -59,13 +61,18 @@ def UsingOpenGl():
         return False
 
 def OverlaySetup():
-    dest_dir = os.path.expanduser("~/.var/app/org.vinegarhq.Sober/data/sober/asset_overlay/content/fonts")
-    src_dir = os.path.expanduser("~/.var/app/org.vinegarhq.Sober/data/sober/assets/content/fonts")
+    dest_dir = os.path.expanduser("~/.var/app/org.vinegarhq.Sober/data/sober/asset_overlay/content")
+    src_dir = os.path.expanduser("~/.var/app/org.vinegarhq.Sober/data/sober/assets/content")
+    
+    if os.path.isdir(dest_dir):
+        return
+
     os.makedirs(dest_dir, exist_ok=True)
 
-    for filename in os.listdir(src_dir):
-        src_file = os.path.join(src_dir, filename)
-        dest_file = os.path.join(dest_dir, filename)
-        if os.path.isfile(src_file):
-            shutil.copy2(src_file, dest_file) 
+    if os.path.isdir(src_dir):
+        for filename in os.listdir(src_dir):
+            src_file = os.path.join(src_dir, filename)
+            dest_file = os.path.join(dest_dir, filename)
+            if os.path.isfile(src_file):
+                shutil.copy2(src_file, dest_file)
 

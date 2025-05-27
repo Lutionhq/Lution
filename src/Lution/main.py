@@ -7,6 +7,7 @@ from modules.json.json import *
 from modules.basic.messages import *
 from modules.configcheck.config import *
 from modules.configcheck.fontreplacer import Replace
+from modules.basic.mics import *
 
 
 
@@ -146,6 +147,7 @@ if page == "Mods":
     st.button("Add Mod", on_click=success)
 
 elif page == "Fast Flags":
+    FL = os.path.expanduser("~/.var/app/org.vinegarhq.Sober/data/sober/asset_overlay/content/")
     st.header(LANG["lution.tab.fflags"])
     st.session_state.oof = st.toggle(LANG["lution.fflags.toggle.bringbackoof"], value=st.session_state.oof)
     st.session_state.rpc = st.toggle(LANG["lution.fflags.toggle.rpc"], value=st.session_state.rpc)
@@ -161,6 +163,12 @@ elif page == "Fast Flags":
         ["Voxel Lighting (Phase 1)", "Shadowmap Lighting (Phase 2)", "Future Lighting (Phase 3)"],
         index=["Voxel Lighting (Phase 1)", "Shadowmap Lighting (Phase 2)", "Future Lighting (Phase 3)"].index(st.session_state.lightingtech)
     )
+    st.write("Micsellaneous")
+    st.button(
+        "Open mesh avatar folder",
+        on_click=open_folder(FL),)
+    st.caption("Notice : Hey there gooners, i know what you are about to do, but PLEASEE for the love of god, DO NOT BREAK THE ROBLOX TOS.")
+
 
 elif page == "Appearance":
     st.header("Appearance")
