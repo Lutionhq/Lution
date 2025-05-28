@@ -257,8 +257,6 @@ elif page == "Lution Settings":
     st.markdown("""Should we add something? **Feature in the [isuess](https://github.com/triisdang/Lution/issues) page!**""")
 
 
-elif page == "About":
-    st.markdown(aboutmd)
 
 elif page == "Apply Changes & Config":
     def apply_and_update():
@@ -279,3 +277,6 @@ elif page == "Apply Changes & Config":
         on_click=apply_and_update,
         key="apply_changes_button"
     )
+
+elif page == "About":
+    st.markdown(aboutmd)
