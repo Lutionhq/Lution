@@ -51,3 +51,9 @@ pip install -r requirements.txt
 cd src/strapter
 python3 streamlit run main.py
 ```
+
+-----
+# Mics
+
+### How It Works
+The app navigates to the **Assets Overlay** path and modifies the contents within it.
