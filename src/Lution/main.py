@@ -24,6 +24,8 @@ st.sidebar.caption("Version 0.1.0")
 
 aboutmd = open(os.path.join(os.path.dirname(__file__), 'markdown/about.md')).read()
 
+
+
 def OverwriteMesh(dest_dir, src_files):
     os.makedirs(dest_dir, exist_ok=True)
     for src_file in src_files:
@@ -37,6 +39,10 @@ def OverwriteEmoji(dest_dir):
     os.makedirs(dest_dir, exist_ok=True) 
     dest_file = os.path.join(dest_dir, os.path.basename(src_file))
     shutil.copy2(src_file, dest_file)     
+    disablechat = ReadFflagsConfig("FFlagEnableBubbleChatFromChatService")
+    st.session_state.disablechat = disablechat
+    st.session_state.render = UsingOpenGl()
+
 
 
 def applyfont():
@@ -138,7 +144,8 @@ if "language" not in st.session_state:
 if "fflagseditor" not in st.session_state:
     Currfflags = ReadSoberConfig("fflags")
     st.session_state.fflagseditor = Currfflags
-
+if "fontsize" not in st.session_state:
+    st.session_state.fontsize = ReadFflagsConfig("FIntFontSizePadding")
 
 
 
@@ -174,6 +181,7 @@ elif page == "Fast Flags":
     st.session_state.rpc = st.toggle(LANG["lution.fflags.toggle.rpc"], value=st.session_state.rpc)
     st.session_state.disablechat = st.toggle(LANG["lution.fflags.toggle.bbchat"], value=st.session_state.disablechat)
     st.session_state.fpslimit = st.text_input(LANG["lution.fflags.textbox.fpslimit"], st.session_state.fpslimit, max_chars=3)
+    st.session_state.fontsize = st.text_input("Font size", value=st.session_state.fontsize,max_chars=2)
     st.session_state.render = st.selectbox(
         LANG["lution.fflags.mutichoices.render"],
         ["OpenGL", "Vulkan"],
@@ -189,6 +197,10 @@ elif page == "Fast Flags":
         LANG["lution.fflags.button.reseteditor"],
         on_click=lambda: st.session_state.update({"fflagseditor": ReadSoberConfig("fflags")})
     )
+
+
+
+    #fflags editor
     fflags_text = st.text_area(
         LANG["lution.fflags.texterea.fflagseditor"],
         value=json.dumps(st.session_state.fflagseditor, indent=4),
@@ -198,12 +210,12 @@ elif page == "Fast Flags":
         parsed = json.loads(fflags_text)
         st.session_state.fflagseditor = parsed
     except Exception:
-        st.warning(LANG["lution.message.fflags.warning.invalid"])
+        st.warning(LANG["lution.message.warning.fflags.invalid"])
 
     st.write(LANG["lution.fflags.text.mics"])
     st.button(
         LANG["lution.fflags.button.setupoverlay"],
-        on_click=OverlaySetup
+        on_click=OverlaySetup()
     )
 
 
@@ -249,16 +261,21 @@ elif page == "About":
     st.markdown(aboutmd)
 
 elif page == "Apply Changes & Config":
-    st.button(
-        LANG["lution.save.button.apply"],
-        on_click=apply_changes,
-        args=(
+    def apply_and_update():
+        apply_changes(
             st.session_state.fpslimit,
             st.session_state.lightingtech,
             st.session_state.oof,
             st.session_state.rpc,
             st.session_state.render,
             st.session_state.disablechat,
-            st.session_state.fflagseditor
+            st.session_state.fflagseditor,
+            st.session_state.fontsize
         )
+        Currfflags = ReadSoberConfig("fflags")
+        st.session_state.fflagseditor = Currfflags
+    st.button(
+        LANG["lution.save.button.apply"],
+        on_click=apply_and_update,
+        key="apply_changes_button"
     )

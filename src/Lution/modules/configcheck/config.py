@@ -6,8 +6,10 @@ import shutil
 import os
 import subprocess
 import platform
+import streamlit as st
 
-def apply_changes(fpslimit, lightingtech, oof1, rpc1, rendertech, bbchat, FFlags):
+
+def apply_changes(fpslimit, lightingtech, oof1, rpc1, rendertech, bbchat, FFlags, fontsize):
     """Apply changes based on user input."""
     # Lighting Tech
     if lightingtech == "Voxel Lighting (Phase 1)" : 
@@ -41,7 +43,8 @@ def apply_changes(fpslimit, lightingtech, oof1, rpc1, rendertech, bbchat, FFlags
     Currfflags = ReadSoberConfig("fflags")
     Combine = CombineJson(Currfflags, FFlags)
     UpdateSoberConfig("fflags", Combine)
-
+    # Font Size
+    UpdateFflags("FIntFontSizePadding", fontsize)
 
 def LoadLightTechConfig():
     """Load Lighting techs Sober configs into session state."""
@@ -89,3 +92,4 @@ def open_folder(path):
         subprocess.Popen(["open", path])
     else:  # Linux and others
         subprocess.Popen(["xdg-open", path])
+
