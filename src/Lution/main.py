@@ -19,7 +19,7 @@ with open(lutiontext, "r") as f:
 st.logo(lutionlogo, size="large")
 
 st.sidebar.markdown("<h2>Lution</h2>", unsafe_allow_html=True)
-st.sidebar.markdown(":orange-badge[⚠️ BETA]", unsafe_allow_html=True)
+st.sidebar.markdown(":orange-badge[⚠️ BETA]")
 st.sidebar.caption("Version 0.1.0")
 
 aboutmd = open(os.path.join(os.path.dirname(__file__), 'markdown/about.md')).read()
@@ -67,13 +67,7 @@ LANG_NAMES = {
 if "language" not in st.session_state:
     st.session_state.language = "en"
 
-lang_choice = st.sidebar.selectbox(
-    "Language",
-    LANG_CODES,
-    format_func=lambda code: LANG_NAMES.get(code, code),
-    index=LANG_CODES.index(st.session_state.language)
-)
-st.session_state.language = lang_choice
+
 
 lang_path = os.path.join(LANG_DIR, f"{st.session_state.language}.json")
 with open(lang_path, "r") as f:
@@ -141,9 +135,8 @@ if "language" not in st.session_state:
 
 
 if page == "Mods":
+    FL = os.path.expanduser("~/.var/app/org.vinegarhq.Sober/data/sober/asset_overlay/content/avatar/meshes")
     st.header(LANG["lution.tab.mods"])
-    st.write("This is the Mods tab. You can add your mods here.")
-    st.button("Add Mod", on_click=success)
     st.button(
         "Open mesh avatar folder",
         on_click=open_folder,
@@ -152,7 +145,6 @@ if page == "Mods":
     st.caption("Notice : Hey there gooners, i know what you are about to do, but PLEASEE for the love of god, DO NOT BREAK THE ROBLOX TOS.")
 
 elif page == "Fast Flags":
-    FL = os.path.expanduser("~/.var/app/org.vinegarhq.Sober/data/sober/asset_overlay/content/avatar/meshes")
     st.header(LANG["lution.tab.fflags"])
     st.session_state.oof = st.toggle(LANG["lution.fflags.toggle.bringbackoof"], value=st.session_state.oof)
     st.session_state.rpc = st.toggle(LANG["lution.fflags.toggle.rpc"], value=st.session_state.rpc)
@@ -196,7 +188,15 @@ elif page == "Appearance":
     """)
 
 elif page == "Lution Settings":
+    lang_choice = st.selectbox(
+    "Language",
+    LANG_CODES,
+    format_func=lambda code: LANG_NAMES.get(code, code),
+    index=LANG_CODES.index(st.session_state.language)
+)
+    st.session_state.language = lang_choice
     st.markdown("""Should we add something? **Feature in the [isuess](https://github.com/triisdang/Lution/issues) page!**""")
+
 
 elif page == "About":
     st.markdown(aboutmd)
