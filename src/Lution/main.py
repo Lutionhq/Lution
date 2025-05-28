@@ -98,7 +98,7 @@ if st.sidebar.button(LANG["lution.tab.fflags"]):
     st.session_state.page = "Fast Flags"
 if st.sidebar.button(LANG["lution.tab.apply"]):
     st.session_state.page = "Apply Changes & Config"
-if st.sidebar.button("Lution Settings"):
+if st.sidebar.button(LANG["lution.tab.lutionsettings"]):
     st.session_state.page = "Lution Settings"
 if st.sidebar.button(LANG["lution.tab.about"]):
     st.session_state.page = "About"
@@ -163,13 +163,13 @@ elif page == "Fast Flags":
         ["Voxel Lighting (Phase 1)", "Shadowmap Lighting (Phase 2)", "Future Lighting (Phase 3)"],
         index=["Voxel Lighting (Phase 1)", "Shadowmap Lighting (Phase 2)", "Future Lighting (Phase 3)"].index(st.session_state.lightingtech)
     )
-    st.write("Advanced")
+    st.write(LANG["lution.fflags.text.advanded"])
     st.button(
-        "Reset FFlags Editor",
+        LANG["lution.fflags.button.reseteditor"],
         on_click=lambda: st.session_state.update({"fflagseditor": ReadSoberConfig("fflags")})
     )
     fflags_text = st.text_area(
-        "FFlags JSON Editor",
+        LANG["lution.fflags.texterea.fflagseditor"],
         value=json.dumps(st.session_state.fflagseditor, indent=4),
         height=300
     )
@@ -177,11 +177,11 @@ elif page == "Fast Flags":
         parsed = json.loads(fflags_text)
         st.session_state.fflagseditor = parsed
     except Exception:
-        st.warning("Invalid JSON! Please fix errors in the editor.")
+        st.warning(LANG["lution.message.fflags.warning.invalid"])
 
-    st.write("Micsellaneous")
+    st.write(LANG["lution.fflags.text.mics"])
     st.button(
-        "Setup Overlay",
+        LANG["lution.fflags.button.setupoverlay"],
         on_click=OverlaySetup
     )
 
