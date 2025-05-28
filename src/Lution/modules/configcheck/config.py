@@ -143,6 +143,7 @@ def UpdateCursor(cursortype):
                 cursor_file("customcursor", "new", "IBeamCursor.png"),
             ]
         )
+        UpdateLutionConfig("CursorType", "Default")
     elif cursortype == "Old 2007 Cursor":
         OverwriteFiles(
             CursorFolder,
@@ -152,5 +153,6 @@ def UpdateCursor(cursortype):
                 cursor_file("customcursor", "old", "IBeamCursor.png"),
             ]
         )
+        UpdateLutionConfig("CursorType", "Old 2007 Cursor")
     else:
         st.error("Invalid cursor type selected.")

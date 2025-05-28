@@ -140,7 +140,7 @@ if "fontsize" not in st.session_state:
     st.session_state.fontsize = ReadFflagsConfig("FIntFontSizePadding")
 if "Cursor" not in st.session_state:
     JsonSetup()
-    Cursorcf = ReadSoberConfig("cursor")
+    Cursorcf = ReadLutionConfig("CursorType")
     if Cursorcf is None:
         Cursorcf = "Default"
     else:
@@ -224,7 +224,7 @@ elif page == "Fast Flags":
 
 elif page == "Appearance":
     st.header(LANG["lution.tab.appearance"])
-
+    
 
     st.session_state.customfont = st.file_uploader(
         LANG["lution.appearance.uploader.customfont"],
