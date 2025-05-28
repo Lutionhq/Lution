@@ -1,15 +1,16 @@
 #src/sostrapter/modules/json/json.py
 from modules.json.json import UpdateFflags, UpdateSoberConfig,ReadFflagsConfig, ReadSoberConfig, CombineJson
 from modules.configcheck.fontreplacer import *
+from modules.utils.files import OverwriteFiles
 import os
 import shutil
 import os
 import subprocess
 import platform
 import streamlit as st
+import json
 
-
-def apply_changes(fpslimit, lightingtech, oof1, rpc1, rendertech, bbchat, FFlags, fontsize):
+def apply_changes(fpslimit, lightingtech, oof1, rpc1, rendertech, bbchat, FFlags, fontsize, Cursor):
     """Apply changes based on user input."""
     # Lighting Tech
     if lightingtech == "Voxel Lighting (Phase 1)" : 
@@ -45,6 +46,8 @@ def apply_changes(fpslimit, lightingtech, oof1, rpc1, rendertech, bbchat, FFlags
     UpdateSoberConfig("fflags", Combine)
     # Font Size
     UpdateFflags("FIntFontSizePadding", fontsize)
+
+
 
 def LoadLightTechConfig():
     """Load Lighting techs Sober configs into session state."""
@@ -93,3 +96,61 @@ def open_folder(path):
     else:  # Linux and others
         subprocess.Popen(["xdg-open", path])
 
+def JsonSetup(filename="LutionConfig.json", default_data=None):
+    documents_dir = os.path.expanduser("~/Documents")
+    os.makedirs(documents_dir, exist_ok=True)
+    file_path = os.path.join(documents_dir, filename)
+    if not os.path.exists(file_path):
+        with open(file_path, "w") as f:
+            json.dump(default_data if default_data is not None else {}, f, indent=4)
+    return file_path
+
+
+def ReadLutionConfig(key, filename="LutionConfig.json", default=None):
+    JsonSetup()
+    file_path = os.path.join(os.path.expanduser("~/Documents"), filename)
+    if not os.path.exists(file_path):
+        return default
+    with open(file_path, "r") as f:
+        data = json.load(f)
+    return data.get(key, default)
+
+def UpdateLutionConfig(key, value, filename="LutionConfig.json"):
+    JsonSetup()
+    file_path = os.path.join(os.path.expanduser("~/Documents"), filename)
+    if os.path.exists(file_path):
+        with open(file_path, "r") as f:
+            data = json.load(f)
+    else:
+        data = {}
+    data[key] = value
+    with open(file_path, "w") as f:
+        json.dump(data, f, indent=4)
+
+def UpdateCursor(cursortype):
+    base_dir = os.path.abspath(os.path.join(os.path.dirname(__file__), "../../files"))
+    CursorFolder = os.path.expanduser("~/.var/app/org.vinegarhq.Sober/data/sober/asset_overlay/content/textures/Cursors/KeyboardMouse")
+
+    def cursor_file(*parts):
+        return os.path.join(base_dir, *parts)
+
+    if cursortype == "Default":
+        OverwriteFiles(
+            CursorFolder,
+            [
+                cursor_file("customcursor", "new", "ArrowCursor.png"),
+                cursor_file("customcursor", "new", "ArrowFarCursor.png"),
+                cursor_file("customcursor", "new", "IBeamCursor.png"),
+            ]
+        )
+    elif cursortype == "Old 2007 Cursor":
+        OverwriteFiles(
+            CursorFolder,
+            [
+                cursor_file("customcursor", "old", "ArrowCursor.png"),
+                cursor_file("customcursor", "old", "ArrowFarCursor.png"),
+                cursor_file("customcursor", "old", "IBeamCursor.png"),
+            ]
+        )
+    else:
+        st.error("Invalid cursor type selected.")

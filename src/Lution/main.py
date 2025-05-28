@@ -4,7 +4,8 @@ import os
 import json
 from pathlib import Path
 from modules.json.json import *
-from modules.basic.messages import *
+from modules.utils.messages import *
+from modules.utils.files import OverwriteFiles
 from modules.configcheck.config import *
 from modules.configcheck.fontreplacer import Replace
 
@@ -26,23 +27,14 @@ aboutmd = open(os.path.join(os.path.dirname(__file__), 'markdown/about.md')).rea
 
 
 
-def OverwriteMesh(dest_dir, src_files):
-    os.makedirs(dest_dir, exist_ok=True)
-    for src_file in src_files:
-        abs_src_file = os.path.join(os.path.dirname(__file__), src_file)
-        dest_file = os.path.join(dest_dir, os.path.basename(src_file))
-        shutil.copy2(abs_src_file, dest_file)
-    success()
+
+
 
 def OverwriteEmoji(dest_dir):
     src_file = os.path.join(os.path.dirname(__file__), 'files/RobloxEmoji.ttf')
     os.makedirs(dest_dir, exist_ok=True) 
     dest_file = os.path.join(dest_dir, os.path.basename(src_file))
     shutil.copy2(src_file, dest_file)     
-    disablechat = ReadFflagsConfig("FFlagEnableBubbleChatFromChatService")
-    st.session_state.disablechat = disablechat
-    st.session_state.render = UsingOpenGl()
-
 
 
 def applyfont():
@@ -146,6 +138,14 @@ if "fflagseditor" not in st.session_state:
     st.session_state.fflagseditor = Currfflags
 if "fontsize" not in st.session_state:
     st.session_state.fontsize = ReadFflagsConfig("FIntFontSizePadding")
+if "Cursor" not in st.session_state:
+    JsonSetup()
+    Cursorcf = ReadSoberConfig("cursor")
+    if Cursorcf is None:
+        Cursorcf = "Default"
+    else:
+        Cursorcf = "Old 2007 Cursor"
+    st.session_state.cursor = Cursorcf
 
 
 
@@ -162,7 +162,7 @@ if page == "Mods":
     st.caption("Notice : Hey there gooners, i know what you are about to do, but PLEASEE for the love of god, DO NOT BREAK THE ROBLOX TOS.")
     st.button(
         "Rest mesh",
-        on_click=OverwriteMesh,
+        on_click=OverwriteFiles,
         args=(os.path.expanduser("~/.var/app/org.vinegarhq.Sober/data/sober/asset_overlay/content/avatar/meshes/"), [
             "files/mesh/leftarm.mesh",
             "files/mesh/rightarm.mesh",
@@ -224,15 +224,28 @@ elif page == "Fast Flags":
 
 elif page == "Appearance":
     st.header(LANG["lution.tab.appearance"])
+
+
     st.session_state.customfont = st.file_uploader(
         LANG["lution.appearance.uploader.customfont"],
         type=["ttf", "otf"],
         key="custom_font_uploader"
     )
     st.button(
-        LANG["lution.appearance.button.apply"],
+        LANG["lution.appearance.button.applyfont"],
         on_click=applyfont
     )
+    st.session_state.cursor = st.selectbox(
+        LANG["lution.appearance.mutichoices.cursor"],
+        ["Default", "Old 2007 Cursor"],
+        index=["Default", "Old 2007 Cursor"].index(st.session_state.cursor)
+    )
+    st.button(
+        LANG["lution.appearance.button.applycursor"],
+        on_click=lambda: UpdateCursor(st.session_state.cursor),
+    )
+
+
         
 
     st.markdown(LANG["lution.appearance.text.laucher"])

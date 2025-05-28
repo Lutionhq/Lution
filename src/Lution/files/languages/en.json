@@ -23,7 +23,10 @@
     "lution.fflags.button.setupoverlay": "Setup Overlay",
     "lution.fflags.texterea.fflagseditor": "FFlags editor",
     "lution.appearance.uploader.customfont": "Upload Custom Font",
-    "lution.appearance.button.apply": "Apply Custom Font",
+    "lution.appearance.button.applyfont": "Apply Custom Font",
+    "lution.appearance.mutichoices.cursor": "Custom Cursor",
+    "lution.appearance.button.applycursor": "Apply Custom Cursor",
+    "lution.appearance.button.cursor": "Apply custom Cursor",
     "lution.appearance.text.laucher": "**Laucher Appearance Customization**",
     "lution.save.button.downloadcf": "Download Config",
     "lution.save.button.apply": "Apply Changes"
