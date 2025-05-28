@@ -24,6 +24,13 @@ st.sidebar.caption("Version 0.1.0")
 
 aboutmd = open(os.path.join(os.path.dirname(__file__), 'markdown/about.md')).read()
 
+def OverwriteMesh(dest_dir, src_files):
+    os.makedirs(dest_dir, exist_ok=True)
+    for src_file in src_files:
+        abs_src_file = os.path.join(os.path.dirname(__file__), src_file)
+        dest_file = os.path.join(dest_dir, os.path.basename(src_file))
+        shutil.copy2(abs_src_file, dest_file)
+    success()
 
 def OverwriteEmoji(dest_dir):
     src_file = os.path.join(os.path.dirname(__file__), 'files/RobloxEmoji.ttf')
@@ -146,6 +153,17 @@ if page == "Mods":
         args=(FL,)
     )
     st.caption("Notice : Hey there gooners, i know what you are about to do, but PLEASEE for the love of god, DO NOT BREAK THE ROBLOX TOS.")
+    st.button(
+        "Rest mesh",
+        on_click=OverwriteMesh,
+        args=(os.path.expanduser("~/.var/app/org.vinegarhq.Sober/data/sober/asset_overlay/content/avatar/meshes/"), [
+            "files/mesh/leftarm.mesh",
+            "files/mesh/rightarm.mesh",
+            "files/mesh/leftleg.mesh",
+            "files/mesh/rightleg.mesh",
+            "files/mesh/torso.mesh"
+        ])
+    )
 
 elif page == "Fast Flags":
     st.header(LANG["lution.tab.fflags"])

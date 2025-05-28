@@ -1,4 +1,4 @@
 import streamlit as st
-def success():
+def success(message: str = "Operation completed successfully."):
     """Display a success message."""
-    st.success('', icon="✅")
+    st.success(message, icon="✅")
