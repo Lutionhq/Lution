@@ -167,7 +167,7 @@ elif page == "Fast Flags":
     )
 
 elif page == "Appearance":
-    st.header("Appearance")
+    st.header(LANG["lution.tab.appearance"])
     st.session_state.customfont = st.file_uploader(
         LANG["lution.appearance.uploader.customfont"],
         type=["ttf", "otf"],
@@ -178,7 +178,6 @@ elif page == "Appearance":
         on_click=applyfont
     )
         
-    st.header(LANG["lution.tab.appearance"])
 
     st.markdown(LANG["lution.appearance.text.laucher"])
     st.markdown("""
