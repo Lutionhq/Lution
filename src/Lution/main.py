@@ -56,9 +56,9 @@ def applyfont():
             except Exception as e:
                 st.warning(f"Could not delete temp font: {e}")
             OverwriteEmoji(os.path.expanduser("~/.var/app/org.vinegarhq.Sober/data/sober/asset_overlay/content/fonts"))
-            st.success("Custom font applied successfully!")
+            st.success(LANG["lution.message.success.fontapplied"])
         else:
-            st.warning("No custom font uploaded.")
+            st.warning(LANG["lution.message.warning.customfontnotuploaded"])
 
 file_path = os.path.expanduser("~/.var/app/org.vinegarhq.Sober/config/sober/config.json")
 LANG_DIR = os.path.join(os.path.dirname(__file__), "files/languages")  
@@ -66,7 +66,11 @@ lang_files = [f for f in os.listdir(LANG_DIR) if f.endswith(".json")]
 LANG_CODES = [os.path.splitext(f)[0] for f in lang_files]
 LANG_NAMES = {
     "en": "English",
-    "vn": "Tiếng Việt"
+    "vn": "Tiếng Việt",
+    "ger": "Deutsch",
+    "lolcat" : "Lolcat 😹 ",
+    "premiumenglish": "𝓟𝓻𝓮𝓶𝓲𝓾𝓶  𝓔𝓷𝓰𝓵𝓲𝓼𝓱"
+
 }
 
 if "language" not in st.session_state:
@@ -150,13 +154,13 @@ if page == "Mods":
     FL = os.path.expanduser("~/.var/app/org.vinegarhq.Sober/data/sober/asset_overlay/content/avatar/meshes")
     st.header(LANG["lution.tab.mods"])
     st.button(
-        "Open mesh avatar folder",
+        LANG["lution.mods.button.openmesh"],
         on_click=open_folder,
         args=(FL,)
     )
-    st.caption("Notice : Hey there gooners, i know what you are about to do, but PLEASEE for the love of god, DO NOT BREAK THE ROBLOX TOS.")
+    st.caption(LANG["lution.mods.caption.littlenotice"])
     st.button(
-        "Rest mesh",
+        LANG["lution.mods.button.resetmesh"],
         on_click=OverwriteFiles,
         args=(os.path.expanduser("~/.var/app/org.vinegarhq.Sober/data/sober/asset_overlay/content/avatar/meshes/"), [
             "files/mesh/leftarm.mesh",
