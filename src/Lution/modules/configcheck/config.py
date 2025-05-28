@@ -148,11 +148,21 @@ def UpdateCursor(cursortype):
         OverwriteFiles(
             CursorFolder,
             [
-                cursor_file("customcursor", "old", "ArrowCursor.png"),
-                cursor_file("customcursor", "old", "ArrowFarCursor.png"),
-                cursor_file("customcursor", "old", "IBeamCursor.png"),
+                cursor_file("customcursor", "old2006", "ArrowCursor.png"),
+                cursor_file("customcursor", "old2006", "ArrowFarCursor.png"),
+                cursor_file("customcursor", "old2006", "IBeamCursor.png"),
             ]
         )
         UpdateLutionConfig("CursorType", "Old 2007 Cursor")
+    elif cursortype == "Old 2013 Cursor":
+        OverwriteFiles(
+            CursorFolder,
+            [
+                cursor_file("customcursor", "old2013", "ArrowCursor.png"),
+                cursor_file("customcursor", "old2013", "ArrowFarCursor.png"),
+                cursor_file("customcursor", "old2013", "IBeamCursor.png"),
+            ]
+        )
+        UpdateLutionConfig("CursorType", "Old 2013 Cursor")
     else:
         st.error("Invalid cursor type selected.")

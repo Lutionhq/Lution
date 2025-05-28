@@ -140,12 +140,7 @@ if "fontsize" not in st.session_state:
     st.session_state.fontsize = ReadFflagsConfig("FIntFontSizePadding")
 if "Cursor" not in st.session_state:
     JsonSetup()
-    Cursorcf = ReadLutionConfig("CursorType")
-    if Cursorcf is None:
-        Cursorcf = "Default"
-    else:
-        Cursorcf = "Old 2007 Cursor"
-    st.session_state.cursor = Cursorcf
+    st.session_state.cursor = ReadLutionConfig("CursorType")
 
 
 
@@ -237,8 +232,8 @@ elif page == "Appearance":
     )
     st.session_state.cursor = st.selectbox(
         LANG["lution.appearance.mutichoices.cursor"],
-        ["Default", "Old 2007 Cursor"],
-        index=["Default", "Old 2007 Cursor"].index(st.session_state.cursor)
+        ["Default", "Old 2007 Cursor", "Old 2013 Cursor"],
+        index=["Default", "Old 2007 Cursor", "Old 2013 Cursor"].index(st.session_state.cursor)
     )
     st.button(
         LANG["lution.appearance.button.applycursor"],
