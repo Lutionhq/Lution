@@ -51,3 +51,17 @@ def UpdateSoberConfig(key, value):
         st.success(f"Config['{key}'] set to {value}")
     except Exception as e:
         st.error(f"Failed to update config: {e}")
+
+def CombineJson(*json_objs):
+    """
+    Combine multiple JSON objects (dicts) into one.
+    Later objects overwrite earlier ones for duplicate keys.
+    Skips any argument that is not a dict.
+    """
+    result = {}
+    for obj in json_objs:
+        if isinstance(obj, dict):
+            result.update(obj)
+        else:
+            st.warning(f"Skipped non-dict object in CombineJson: {type(obj)}")
+    return result

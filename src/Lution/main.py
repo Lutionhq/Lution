@@ -128,6 +128,9 @@ if "customfont" not in st.session_state:
     st.session_state.customfont = None
 if "language" not in st.session_state:
     st.session_state.language = "en"
+if "fflagseditor" not in st.session_state:
+    Currfflags = ReadSoberConfig("fflags")
+    st.session_state.fflagseditor = Currfflags
 
 
 
@@ -160,11 +163,31 @@ elif page == "Fast Flags":
         ["Voxel Lighting (Phase 1)", "Shadowmap Lighting (Phase 2)", "Future Lighting (Phase 3)"],
         index=["Voxel Lighting (Phase 1)", "Shadowmap Lighting (Phase 2)", "Future Lighting (Phase 3)"].index(st.session_state.lightingtech)
     )
+    st.write("Advanced")
+    st.button(
+        "Reset FFlags Editor",
+        on_click=lambda: st.session_state.update({"fflagseditor": ReadSoberConfig("fflags")})
+    )
+    fflags_text = st.text_area(
+        "FFlags JSON Editor",
+        value=json.dumps(st.session_state.fflagseditor, indent=4),
+        height=300
+    )
+    try:
+        parsed = json.loads(fflags_text)
+        st.session_state.fflagseditor = parsed
+    except Exception:
+        st.warning("Invalid JSON! Please fix errors in the editor.")
+
     st.write("Micsellaneous")
     st.button(
         "Setup Overlay",
         on_click=OverlaySetup
     )
+
+
+
+
 
 elif page == "Appearance":
     st.header(LANG["lution.tab.appearance"])
@@ -185,6 +208,9 @@ elif page == "Appearance":
     
     (Aka Sober team) to add a api to change the appearance of the launcher.
     """)
+
+
+
 
 elif page == "Lution Settings":
     lang_choice = st.selectbox(
@@ -221,6 +247,6 @@ elif page == "Apply Changes & Config":
             st.session_state.rpc,
             st.session_state.render,
             st.session_state.disablechat,
-            st.session_state.customfont if st.session_state.customfont else None
+            st.session_state.fflagseditor
         )
     )

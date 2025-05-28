@@ -1,5 +1,5 @@
 #src/sostrapter/modules/json/json.py
-from modules.json.json import UpdateFflags, UpdateSoberConfig,ReadFflagsConfig, ReadSoberConfig
+from modules.json.json import UpdateFflags, UpdateSoberConfig,ReadFflagsConfig, ReadSoberConfig, CombineJson
 from modules.configcheck.fontreplacer import *
 import os
 import shutil
@@ -7,7 +7,7 @@ import os
 import subprocess
 import platform
 
-def apply_changes(fpslimit, lightingtech, oof1, rpc1, rendertech, bbchat, cusfont):
+def apply_changes(fpslimit, lightingtech, oof1, rpc1, rendertech, bbchat, FFlags):
     """Apply changes based on user input."""
     # Lighting Tech
     if lightingtech == "Voxel Lighting (Phase 1)" : 
@@ -37,8 +37,10 @@ def apply_changes(fpslimit, lightingtech, oof1, rpc1, rendertech, bbchat, cusfon
         UpdateSoberConfig("use_opengl", False)
     # Bubble Chat
     UpdateSoberConfig("FFlagEnableBubbleChatFromChatService", bbchat)
-    # Custom Font
-    UpdateSoberConfig("custom_font", "~/Documents/font test")
+    # FFlags Editor
+    Currfflags = ReadSoberConfig("fflags")
+    Combine = CombineJson(Currfflags, FFlags)
+    UpdateSoberConfig("fflags", Combine)
 
 
 def LoadLightTechConfig():
