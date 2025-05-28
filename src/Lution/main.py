@@ -165,6 +165,9 @@ if page == "Mods":
         ])
     )
 
+
+
+
 elif page == "Fast Flags":
     st.header(LANG["lution.tab.fflags"])
     st.session_state.oof = st.toggle(LANG["lution.fflags.toggle.bringbackoof"], value=st.session_state.oof)
@@ -237,6 +240,7 @@ elif page == "Lution Settings":
     format_func=lambda code: LANG_NAMES.get(code, code),
     index=LANG_CODES.index(st.session_state.language)
 )
+    st.caption("The languages feature still in beta, we are still working on it, if you want to help us translate, please go to the [GitHub repository](https://github.com/triisdang/Lution/)")
     st.session_state.language = lang_choice
     st.markdown("""Should we add something? **Feature in the [isuess](https://github.com/triisdang/Lution/issues) page!**""")
 
@@ -245,16 +249,6 @@ elif page == "About":
     st.markdown(aboutmd)
 
 elif page == "Apply Changes & Config":
-    st.download_button(
-        label=LANG["lution.save.button.downloadcf"],
-        data=json.dumps({
-            "fpslimit": st.session_state.fpslimit,
-            "lightingtech": st.session_state.lightingtech
-        }),
-        file_name="config.json",
-        mime="application/json"
-    )
-    data = st.file_uploader("Upload Config", type=["json"], key="config_uploader")
     st.button(
         LANG["lution.save.button.apply"],
         on_click=apply_changes,
