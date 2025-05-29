@@ -76,4 +76,4 @@ The app navigates to the **Assets Overlay** path and modifies the contents withi
 
 
 
-chip is working for the mods on bloxstrap to work with lution for real!!111(if possible)
+chip is working for the mods on bloxstrap to work with lution for real!!111(CONFRIMED : POSSIBLE!!1111)
