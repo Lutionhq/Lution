@@ -145,9 +145,13 @@ if "fontsize" not in st.session_state:
     st.session_state.fontsize = ReadFflagsConfig("FIntFontSizePadding")
 if "Cursor" not in st.session_state:
     JsonSetup()
-    st.session_state.cursor = ReadLutionConfig("CursorType")
-
-
+    curcf = ReadLutionConfig("CursorType")
+    if curcf is None:
+        st.session_state.cursor = "Default"
+    elif curcf == "Old 2007 Cursor":
+        st.session_state.cursor = "Old 2007 Cursor"
+    elif curcf == "Old 2013 Cursor":
+        st.session_state.cursor = "Old 2013 Cursor"
 
 
 
