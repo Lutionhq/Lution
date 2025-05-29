@@ -1,6 +1,10 @@
 import os
 import shutil
+import json
+import subprocess
+import platform
 from .messages import success
+
 
 def OverwriteFiles(dest_dir, src_files):
     os.makedirs(dest_dir, exist_ok=True)
@@ -17,3 +21,27 @@ def OverwriteFiles(dest_dir, src_files):
 
         shutil.copy2(src_path, dest_path)
     success()
+
+def JsonSetup(filename="LutionConfig.json", default_data=None):
+    documents_dir = os.path.expanduser("~/Documents/Lution/")
+    os.makedirs(documents_dir, exist_ok=True)
+    file_path = os.path.join(documents_dir, filename)
+    if not os.path.exists(file_path):
+        with open(file_path, "w") as f:
+            json.dump(default_data if default_data is not None else {}, f, indent=4)
+    return file_path
+
+def ModsFolder():
+    mods_dir = os.path.expanduser("~/Documents/Lution/Mods")
+    if not os.path.exists(mods_dir):
+        os.makedirs(mods_dir)
+    OpenFolder
+
+
+def OpenFolder(path):
+    from modules.configcheck.config import OverlaySetup
+    OverlaySetup()
+    if platform.system() == "Darwin":  # macOS shiz
+        subprocess.Popen(["open", path])
+    else:  # Linux and others
+        subprocess.Popen(["xdg-open", path])

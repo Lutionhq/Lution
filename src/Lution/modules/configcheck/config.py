@@ -2,6 +2,7 @@
 from modules.json.json import UpdateFflags, UpdateSoberConfig,ReadFflagsConfig, ReadSoberConfig, CombineJson
 from modules.configcheck.fontreplacer import *
 from modules.utils.files import OverwriteFiles
+from modules.utils.files import JsonSetup
 import os
 import shutil
 import os
@@ -89,21 +90,6 @@ def OverlaySetup():
             else:
                 shutil.copy2(s, d)
 
-def open_folder(path):
-    OverlaySetup()
-    if platform.system() == "Darwin":  # macOS shiz
-        subprocess.Popen(["open", path])
-    else:  # Linux and others
-        subprocess.Popen(["xdg-open", path])
-
-def JsonSetup(filename="LutionConfig.json", default_data=None):
-    documents_dir = os.path.expanduser("~/Documents")
-    os.makedirs(documents_dir, exist_ok=True)
-    file_path = os.path.join(documents_dir, filename)
-    if not os.path.exists(file_path):
-        with open(file_path, "w") as f:
-            json.dump(default_data if default_data is not None else {}, f, indent=4)
-    return file_path
 
 
 def ReadLutionConfig(key, filename="LutionConfig.json", default=None):
