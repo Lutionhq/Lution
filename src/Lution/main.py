@@ -110,7 +110,7 @@ if st.sidebar.button(LANG["lution.tab.apply"]):
     st.session_state.page = "Apply Changes & Config"
 if st.sidebar.button(LANG["lution.tab.lutionsettings"]):
     st.session_state.page = "Lution Settings"
-if st.sidebar.button(LANG["lution.tab.about"]):
+if st.sidebar.button(LANG["lution.tab.about"], key="about_button"):
     st.session_state.page = "About"
 
 
@@ -243,6 +243,7 @@ elif page == "Appearance":
     st.button(
         LANG["lution.appearance.button.applycursor"],
         on_click=lambda: UpdateCursor(st.session_state.cursor),
+        key="apply_cursor_button"
     )
 
 
