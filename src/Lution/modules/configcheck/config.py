@@ -77,7 +77,7 @@ def UsingOpenGl():
 
 def ReadLutionConfig(key, filename="LutionConfig.json", default=None):
     JsonSetup()
-    file_path = os.path.join(os.path.expanduser("~/Documents"), filename)
+    file_path = os.path.join(os.path.expanduser("~/Documents/Lution"), filename)
     if not os.path.exists(file_path):
         return default
     with open(file_path, "r") as f:
@@ -86,7 +86,7 @@ def ReadLutionConfig(key, filename="LutionConfig.json", default=None):
 
 def UpdateLutionConfig(key, value, filename="LutionConfig.json"):
     JsonSetup()
-    file_path = os.path.join(os.path.expanduser("~/Documents"), filename)
+    file_path = os.path.join(os.path.expanduser("~/Documents/Lution"), filename)
     if os.path.exists(file_path):
         with open(file_path, "r") as f:
             data = json.load(f)

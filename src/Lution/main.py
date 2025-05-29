@@ -159,7 +159,10 @@ if page == "Mods":
         on_click=lambda : ModsFolder(), 
         key = "mod_button"
     )
+    st.button(
+        "Apply Mods"
 
+    )
 
     FL = os.path.expanduser("~/.var/app/org.vinegarhq.Sober/data/sober/asset_overlay/content/avatar/meshes")
     st.button(

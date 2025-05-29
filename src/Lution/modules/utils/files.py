@@ -22,6 +22,26 @@ def OverwriteFiles(dest_dir, src_files):
         shutil.copy2(src_path, dest_path)
     success()
 
+def OverwriteFolders(dest_dir, src_dirs):
+
+    os.makedirs(dest_dir, exist_ok=True)
+
+    for src_path in src_dirs:
+        if not os.path.isabs(src_path):
+            raise ValueError(f"Expected absolute path, got: {src_path}")
+
+        if not os.path.isdir(src_path):
+            continue  # Skip if not a directory
+
+        folder_name = os.path.basename(src_path)
+        dest_path = os.path.join(dest_dir, folder_name)
+
+        if os.path.exists(dest_path):
+            shutil.rmtree(dest_path)
+        shutil.copytree(src_path, dest_path)
+    success()
+
+
 def JsonSetup(filename="LutionConfig.json", default_data=None):
     documents_dir = os.path.expanduser("~/Documents/Lution/")
     os.makedirs(documents_dir, exist_ok=True)
