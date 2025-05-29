@@ -163,10 +163,18 @@ if page == "Mods":
         on_click=lambda : ModsFolder(), 
         key = "mod_button"
     )
+    st.caption("By the way, we support bloxstrap mods :) (most of it, if your mod does not work, go to the issues page on github)")
     st.button(
         "Apply Mods",
-        on_click=lambda: ApplyMods()
+        on_click=lambda: ApplyMods(),
+        key="apply_mods_button"
 
+    )
+
+    st.button(
+        "Reset Roblox to default",
+        on_click=lambda: ResetMods(),
+        key="reset_mods_button"
     )
 
     FL = os.path.expanduser("~/.var/app/org.vinegarhq.Sober/data/sober/asset_overlay/content/avatar/meshes")

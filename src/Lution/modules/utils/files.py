@@ -3,7 +3,7 @@ import shutil
 import json
 import subprocess
 import platform
-from .messages import success
+from .messages import success , warning as warn
 
 
 def OverwriteFiles(dest_dir, src_files):
@@ -22,7 +22,7 @@ def OverwriteFiles(dest_dir, src_files):
         shutil.copy2(src_path, dest_path)
     success()
 
-def OverwriteFolders(dest_dir, src_dirs):
+def OverwriteFolders(dest_dir, src_dirs, no_success=False):
 
     os.makedirs(dest_dir, exist_ok=True)
 
@@ -33,13 +33,16 @@ def OverwriteFolders(dest_dir, src_dirs):
         if not os.path.isdir(src_path):
             continue  # Skip if not a directory
 
-        folder_name = os.path.basename(src_path)
+        folder_name = os.path.basename(os.path.normpath(src_path))
         dest_path = os.path.join(dest_dir, folder_name)
 
         if os.path.exists(dest_path):
             shutil.rmtree(dest_path)
         shutil.copytree(src_path, dest_path)
-    success()
+    if not no_success:
+        print("u suck at code")
+        success()
+    
 
 
 def JsonSetup(filename="LutionConfig.json", default_data=None):
@@ -88,7 +91,12 @@ def OverlaySetup():
 
 def ApplyMods():
     dest_dirr = os.path.expanduser("~/.var/app/org.vinegarhq.Sober/data/sober/asset_overlay/ExtraContent/")
-    OverwriteFolders(dest_dirr, [os.path.expanduser("~/Documents/Lution/Mods/ExtaContent/")])
+    OverwriteFolders(dest_dirr, [os.path.expanduser("~/Documents/Lution/Mods/ExtaContent/")],no_success=True)
     dest_dirr = os.path.expanduser("~/.var/app/org.vinegarhq.Sober/data/sober/asset_overlay/content/")
-    OverwriteFolders(dest_dirr, [os.path.expanduser("~/Documents/Lution/Mods/content/")])
+    OverwriteFolders(dest_dirr, [os.path.expanduser("~/Documents/Lution/Mods/content/")],no_success=True)
+    warn("Restart Sober to apply the mods. If you not opened Sober, you can ignore this message.")
+
+def ResetMods():
+    dest_dirr = os.path.expanduser("~/.var/app/org.vinegarhq.Sober/data/sober/asset_overlay/")
+    OverwriteFolders(dest_dirr, [os.path.expanduser("~/.var/app/org.vinegarhq.Sober/data/sober/assets/")], no_success=True)
     success()
