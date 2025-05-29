@@ -3,6 +3,7 @@ import shutil
 import json
 import subprocess
 import platform
+import streamlit as st
 from .messages import success , warning as warn
 
 
@@ -90,13 +91,15 @@ def OverlaySetup():
 
 
 def ApplyMods():
-    dest_dirr = os.path.expanduser("~/.var/app/org.vinegarhq.Sober/data/sober/asset_overlay/ExtraContent/")
-    OverwriteFolders(dest_dirr, [os.path.expanduser("~/Documents/Lution/Mods/ExtaContent/")],no_success=True)
-    dest_dirr = os.path.expanduser("~/.var/app/org.vinegarhq.Sober/data/sober/asset_overlay/content/")
-    OverwriteFolders(dest_dirr, [os.path.expanduser("~/Documents/Lution/Mods/content/")],no_success=True)
-    warn("Restart Sober to apply the mods. If you not opened Sober, you can ignore this message.")
+    with st.spinner("Applying mods..."):
+        dest_dirr = os.path.expanduser("~/.var/app/org.vinegarhq.Sober/data/sober/asset_overlay/ExtraContent/")
+        OverwriteFolders(dest_dirr, [os.path.expanduser("~/Documents/Lution/Mods/ExtaContent/")],no_success=True)
+        dest_dirr = os.path.expanduser("~/.var/app/org.vinegarhq.Sober/data/sober/asset_overlay/content/")
+        OverwriteFolders(dest_dirr, [os.path.expanduser("~/Documents/Lution/Mods/content/")],no_success=True)
+        warn("Restart Sober to apply the mods. If you not opened Sober, you can ignore this message.")
 
 def ResetMods():
-    dest_dirr = os.path.expanduser("~/.var/app/org.vinegarhq.Sober/data/sober/asset_overlay/")
-    OverwriteFolders(dest_dirr, [os.path.expanduser("~/.var/app/org.vinegarhq.Sober/data/sober/assets/")], no_success=True)
-    success()
+    with st.spinner("Resetting mods..."):
+        dest_dirr = os.path.expanduser("~/.var/app/org.vinegarhq.Sober/data/sober/asset_overlay/")
+        OverwriteFolders(dest_dirr, [os.path.expanduser("~/.var/app/org.vinegarhq.Sober/data/sober/assets/")], no_success=True)
+        success()
