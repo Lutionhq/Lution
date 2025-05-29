@@ -164,7 +164,8 @@ if page == "Mods":
         key = "mod_button"
     )
     st.button(
-        "Apply Mods"
+        "Apply Mods",
+        on_click=lambda: ApplyMods()
 
     )
 

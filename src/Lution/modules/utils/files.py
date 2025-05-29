@@ -84,3 +84,11 @@ def OverlaySetup():
                 shutil.copytree(s, d)
             else:
                 shutil.copy2(s, d)
+
+
+def ApplyMods():
+    dest_dirr = os.path.expanduser("~/.var/app/org.vinegarhq.Sober/data/sober/asset_overlay/ExtraContent/")
+    OverwriteFolders(dest_dirr, [os.path.expanduser("~/Documents/Lution/Mods/ExtaContent/")])
+    dest_dirr = os.path.expanduser("~/.var/app/org.vinegarhq.Sober/data/sober/asset_overlay/content/")
+    OverwriteFolders(dest_dirr, [os.path.expanduser("~/Documents/Lution/Mods/content/")])
+    success()
