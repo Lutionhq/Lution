@@ -2,6 +2,7 @@
 from modules.json.json import UpdateFflags, UpdateSoberConfig,ReadFflagsConfig, ReadSoberConfig, CombineJson
 from modules.configcheck.fontreplacer import *
 from modules.utils.files import OverwriteFiles
+from modules.utils.files import JsonSetup
 import os
 import shutil
 import os
@@ -71,44 +72,12 @@ def UsingOpenGl():
     else:
         return False
 
-def OverlaySetup():
-    dest_dir = os.path.expanduser("~/.var/app/org.vinegarhq.Sober/data/sober/asset_overlay/content")
-    src_dir = os.path.expanduser("~/.var/app/org.vinegarhq.Sober/data/sober/assets/content")
-    
-    if os.path.isdir(dest_dir):
-        return
 
-    os.makedirs(dest_dir, exist_ok=True)
-
-    if os.path.isdir(src_dir):
-        for item in os.listdir(src_dir):
-            s = os.path.join(src_dir, item)
-            d = os.path.join(dest_dir, item)
-            if os.path.isdir(s):
-                shutil.copytree(s, d)
-            else:
-                shutil.copy2(s, d)
-
-def open_folder(path):
-    OverlaySetup()
-    if platform.system() == "Darwin":  # macOS shiz
-        subprocess.Popen(["open", path])
-    else:  # Linux and others
-        subprocess.Popen(["xdg-open", path])
-
-def JsonSetup(filename="LutionConfig.json", default_data=None):
-    documents_dir = os.path.expanduser("~/Documents")
-    os.makedirs(documents_dir, exist_ok=True)
-    file_path = os.path.join(documents_dir, filename)
-    if not os.path.exists(file_path):
-        with open(file_path, "w") as f:
-            json.dump(default_data if default_data is not None else {}, f, indent=4)
-    return file_path
 
 
 def ReadLutionConfig(key, filename="LutionConfig.json", default=None):
     JsonSetup()
-    file_path = os.path.join(os.path.expanduser("~/Documents"), filename)
+    file_path = os.path.join(os.path.expanduser("~/Documents/Lution"), filename)
     if not os.path.exists(file_path):
         return default
     with open(file_path, "r") as f:
@@ -117,7 +86,7 @@ def ReadLutionConfig(key, filename="LutionConfig.json", default=None):
 
 def UpdateLutionConfig(key, value, filename="LutionConfig.json"):
     JsonSetup()
-    file_path = os.path.join(os.path.expanduser("~/Documents"), filename)
+    file_path = os.path.join(os.path.expanduser("~/Documents/Lution"), filename)
     if os.path.exists(file_path):
         with open(file_path, "r") as f:
             data = json.load(f)

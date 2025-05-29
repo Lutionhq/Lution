@@ -5,7 +5,7 @@ import json
 from pathlib import Path
 from modules.json.json import *
 from modules.utils.messages import *
-from modules.utils.files import OverwriteFiles
+from modules.utils.files import *
 from modules.configcheck.config import *
 from modules.configcheck.fontreplacer import Replace
 
@@ -21,7 +21,7 @@ st.logo(lutionlogo, size="large")
 
 st.sidebar.markdown("<h2>Lution</h2>", unsafe_allow_html=True)
 st.sidebar.markdown(":orange-badge[⚠️ BETA]")
-st.sidebar.caption("Version 0.1.0")
+st.sidebar.caption("Version 0.2.0")
 
 aboutmd = open(os.path.join(os.path.dirname(__file__), 'markdown/about.md')).read()
 
@@ -155,14 +155,32 @@ if "Cursor" not in st.session_state:
 
 
 
-
-
 if page == "Mods":
-    FL = os.path.expanduser("~/.var/app/org.vinegarhq.Sober/data/sober/asset_overlay/content/avatar/meshes")
     st.header(LANG["lution.tab.mods"])
+    mods = os.path.expanduser("~/Documents/Lution/Mods")
+    st.button(
+        "Open Mods Folder",
+        on_click=lambda : ModsFolder(), 
+        key = "mod_button"
+    )
+    st.caption("By the way, we support bloxstrap mods :) (most of it, if your mod does not work, go to the issues page on github)")
+    st.button(
+        "Apply Mods",
+        on_click=lambda: ApplyMods(),
+        key="apply_mods_button"
+
+    )
+
+    st.button(
+        "Reset Roblox to default",
+        on_click=lambda: ResetMods(),
+        key="reset_mods_button"
+    )
+
+    FL = os.path.expanduser("~/.var/app/org.vinegarhq.Sober/data/sober/asset_overlay/content/avatar/meshes")
     st.button(
         LANG["lution.mods.button.openmesh"],
-        on_click=open_folder,
+        on_click=OpenFolder,
         args=(FL,)
     )
     st.caption(LANG["lution.mods.caption.littlenotice"])
