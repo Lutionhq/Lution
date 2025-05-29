@@ -156,10 +156,9 @@ if page == "Mods":
     mods = os.path.expanduser("~/Documents/Lution/Mods")
     st.button(
         "Open Mods Folder",
-        on_click=lambda : ModsFolder, 
+        on_click=lambda : ModsFolder(), 
         key = "mod_button"
     )
-
 
 
     FL = os.path.expanduser("~/.var/app/org.vinegarhq.Sober/data/sober/asset_overlay/content/avatar/meshes")

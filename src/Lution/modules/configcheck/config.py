@@ -72,23 +72,6 @@ def UsingOpenGl():
     else:
         return False
 
-def OverlaySetup():
-    dest_dir = os.path.expanduser("~/.var/app/org.vinegarhq.Sober/data/sober/asset_overlay/content")
-    src_dir = os.path.expanduser("~/.var/app/org.vinegarhq.Sober/data/sober/assets/content")
-    
-    if os.path.isdir(dest_dir):
-        return
-
-    os.makedirs(dest_dir, exist_ok=True)
-
-    if os.path.isdir(src_dir):
-        for item in os.listdir(src_dir):
-            s = os.path.join(src_dir, item)
-            d = os.path.join(dest_dir, item)
-            if os.path.isdir(s):
-                shutil.copytree(s, d)
-            else:
-                shutil.copy2(s, d)
 
 
 
