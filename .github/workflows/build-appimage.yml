@@ -16,51 +16,54 @@ jobs:
       - name: Set up Python
         uses: actions/setup-python@v4
         with:
-          python-version: 3.13.2
-
-
+          python-version: '3.12.3'
       - name: Install dependencies in venv
         run: |
-          cd src/Lution
           python3 -m venv venv
           source venv/bin/activate
-          cd ..
-          pip install -r requirements.txt
+          pip install -r src/Lution/requirements.txt
+
       - name: Prepare AppDir
         run: |
           mkdir -p AppDir/usr/bin
-          cp -r src/Lution/venv AppDir/usr/venv
+          cp -r venv AppDir/usr/venv
           cp -r src/Lution AppDir/usr/bin/Lution
 
       - name: Create AppRun
         run: |
           cat <<EOF > AppDir/AppRun
-          #!/bin/bash
-          HERE="\$(dirname "\$(readlink -f "\$0")")"
-          "\$HERE/usr/venv/bin/streamlit" run "\$HERE/usr/bin/Lution/main.py" --server.headless true
-          EOF
+#!/bin/bash
+HERE="\$(dirname "\$(readlink -f "\$0")")"
+"\$HERE/usr/venv/bin/streamlit" run "\$HERE/usr/bin/Lution/main.py" --server.headless true
+EOF
           chmod +x AppDir/AppRun
 
       - name: Create desktop file
         run: |
           cat <<EOF > AppDir/lution.desktop
-          [Desktop Entry]
-          Type=Application
-          Name=Lution
-          Exec=AppRun
-          Icon=utilities-terminal
-          Categories=Utility;
-          EOF
+[Desktop Entry]
+Type=Application
+Name=Lution
+Exec=AppRun
+Icon=icon
+Categories=Utility;
+Terminal=false
+EOF
+
+      - name: Add icon
+        run: |
+          cp src/Lution/icon.png AppDir/icon.png || echo "No icon found"
 
       - name: Download appimagetool
         run: |
           wget https://github.com/AppImage/AppImageKit/releases/latest/download/appimagetool-x86_64.AppImage
           chmod +x appimagetool-x86_64.AppImage
-      - name : Install libfuse2
-        run : |
+
+      - name: Install libfuse2
+        run: |
           sudo apt update
           sudo apt install -y libfuse2
-      
+
       - name: Build AppImage
         run: |
           ./appimagetool-x86_64.AppImage AppDir
