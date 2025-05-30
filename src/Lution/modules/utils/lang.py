@@ -2,9 +2,10 @@
 import os
 import json
 import streamlit as st
-
-file_path = os.path.expanduser("~/.var/app/org.vinegarhq.Sober/config/sober/config.json")
-LANG_DIR = os.path.join(os.path.dirname(__file__), "files/languages")  
+if "language" not in st.session_state:
+    st.session_state.language = "en"
+    
+LANG_DIR = os.path.join(os.path.dirname(os.path.dirname(os.path.dirname(__file__))), "files/languages")
 lang_files = [f for f in os.listdir(LANG_DIR) if f.endswith(".json")]
 LANG_CODES = [os.path.splitext(f)[0] for f in lang_files]
 LANG_NAMES = {

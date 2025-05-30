@@ -3,7 +3,9 @@ import json
 from modules.utils.lang import LANG
 from modules.utils.files import OverlaySetup
 from modules.configcheck.config import ReadSoberConfig
+from modules.utils.sidebar import InitSidebar
 
+InitSidebar()
 
 
 st.header(LANG["lution.tab.fflags"])

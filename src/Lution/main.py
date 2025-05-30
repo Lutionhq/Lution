@@ -8,24 +8,14 @@ from modules.utils.messages import *
 from modules.utils.files import *
 from modules.configcheck.config import *
 from modules.utils.lang import LANG , LANG_CODES, LANG_NAMES
+from modules.utils.sidebar import InitSidebar
 
 
 
-lutiontext = os.path.join(os.path.dirname(__file__), "files/lutiontext.svg")
-with open(lutiontext, "r") as f:
-    lutionlogo = f.read()
-
-
-st.logo(lutionlogo, size="large")
-
-st.sidebar.markdown("<h2>Lution</h2>", unsafe_allow_html=True)
-st.sidebar.markdown(":orange-badge[⚠️ BETA]")
-st.sidebar.caption("Version 0.2.0")
 file_path = os.path.expanduser("~/.var/app/org.vinegarhq.Sober/config/sober/config.json")
 
 
-if "language" not in st.session_state:
-    st.session_state.language = "en"
+
 
 try:
     with open(file_path, 'r') as f:
@@ -61,7 +51,7 @@ except Exception as e:
 #     st.session_state.page = "About"
 
 
-page = st.session_state.page
+# page = st.session_state.page
 
 # Set default values so they're always defined
 if "fpslimit" not in st.session_state:
@@ -102,5 +92,6 @@ if "Cursor" not in st.session_state:
 
 
 
-st.sidebar.page_link("pages/mods.py", label=LANG["lution.tab.mods"], icon="🛠️")
+st.page_link("main.py", label="Home")
 
+InitSidebar()

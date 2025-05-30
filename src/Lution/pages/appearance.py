@@ -3,7 +3,9 @@ import streamlit as st
 from modules.utils.files import ApplyFont
 from modules.utils.lang import LANG
 from modules.configcheck.config import UpdateCursor
+from modules.utils.sidebar import InitSidebar
 
+InitSidebar()
 
 
 st.header(LANG["lution.tab.appearance"])
@@ -38,3 +40,4 @@ Maybe not possible,Sober itself is not very customizable, but you can wait to Vi
     
 (Aka Sober team) to add a api to change the appearance of the launcher.
 """)
+

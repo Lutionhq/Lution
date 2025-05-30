@@ -4,7 +4,9 @@ import json
 from pathlib import Path
 from modules.utils.files import *
 from modules.utils.lang import LANG
+from modules.utils.sidebar import InitSidebar
 
+InitSidebar()
 
 st.header(LANG["lution.tab.mods"])
 mods = os.path.expanduser("~/Documents/Lution/Mods")

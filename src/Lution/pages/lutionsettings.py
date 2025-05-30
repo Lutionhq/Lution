@@ -1,7 +1,9 @@
 #src/lution/pages/lutionsettings.py
 import streamlit as st
 from modules.utils.lang import LANG , LANG_CODES, LANG_NAMES
+from modules.utils.sidebar import InitSidebar
 
+InitSidebar()
 
 
 lang_choice = st.selectbox(
