@@ -18,6 +18,7 @@ jobs:
         with:
           python-version: 3.10
 
+
       - name: Install dependencies in venv
         run: |
           cd src/Lution
