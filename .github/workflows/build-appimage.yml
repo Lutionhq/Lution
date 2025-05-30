@@ -31,24 +31,20 @@ jobs:
 
       - name: Create AppRun
         run: |
-          cat <<EOF > AppDir/AppRun
-#!/bin/bash
-HERE="\$(dirname "\$(readlink -f "\$0")")"
-"\$HERE/usr/venv/bin/streamlit" run "\$HERE/usr/bin/Lution/main.py" --server.headless true
-EOF
+          echo '#!/bin/bash' > AppDir/AppRun
+          echo 'HERE="$(dirname "$(readlink -f "$0")")"' >> AppDir/AppRun
+          echo '"$HERE/usr/venv/bin/streamlit" run "$HERE/usr/bin/Lution/main.py" --server.headless true' >> AppDir/AppRun
           chmod +x AppDir/AppRun
 
       - name: Create desktop file
         run: |
-          cat <<EOF > AppDir/lution.desktop
-[Desktop Entry]
-Type=Application
-Name=Lution
-Exec=AppRun
-Icon=icon
-Categories=Utility;
-Terminal=false
-EOF
+          echo '[Desktop Entry]' > AppDir/lution.desktop
+          echo 'Type=Application' >> AppDir/lution.desktop
+          echo 'Name=Lution' >> AppDir/lution.desktop
+          echo 'Exec=AppRun' >> AppDir/lution.desktop
+          echo 'Icon=icon' >> AppDir/lution.desktop
+          echo 'Categories=Utility;' >> AppDir/lution.desktop
+          echo 'Terminal=false' >> AppDir/lution.desktop
 
       - name: Add icon
         run: |
