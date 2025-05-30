@@ -8,6 +8,11 @@
 
 Lution is a third-party application designed to enhance your experience with Sober by providing quality-of-life improvements and additional features. Similar to other bootstrappers like [Lucem](https://github.com/xTrayambak/lucem) and [Bloxstrap](https://github.com/bloxstraplabs/bloxstrap), Lution stands out because it's built entirely with **Python**.
 
+And yes **This app can work with bloxstrap mods!!!11** 
+
+<sub>If your bloxstrap mods not working please report your mods into the github issues page so we can know (Our fault)</sub>
+
+
 -----
 
 # Get Started (Install or Contribute)
@@ -58,22 +63,3 @@ python3 streamlit run main.py
 ### How It Works
 The app navigates to the **Assets Overlay** path and modifies the contents within it.
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-chip is working for the mods on bloxstrap to work with lution for real!!111(CONFRIMED : POSSIBLE!!1111)
