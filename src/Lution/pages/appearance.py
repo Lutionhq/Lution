@@ -1,12 +1,21 @@
-
 import streamlit as st
 from modules.utils.files import ApplyFont
 from modules.utils.lang import LANG
-from modules.configcheck.config import UpdateCursor
+from modules.configcheck.config import UpdateCursor, ReadLutionConfig, JsonSetup
 from modules.utils.sidebar import InitSidebar
 
 InitSidebar()
 
+JsonSetup()
+curcf = ReadLutionConfig("CursorType")
+
+if "cursor" not in st.session_state:
+    st.session_state.cursor = "Default"
+
+if curcf == "Old 2007 Cursor":
+    st.session_state.cursor = "Old 2007 Cursor"
+elif curcf == "Old 2013 Cursor":
+    st.session_state.cursor = "Old 2013 Cursor"
 
 st.header(LANG["lution.tab.appearance"])
     

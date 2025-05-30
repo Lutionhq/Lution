@@ -12,7 +12,6 @@ from modules.utils.sidebar import InitSidebar
 
 InitSidebar()
 
-
 file_path = os.path.expanduser("~/.var/app/org.vinegarhq.Sober/config/sober/config.json")
 
 
@@ -81,12 +80,7 @@ if "fflagseditor" not in st.session_state:
     st.session_state.fflagseditor = Currfflags
 if "fontsize" not in st.session_state:
     st.session_state.fontsize = ReadFflagsConfig("FIntFontSizePadding")
-if "Cursor" not in st.session_state:
-    JsonSetup()
-    curcf = ReadLutionConfig("CursorType")
-    if curcf is None:
-        st.session_state.cursor = "Default"
-    elif curcf == "Old 2007 Cursor":
-        st.session_state.cursor = "Old 2007 Cursor"
-    elif curcf == "Old 2013 Cursor":
-        st.session_state.cursor = "Old 2013 Cursor"
+
+
+
+
