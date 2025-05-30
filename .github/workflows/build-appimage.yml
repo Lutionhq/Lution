@@ -26,7 +26,6 @@ jobs:
           source venv/bin/activate
           cd ..
           pip install -r requirements.txt
-          cd src/Lution
       - name: Prepare AppDir
         run: |
           mkdir -p AppDir/usr/bin
