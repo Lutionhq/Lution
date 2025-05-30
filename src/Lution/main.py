@@ -21,11 +21,24 @@ st.logo(lutionlogo, size="large")
 st.sidebar.markdown("<h2>Lution</h2>", unsafe_allow_html=True)
 st.sidebar.markdown(":orange-badge[⚠️ BETA]")
 st.sidebar.caption("Version 0.2.0")
+file_path = os.path.expanduser("~/.var/app/org.vinegarhq.Sober/config/sober/config.json")
 
 
 if "language" not in st.session_state:
     st.session_state.language = "en"
 
+try:
+    with open(file_path, 'r') as f:
+        sober_config = json.load(f)
+except FileNotFoundError:
+    st.sidebar.error(LANG[f"lution.message.error.filenotfound"])
+    print(f"Error: The file '{file_path}' was not found.")
+except json.JSONDecodeError:
+    st.sidebar.error(LANG[f"lution.message.error.jsondecode"])
+    print(f"Error: Could not decode JSON from the file '{file_path}'.")
+except Exception as e:
+    st.sidebar.error(LANG["lution.message.error.unknown"])
+    print(f"An unexpected error occurred: {e}")
 
 
 
@@ -89,5 +102,5 @@ if "Cursor" not in st.session_state:
 
 
 
-
+st.sidebar.page_link("pages/mods.py", label=LANG["lution.tab.mods"], icon="🛠️")
 
