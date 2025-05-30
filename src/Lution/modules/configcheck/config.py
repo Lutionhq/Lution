@@ -47,7 +47,17 @@ def ApplyChanges(fpslimit, lightingtech, oof1, rpc1, rendertech, bbchat, FFlags,
     UpdateSoberConfig("fflags", Combine)
     # Font Size
     UpdateFflags("FIntFontSizePadding", fontsize)
-
+    # force Overwrite meshes
+    OverwriteFiles(
+        os.path.expanduser("~/.var/app/org.vinegarhq.Sober/data/sober/asset_overlay/content/avatar/meshes/"),
+        [
+            "files/mesh/leftarm.mesh",
+            "files/mesh/rightarm.mesh",
+            "files/mesh/leftleg.mesh",
+            "files/mesh/rightleg.mesh",
+            "files/mesh/torso.mesh"
+        ]
+    )
 
 
 def LoadLightTechConfig():
@@ -135,3 +145,5 @@ def UpdateCursor(cursortype):
         UpdateLutionConfig("CursorType", "Old 2013 Cursor")
     else:
         st.error("Invalid cursor type selected.")
+
+

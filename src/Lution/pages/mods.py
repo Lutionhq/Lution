@@ -1,7 +1,5 @@
 import streamlit as st 
 import os 
-import json
-from pathlib import Path
 from modules.utils.files import *
 from modules.utils.lang import LANG
 from modules.utils.sidebar import InitSidebar
