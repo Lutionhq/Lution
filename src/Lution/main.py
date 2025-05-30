@@ -13,11 +13,12 @@ from modules.configcheck.fontreplacer import Replace
 
 
 lutiontext = os.path.join(os.path.dirname(__file__), "files/lutiontext.svg")
+gubby = os.path.join(os.path.dirname(__file__), "files/gubby.png")
 with open(lutiontext, "r") as f:
     lutionlogo = f.read()
 
 
-st.logo(lutionlogo, size="large")
+st.logo(lutionlogo, size="large",icon_image=gubby)
 
 st.sidebar.markdown("<h2>Lution</h2>", unsafe_allow_html=True)
 st.sidebar.markdown(":orange-badge[⚠️ BETA]")
