@@ -3,3 +3,5 @@ base = "dark"
 primaryColor = "red"
 backgroundColor = "#0E1117"
 secondaryBackgroundColor = "#262730"
+[client]
+showSidebarNavigation = false

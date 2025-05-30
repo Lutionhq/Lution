@@ -11,7 +11,7 @@ import platform
 import streamlit as st
 import json
 
-def apply_changes(fpslimit, lightingtech, oof1, rpc1, rendertech, bbchat, FFlags, fontsize, Cursor):
+def ApplyChanges(fpslimit, lightingtech, oof1, rpc1, rendertech, bbchat, FFlags, fontsize):
     """Apply changes based on user input."""
     # Lighting Tech
     if lightingtech == "Voxel Lighting (Phase 1)" : 
