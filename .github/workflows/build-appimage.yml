@@ -48,7 +48,7 @@ jobs:
 
       - name: Add icon
         run: |
-          cp src/Lution/icon.png AppDir/icon.png || echo "No icon found"
+          cp src/Lution/files/lution1.png AppDir/icon.png || echo "No icon found"
 
       - name: Download appimagetool
         run: |
