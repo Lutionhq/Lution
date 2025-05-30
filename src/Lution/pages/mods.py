@@ -29,21 +29,4 @@ st.button(
         key="reset_mods_button"
     )
 
-FL = os.path.expanduser("~/.var/app/org.vinegarhq.Sober/data/sober/asset_overlay/content/avatar/meshes")
-st.button(
-        LANG["lution.mods.button.openmesh"],
-        on_click=OpenFolder,
-        args=(FL,)
-    )
-st.caption(LANG["lution.mods.caption.littlenotice"])
-st.button(
-        LANG["lution.mods.button.resetmesh"],
-        on_click=OverwriteFiles,
-        args=(os.path.expanduser("~/.var/app/org.vinegarhq.Sober/data/sober/asset_overlay/content/avatar/meshes/"), [
-            "files/mesh/leftarm.mesh",
-            "files/mesh/rightarm.mesh",
-            "files/mesh/leftleg.mesh",
-            "files/mesh/rightleg.mesh",
-            "files/mesh/torso.mesh"
-        ])
-    )
+# yay
