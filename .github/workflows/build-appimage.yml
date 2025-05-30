@@ -1,4 +1,4 @@
-name: Build Streamlit AppImage
+name: Build Lution AppImage
 
 on:
   push:
@@ -17,6 +17,7 @@ jobs:
         uses: actions/setup-python@v4
         with:
           python-version: '3.12.3'
+
       - name: Install dependencies in venv
         run: |
           python3 -m venv venv
@@ -63,7 +64,6 @@ jobs:
       - name: Build AppImage
         run: |
           ./appimagetool-x86_64.AppImage AppDir
-          mv *.AppImage Lution-x86_64.AppImage
 
       - name: Upload AppImage artifact
         uses: actions/upload-artifact@v4
