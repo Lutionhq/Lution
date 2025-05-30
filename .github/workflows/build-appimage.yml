@@ -56,7 +56,11 @@ jobs:
         run: |
           wget https://github.com/AppImage/AppImageKit/releases/latest/download/appimagetool-x86_64.AppImage
           chmod +x appimagetool-x86_64.AppImage
-
+      - name : Install libfuse2
+        run : |
+          sudo apt update
+          sudo apt install -y libfuse2
+      
       - name: Build AppImage
         run: |
           ./appimagetool-x86_64.AppImage AppDir
