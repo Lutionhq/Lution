@@ -18,23 +18,22 @@ jobs:
         with:
           python-version: '3.12.3'
 
-      - name: Install dependencies in venv
+      - name: Install dependencies to AppDir
         run: |
-          python3 -m venv venv
-          source venv/bin/activate
-          pip install -r src/Lution/requirements.txt
+          mkdir -p AppDir/usr/site-packages
+          pip install --target=AppDir/usr/site-packages -r src/Lution/requirements.txt
 
       - name: Prepare AppDir
         run: |
           mkdir -p AppDir/usr/bin
-          cp -r venv AppDir/usr/venv
           cp -r src/Lution AppDir/usr/bin/Lution
 
       - name: Create AppRun
         run: |
           echo '#!/bin/bash' > AppDir/AppRun
           echo 'HERE="$(dirname "$(readlink -f "$0")")"' >> AppDir/AppRun
-          echo '"$HERE/usr/venv/bin/streamlit" run "$HERE/usr/bin/Lution/main.py" --server.headless true' >> AppDir/AppRun
+          echo 'export PYTHONPATH="$HERE/usr/site-packages"' >> AppDir/AppRun
+          echo 'python3 -m streamlit run "$HERE/usr/bin/Lution/main.py" --server.headless true' >> AppDir/AppRun
           chmod +x AppDir/AppRun
 
       - name: Create desktop file
