@@ -10,7 +10,7 @@ from modules.configcheck.config import *
 from modules.utils.lang import LANG , LANG_CODES, LANG_NAMES
 from modules.utils.sidebar import InitSidebar
 
-
+InitSidebar()
 
 file_path = os.path.expanduser("~/.var/app/org.vinegarhq.Sober/config/sober/config.json")
 
@@ -92,6 +92,4 @@ if "Cursor" not in st.session_state:
 
 
 
-st.page_link("main.py", label="Home")
 
-InitSidebar()
