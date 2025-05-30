@@ -98,18 +98,29 @@ def OverlaySetup():
 def ApplyMods():
     with st.spinner("Applying mods..."):
         dest_dirr = os.path.expanduser("~/.var/app/org.vinegarhq.Sober/data/sober/asset_overlay/ExtraContent/")
-        OverwriteFolders(dest_dirr, [os.path.expanduser("~/Documents/Lution/Mods/ExtaContent/")],no_success=True)
+        OverwriteFolders(dest_dirr, [os.path.expanduser("~/Documents/Lution/Mods/ExtraContent/")],no_success=True)
         dest_dirr = os.path.expanduser("~/.var/app/org.vinegarhq.Sober/data/sober/asset_overlay/content/")
         OverwriteFolders(dest_dirr, [os.path.expanduser("~/Documents/Lution/Mods/content/")],no_success=True)
         warn("Restart Sober to apply the mods. If you not opened Sober, you can ignore this message.")
 
 
-
-
 def ResetMods():
     with st.spinner("Resetting mods..."):
-        dest_dirr = os.path.expanduser("~/.var/app/org.vinegarhq.Sober/data/sober/asset_overlay/")
-        OverwriteFolders(dest_dirr, [os.path.expanduser("~/.var/app/org.vinegarhq.Sober/data/sober/assets/")], no_success=True)
+        dest_dirr = os.path.expanduser("~/.var/app/org.vinegarhq.Sober/data/sober/asset_overlay/content/")
+        src_dir = os.path.expanduser("~/.var/app/org.vinegarhq.Sober/data/sober/assets/content/")
+        if not os.path.isdir(src_dir):
+            st.warning(f"Source directory does not exist: {src_dir}")
+            return
+        os.makedirs(dest_dirr, exist_ok=True)
+        for item in os.listdir(src_dir):
+            s = os.path.join(src_dir, item)
+            d = os.path.join(dest_dirr, item)
+            if os.path.isdir(s):
+                if os.path.exists(d):
+                    shutil.rmtree(d)
+                shutil.copytree(s, d)
+            else:
+                shutil.copy2(s, d)
         success()
 
 
