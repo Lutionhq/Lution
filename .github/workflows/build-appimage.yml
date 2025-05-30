@@ -1,0 +1,68 @@
+name: Build Streamlit AppImage
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: 3.10
+
+      - name: Install dependencies in venv
+        run: |
+          cd src/Lution
+          python3 -m venv venv
+          source venv/bin/activate
+          pip install -r requirements.txt
+
+      - name: Prepare AppDir
+        run: |
+          mkdir -p AppDir/usr/bin
+          cp -r src/Lution/venv AppDir/usr/venv
+          cp -r src/Lution AppDir/usr/bin/Lution
+
+      - name: Create AppRun
+        run: |
+          cat <<EOF > AppDir/AppRun
+          #!/bin/bash
+          HERE="\$(dirname "\$(readlink -f "\$0")")"
+          "\$HERE/usr/venv/bin/streamlit" run "\$HERE/usr/bin/Lution/main.py" --server.headless true
+          EOF
+          chmod +x AppDir/AppRun
+
+      - name: Create desktop file
+        run: |
+          cat <<EOF > AppDir/lution.desktop
+          [Desktop Entry]
+          Type=Application
+          Name=Lution
+          Exec=AppRun
+          Icon=utilities-terminal
+          Categories=Utility;
+          EOF
+
+      - name: Download appimagetool
+        run: |
+          wget https://github.com/AppImage/AppImageKit/releases/latest/download/appimagetool-x86_64.AppImage
+          chmod +x appimagetool-x86_64.AppImage
+
+      - name: Build AppImage
+        run: |
+          ./appimagetool-x86_64.AppImage AppDir
+          mv *.AppImage Lution-x86_64.AppImage
+
+      - name: Upload AppImage artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: LutionApp
+          path: Lution-x86_64.AppImage
