@@ -25,9 +25,13 @@ def create_columns(contents):
         with col:
             st.markdown(f"### {content.get('title', 'Untitled')}")
             if "body" in content:
-                st.markdown(content["body"])
+                st.markdown(content.get("body", "No description provided."))
+            if "image" in content:
+                st.image(content.get("image"), use_container_width=True)
+            else:
+                st.image("https://placehold.co/600x400?text=No+Image", use_container_width=True)
             if "button" in content:
-                st.button(content["button"], key=f"{content.get('title', 'Untitled')}_btn_{idx}")
+                st.button(content.get("button"), key=f"{content.get('title', 'Untitled')}_btn_{idx}")
 
 contents = [
     {"title": "Better Default", "body": "A better default theme for Lution.", "button": "Install"},
