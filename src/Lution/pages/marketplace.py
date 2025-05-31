@@ -1,25 +1,28 @@
 import streamlit as st
+from github import Github as g
+import json
 from modules.utils.sidebar import InitSidebar
 
 InitSidebar()
-st.header("Marketplace")
+@st.cache_data(ttl=3600)  # Cache for 1 hour
+def GetItemCached(repo_name, item):
+    repo = g().get_repo(repo_name)
+    return repo.get_contents(item)
 
-# thc = st.container(border=True)
+if st.session_state.get("theme") is None:
+    content_file = GetItemCached("triisdang/Lution-Mods", "Assets/Themes/content.json")
+    st.session_state.theme = json.loads(content_file.decoded_content.decode())
+if st.session_state.get("mods") is None:
+    content_file = GetItemCached("triisdang/Lution-Mods", "Assets/Mods/content.json")
+    st.session_state.mods = json.loads(content_file.decoded_content.decode())
 
-# thc.markdown("""### Themes""")
+def check(name):
+    st.write(name)
 
-# cnthc = thc.container(border=True)
-
-# cnthc.markdown("""###### Better Default""")
-# cnthc.button("Install")
-
-
-def create_container(title: str, border: bool = True):
-    container = st.container(border=border)
-    container.markdown(f"### {title}")
-    return container
+global_index = 0
 
 def create_columns(contents):
+    global global_index
     cols = st.columns(len(contents), border=True)
     for idx, (col, content) in enumerate(zip(cols, contents)):
         with col:
@@ -30,12 +33,19 @@ def create_columns(contents):
                 st.image(content.get("image"), use_container_width=True)
             else:
                 st.image("https://placehold.co/600x400?text=No+Image", use_container_width=True)
-            if "button" in content:
-                st.button(content.get("button"), key=f"{content.get('title', 'Untitled')}_btn_{idx}")
 
-contents = [
-    {"title": "Better Default", "body": "A better default theme for Lution.", "button": "Install"},
-    {"title": "Dark Mode", "body": "A dark mode theme for Lution.", "button": "Install"},
-    {"title": "Light Mode", "body": "A light mode theme for Lution.", "button": "Install"},
-]
-create_columns(contents)
+            button_key = f"{content.get('title', 'Untitled')}_{global_index}"
+            if st.button(content.get("button", "Install"), key=button_key):
+                check(content.get("title", 'Untitled'))
+        global_index += 1
+
+st.header("Marketplace")
+st.write("Welcome to the Lution Marketplace! Here you can find themes and mods to enhance your Sober experience.")
+
+st.write("### Themes")
+if st.session_state.get("theme") is not None:
+    create_columns(st.session_state.theme)
+
+st.write("### Mods")
+if st.session_state.get("mods") is not None:
+    create_columns(st.session_state.mods)
