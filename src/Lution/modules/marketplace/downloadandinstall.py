@@ -41,7 +41,6 @@ def GHFiles(repo_name, file_path, output_path, max_retries=3, retry_delay=5):
             else:
                 raise Exception("Unable to retrieve file content from GitHub API.")
 
-            print(content)
             with open(output_path, "wb") as f:
                 f.write(content)
             print(url)
