@@ -16,6 +16,7 @@ def InitSidebar():
     st.sidebar.caption("Version 0.2.0")
 
     st.sidebar.page_link("main.py", label="Home", icon="🏠")
+    st.sidebar.page_link("pages/marketplace.py", label="Marketplace", icon="🛒")
     st.sidebar.page_link("pages/mods.py", label=LANG["lution.tab.mods"], icon="🧩")
     st.sidebar.page_link("pages/appearance.py", label=LANG["lution.tab.appearance"], icon="🛠️")
     st.sidebar.page_link("pages/fflags.py", label=LANG["lution.tab.fflags"], icon="⚡")
