@@ -5,10 +5,11 @@ import os
 
 def InitSidebar():
     lutiontext = os.path.join(os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__)))), "files", "lutiontext.svg")
-    with open(lutiontext, "r") as f:
-        lutionlogo = f.read()
+    # with open(lutiontext, "r") as f:
+    #     lutionlogo = f.read()
 
-    st.logo(lutionlogo, size="large")
+    # st.logo(lutionlogo, size="large")
+    st.sidebar.image(lutiontext, width=200) # Adjust width as needed
 
     st.sidebar.markdown("<h2>Lution</h2>", unsafe_allow_html=True)
     st.sidebar.markdown(":orange-badge[⚠️ BETA]")
