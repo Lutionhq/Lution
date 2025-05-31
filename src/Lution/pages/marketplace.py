@@ -47,7 +47,7 @@ def create_columns(contents, content_type):
         global_index += 1
 
 st.header("Marketplace")
-st.write("Welcome to the Lution Marketplace! Here you can find themes and mods to enhance your Sober experience.")
+st.write("Welcome to the Lution Marketplace! Here you can find themes and mods to enhance your Roblox experience.")
 
 st.write("### Themes")
 if st.session_state.get("theme") is not None:
