@@ -54,5 +54,5 @@ if st.session_state.get("theme") is not None:
     create_columns(st.session_state.theme, "theme")
 
 st.write("### Mods")
-if st.session_state.get("mods") is not None:
-    create_columns(st.session_state.mods, "mods")
+if st.session_state.get("mod") is not None:
+    create_columns(st.session_state.mods, "mod")
