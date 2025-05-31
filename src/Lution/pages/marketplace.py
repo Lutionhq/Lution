@@ -51,8 +51,10 @@ st.write("Welcome to the Lution Marketplace! Here you can find themes and mods t
 
 st.write("### Themes")
 if st.session_state.get("theme") is not None:
-    create_columns(st.session_state.theme, "theme")
+    with st.spinner("Downloading and applying mods, Please be patient..."):
+        create_columns(st.session_state.theme, "theme")
 
 st.write("### Mods")
 if st.session_state.get("mod") is not None:
-    create_columns(st.session_state.mods, "mod")
+    with st.spinner("Downloading and applying mods, Please be patient..."):
+        create_columns(st.session_state.mods, "mod")
