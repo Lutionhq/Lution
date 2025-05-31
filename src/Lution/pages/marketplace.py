@@ -13,9 +13,9 @@ def GetItemCached(repo_name, item):
 if st.session_state.get("theme") is None:
     content_file = GetItemCached("triisdang/Lution-Mods", "Assets/Themes/content.json")
     st.session_state.theme = json.loads(content_file.decoded_content.decode())
-if st.session_state.get("mods") is None:
+if st.session_state.get("mod") is None:
     content_file = GetItemCached("triisdang/Lution-Mods", "Assets/Mods/content.json")
-    st.session_state.mods = json.loads(content_file.decoded_content.decode())
+    st.session_state.mod = json.loads(content_file.decoded_content.decode())
 
 
 global_index = 0
