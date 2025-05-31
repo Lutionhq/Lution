@@ -43,9 +43,7 @@ def GHFiles(repo_name, file_path, output_path, max_retries=3, retry_delay=5):
 
             with open(output_path, "wb") as f:
                 f.write(content)
-            print(url)
             response = requests.get(url)  
-            print(response.content)
             response.raise_for_status() 
             with open(output_path, "wb") as f:
                 f.write(response.content)
