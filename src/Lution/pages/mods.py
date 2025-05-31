@@ -7,6 +7,8 @@ from modules.utils.sidebar import InitSidebar
 InitSidebar()
 
 st.header(LANG["lution.tab.mods"])
+st.session_state.useoldrobloxsounds = st.toggle("Use old roblox sounds", value=st.session_state.useoldrobloxsounds, key="toogle old roblox sounds")
+
 mods = os.path.expanduser("~/Documents/Lution/Mods")
 st.button(
     "Open Mods Folder",

@@ -11,7 +11,7 @@ import platform
 import streamlit as st
 import json
 
-def ApplyChanges(fpslimit, lightingtech, oof1, rpc1, rendertech, bbchat, FFlags, fontsize):
+def ApplyChanges(fpslimit, lightingtech, oof1, rpc1, rendertech, bbchat, FFlags, fontsize, useoldrobloxsounds):
     """Apply changes based on user input."""
     # Lighting Tech
     if lightingtech == "Voxel Lighting (Phase 1)" : 
@@ -51,13 +51,26 @@ def ApplyChanges(fpslimit, lightingtech, oof1, rpc1, rendertech, bbchat, FFlags,
     OverwriteFiles(
         os.path.expanduser("~/.var/app/org.vinegarhq.Sober/data/sober/asset_overlay/content/avatar/meshes/"),
         [
-            "files/mesh/leftarm.mesh",
-            "files/mesh/rightarm.mesh",
-            "files/mesh/leftleg.mesh",
-            "files/mesh/rightleg.mesh",
-            "files/mesh/torso.mesh"
+            os.path.abspath(os.path.join(os.path.dirname(__file__), "../../files/mesh/leftarm.mesh")),
+            os.path.abspath(os.path.join(os.path.dirname(__file__), "../../files/mesh/rightarm.mesh")),
+            os.path.abspath(os.path.join(os.path.dirname(__file__), "../../files/mesh/leftleg.mesh")),
+            os.path.abspath(os.path.join(os.path.dirname(__file__), "../../files/mesh/rightleg.mesh")),
+            os.path.abspath(os.path.join(os.path.dirname(__file__), "../../files/mesh/torso.mesh")),
         ]
     )
+    # use old roblox sounds
+    UpdateLutionConfig("OldRlbxSd",useoldrobloxsounds)
+    if useoldrobloxsounds:
+        OverwriteFiles(
+            os.path.expanduser("~/.var/app/org.vinegarhq.Sober/data/sober/asset_overlay/content/sounds/"),
+            [
+                os.path.abspath(os.path.join(os.path.dirname(__file__), "../../files/sounds/action_footsteps_plastic.mp3")),
+                os.path.abspath(os.path.join(os.path.dirname(__file__), "../../files/sounds/action_get_up.mp3")),
+                os.path.abspath(os.path.join(os.path.dirname(__file__), "../../files/sounds/action_jump.mp3")),
+                os.path.abspath(os.path.join(os.path.dirname(__file__), "../../files/sounds/ouch.ogg")),
+            ]
+        )
+
 
 
 def LoadLightTechConfig():

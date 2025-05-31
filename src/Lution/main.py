@@ -80,7 +80,11 @@ if "fflagseditor" not in st.session_state:
     st.session_state.fflagseditor = Currfflags
 if "fontsize" not in st.session_state:
     st.session_state.fontsize = ReadFflagsConfig("FIntFontSizePadding")
-
+if "useoldrobloxsounds" not in st.session_state:
+    a = ReadLutionConfig("OldRlbxSd")
+    if a is None:
+        a = False  
+    st.session_state.useoldrobloxsounds = a
 
 
 
