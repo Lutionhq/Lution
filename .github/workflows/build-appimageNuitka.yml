@@ -1,4 +1,4 @@
-name: Build Lution AppImage
+name: Build Lution AppImage with Nuitka
 
 on:
   push:
@@ -18,22 +18,30 @@ jobs:
         with:
           python-version: '3.12.3'
 
-      - name: Install dependencies to AppDir
+      - name: Install dependencies
         run: |
-          mkdir -p AppDir/usr/site-packages
-          pip install --target=AppDir/usr/site-packages -r src/Lution/requirements.txt
+          pip install -r src/Lution/requirements.txt
+          pip install nuitka
+
+      - name: Compile with Nuitka
+        run: |
+          mkdir -p build
+          nuitka3 --standalone --onefile --enable-plugin=pylint-warnings \
+            --include-package=streamlit \
+            --output-dir=build src/Lution/main.py
+          mv build/main.bin build/lution-bin || true  # fallback name
 
       - name: Prepare AppDir
         run: |
           mkdir -p AppDir/usr/bin
-          cp -r src/Lution AppDir/usr/bin/Lution
+          cp build/lution-bin AppDir/usr/bin/Lution
+          chmod +x AppDir/usr/bin/Lution
 
       - name: Create AppRun
         run: |
           echo '#!/bin/bash' > AppDir/AppRun
           echo 'HERE="$(dirname "$(readlink -f "$0")")"' >> AppDir/AppRun
-          echo 'export PYTHONPATH="$HERE/usr/site-packages"' >> AppDir/AppRun
-          echo 'python3 -m streamlit run "$HERE/usr/bin/Lution/main.py" --server.headless true' >> AppDir/AppRun
+          echo '"$HERE/usr/bin/Lution"' >> AppDir/AppRun
           chmod +x AppDir/AppRun
 
       - name: Create desktop file
