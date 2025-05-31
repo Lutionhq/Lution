@@ -69,3 +69,11 @@ jobs:
         with:
           name: LutionApp
           path: Lution-x86_64.AppImage
+      - name: Clean up
+        run: |
+          rm -rf AppDir
+          rm appimagetool-x86_64.AppImage
+          rm Lution-x86_64.AppImage
+          rm lution.desktop
+          rm icon.png
+          echo "Cleanup completed"
