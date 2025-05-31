@@ -34,7 +34,6 @@ jobs:
           nuitka --standalone --onefile \
           --include-package=streamlit \
           --output-dir=build \
-          --no-pyi-warnings \
           --disable-plugin=numpy,numpy-pkg-resources,anti-bloat \
           src/Lution/main.py
           mv build/main.bin build/lution-bin || true
