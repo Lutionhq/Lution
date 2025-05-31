@@ -53,7 +53,7 @@ pip install -r requirements.txt
 
 
 ```bash
-cd src/strapter
+cd src/Lution
 python3 streamlit run main.py
 ```
 
