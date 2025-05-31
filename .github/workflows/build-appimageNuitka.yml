@@ -23,13 +23,19 @@ jobs:
           pip install -r src/Lution/requirements.txt
           pip install nuitka
 
+      - name: Install system dependencies for Nuitka
+        run: |
+          sudo apt update
+          sudo apt install -y python3-dev gcc g++ zlib1g-dev
+
       - name: Compile with Nuitka
         run: |
           mkdir -p build
-          nuitka3 --standalone --onefile --enable-plugin=pylint-warnings \
+          nuitka --standalone --onefile \
             --include-package=streamlit \
             --output-dir=build src/Lution/main.py
-          mv build/main.bin build/lution-bin || true  # fallback name
+          mv build/main.bin build/lution-bin || true
+
 
       - name: Prepare AppDir
         run: |
