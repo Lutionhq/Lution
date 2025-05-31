@@ -33,6 +33,8 @@ def create_columns(contents):
                 st.image(content.get("image"), use_container_width=True)
             else:
                 st.image("https://placehold.co/600x400?text=No+Image", use_container_width=True)
+            if "creator" in content:
+                st.markdown(f"**By:** {content.get('creator', 'Unknown, Strapped by Lution dev')}")
 
             button_key = f"{content.get('title', 'Untitled')}_{global_index}"
             if st.button(content.get("button", "Install"), key=button_key):
