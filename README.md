@@ -46,6 +46,7 @@ source venv/bin/activate
 Install all necessary packages:
 
 ```bash
+cd src/Lution
 pip install -r requirements.txt
 ```
 
@@ -53,7 +54,6 @@ pip install -r requirements.txt
 
 
 ```bash
-cd src/Lution
 python3 streamlit run main.py
 ```
 
