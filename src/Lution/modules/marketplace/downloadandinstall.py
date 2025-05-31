@@ -1,5 +1,5 @@
 from github import Github as g
-from modules.utils.files import ApplyMods
+from modules.utils.files import ApplyMarketplaceMods
 import os
 import zipfile
 import requests
@@ -49,8 +49,7 @@ def ApplyMarketplace(Name, type):
             os.remove(local_zip_path)  
         else:
             print(f"No theme found with name '{Name}'")
-        ApplyMods()
-
+        ApplyMarketplaceMods()
         
     elif type == "mod":
         info_file_path = "Assets/Mods/info.json"
@@ -66,4 +65,4 @@ def ApplyMarketplace(Name, type):
             os.remove(local_zip_path)  
         else:
             print(f"No mod found with name '{Name}'")
-        ApplyMods()
+        ApplyMarketplaceMods()
