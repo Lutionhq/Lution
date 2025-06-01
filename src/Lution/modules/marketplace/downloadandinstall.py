@@ -120,6 +120,8 @@ def ApplyMarketplace(Name, type):
         ApplyMarketplaceMods(download_dir)
     elif type == "mod":
         curf = rmk("InstalledMods")
+        if not curf:
+            curf = ""
         if Name not in curf:
             cfmk("InstalledMods", Name + "," + curf if curf else Name)
         ApplyMarketplaceMods(download_dir)

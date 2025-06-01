@@ -1,7 +1,8 @@
 import streamlit as st
 import json
-from modules.marketplace.downloadandinstall import DownloadMarketplace
+from modules.marketplace.downloadandinstall import DownloadMarketplace, ApplyMarketplace
 from github import Github as g
+from modules.configcheck.config import UpdateLutionMarketplaceConfig as cfmk, ReadLutionMarketplaceConfig as rmk
 from modules.utils.sidebar import InitSidebar
 
 InitSidebar()
@@ -61,3 +62,24 @@ with marketplace:
         with st.spinner("Downloading and applying mods, Please be patient..."):
             create_columns(st.session_state.mod, "mod")
 
+with installed:
+    st.header("Installed")
+    st.write("Here you can see the themes and mods you have installed.")
+    theme = rmk("InstalledThemes")
+    mod = rmk("InstalledMods")
+    if theme:
+        st.write("### Themes")
+        themes = theme.split(",")
+        for t in themes:
+            st.markdown(f"- {t}")
+            if st.button(f"Apply {t}"):
+                with st.spinner("Applying theme..."):
+                    ApplyMarketplace(t, "theme")
+    if mod:
+        st.write("### Mods")
+        mods = mod.split(",")
+        for m in mods:
+            st.markdown(f"- {m}")
+            if st.button(f"Apply {m}"):
+                with st.spinner("Applying mod..."):
+                    ApplyMarketplace(m, "mod")
