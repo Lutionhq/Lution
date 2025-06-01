@@ -54,12 +54,12 @@ with marketplace:
 
     st.write("### Themes")
     if st.session_state.get("theme") is not None:
-        with st.spinner("Downloading and applying mods, Please be patient..."):
+        with st.spinner("Downloading, Please be patient..."):
             create_columns(st.session_state.theme, "theme")
 
     st.write("### Mods")
     if st.session_state.get("mod") is not None:
-        with st.spinner("Downloading and applying mods, Please be patient..."):
+        with st.spinner("Downloading, Please be patient..."):
             create_columns(st.session_state.mod, "mod")
 
 with installed:
