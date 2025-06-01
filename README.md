@@ -56,7 +56,10 @@ pip install -r requirements.txt
 ```bash
 python3 streamlit run main.py
 ```
-
+OR
+```bash
+streamlit run main.py
+```
 -----
 # Mics
 
