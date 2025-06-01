@@ -1,6 +1,6 @@
 import streamlit as st
 import json
-from modules.marketplace.downloadandinstall import ApplyMarketplace
+from modules.marketplace.downloadandinstall import DownloadMarketplace
 from github import Github as g
 from modules.utils.sidebar import InitSidebar
 
@@ -17,6 +17,7 @@ if st.session_state.get("mod") is None:
     content_file = GetItemCached("triisdang/Lution-Mods", "Assets/Mods/content.json")
     st.session_state.mod = json.loads(content_file.decoded_content.decode())
 
+marketplace, installed = st.tabs(["Marketplace", "Installed"])
 
 global_index = 0
 
@@ -43,18 +44,20 @@ def create_columns(contents, content_type):
                     st.markdown('<span style="background-color: #9e9e9e; color: white; padding: 2px 8px; border-radius: 8px;">❓ Unknown</span>', unsafe_allow_html=True)
             button_key = f"{content.get('title', 'Untitled')}_{global_index}"
             if st.button(content.get("button", "Install"), key=button_key):
-                ApplyMarketplace(content.get("title", 'Untitled'), type=content_type)
+                DownloadMarketplace(content.get("title", 'Untitled'), type=content_type)
         global_index += 1
 
-st.header("Marketplace")
-st.write("Welcome to the Lution Marketplace! Here you can find themes and mods to enhance your Roblox experience.")
+with marketplace:
+    st.header("Marketplace")
+    st.write("Welcome to the Lution Marketplace! Here you can find themes and mods to enhance your Roblox experience.")
 
-st.write("### Themes")
-if st.session_state.get("theme") is not None:
-    with st.spinner("Downloading and applying mods, Please be patient..."):
-        create_columns(st.session_state.theme, "theme")
+    st.write("### Themes")
+    if st.session_state.get("theme") is not None:
+        with st.spinner("Downloading and applying mods, Please be patient..."):
+            create_columns(st.session_state.theme, "theme")
 
-st.write("### Mods")
-if st.session_state.get("mod") is not None:
-    with st.spinner("Downloading and applying mods, Please be patient..."):
-        create_columns(st.session_state.mod, "mod")
+    st.write("### Mods")
+    if st.session_state.get("mod") is not None:
+        with st.spinner("Downloading and applying mods, Please be patient..."):
+            create_columns(st.session_state.mod, "mod")
+

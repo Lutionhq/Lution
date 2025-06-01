@@ -1,5 +1,6 @@
 from github import Github as g
-from modules.utils.files import ApplyMarketplaceMods
+from modules.utils.files import ApplyMarketplaceMods, ResetMods2
+from modules.configcheck.config import UpdateLutionMarketplaceConfig as cfmk, ReadLutionMarketplaceConfig as rmk
 import os
 import zipfile
 import requests
@@ -64,7 +65,7 @@ def GHFiles(repo_name, file_path, output_path, max_retries=3, retry_delay=5):
             print(f"An unexpected error occurred: {e}")
             raise
 
-def ApplyMarketplace(Name, type):
+def DownloadMarketplace(Name, type):
     repo_name = "triisdang/Lution-Mods"
     repo = g().get_repo(repo_name)
     download_dir = os.path.expanduser(f"~/Documents/Lution/Lution Marketplace/{type}s/{Name}")
@@ -72,10 +73,8 @@ def ApplyMarketplace(Name, type):
 
     if type == "theme":
         info_file_path = "Assets/Themes/info.json"
-
         content = repo.get_contents(info_file_path)
         info_list = json.loads(content.decoded_content.decode())
-
         entry = next((item for item in info_list if item["name"] == Name), None)
         if entry:
             zip_path = entry["path"]
@@ -84,17 +83,15 @@ def ApplyMarketplace(Name, type):
             if zipfile.is_zipfile(local_zip_path):
                 Unzip(local_zip_path, download_dir)
                 os.remove(local_zip_path)
+                return download_dir
             else:
                 print(f"Error: {local_zip_path} is not a valid zip file.")
         else:
             print(f"No theme found with name '{Name}'")
-        ApplyMarketplaceMods(download_dir)
-
     elif type == "mod":
         info_file_path = "Assets/Mods/info.json"
         content = repo.get_contents(info_file_path)
         info_list = json.loads(content.decoded_content.decode())
-
         entry = next((item for item in info_list if item["name"] == Name), None)
         if entry:
             zip_path = entry["path"]
@@ -103,8 +100,26 @@ def ApplyMarketplace(Name, type):
             if zipfile.is_zipfile(local_zip_path):
                 Unzip(local_zip_path, download_dir)
                 os.remove(local_zip_path)
+                return download_dir
             else:
                 print(f"Error: {local_zip_path} is not a valid zip file.")
         else:
             print(f"No mod found with name '{Name}'")
+    return None
+
+def ApplyMarketplace(Name, type):
+    ResetMods2()
+    download_dir = os.path.expanduser(f"~/Documents/Lution/Lution Marketplace/{type}s/{Name}")
+
+    if type == "theme":
+        curf = rmk("InstalledThemes")
+        if not curf:
+            curf = ""
+        if Name not in curf:
+            cfmk("InstalledThemes", Name + "," + curf if curf else Name)
+        ApplyMarketplaceMods(download_dir)
+    elif type == "mod":
+        curf = rmk("InstalledMods")
+        if Name not in curf:
+            cfmk("InstalledMods", Name + "," + curf if curf else Name)
         ApplyMarketplaceMods(download_dir)
