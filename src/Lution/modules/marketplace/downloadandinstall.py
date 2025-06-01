@@ -72,6 +72,11 @@ def DownloadMarketplace(Name, type):
     os.makedirs(download_dir, exist_ok=True)
 
     if type == "theme":
+        curf = rmk("InstalledThemes")
+        if not curf:
+            curf = ""
+        if Name not in curf:
+            cfmk("InstalledThemes", Name + "," + curf if curf else Name)
         info_file_path = "Assets/Themes/info.json"
         content = repo.get_contents(info_file_path)
         info_list = json.loads(content.decoded_content.decode())
@@ -89,6 +94,11 @@ def DownloadMarketplace(Name, type):
         else:
             print(f"No theme found with name '{Name}'")
     elif type == "mod":
+        curf = rmk("InstalledMods")
+        if not curf:
+            curf = ""
+        if Name not in curf:
+            cfmk("InstalledMods", Name + "," + curf if curf else Name)
         info_file_path = "Assets/Mods/info.json"
         content = repo.get_contents(info_file_path)
         info_list = json.loads(content.decoded_content.decode())
@@ -112,16 +122,6 @@ def ApplyMarketplace(Name, type):
     download_dir = os.path.expanduser(f"~/Documents/Lution/Lution Marketplace/{type}s/{Name}")
 
     if type == "theme":
-        curf = rmk("InstalledThemes")
-        if not curf:
-            curf = ""
-        if Name not in curf:
-            cfmk("InstalledThemes", Name + "," + curf if curf else Name)
         ApplyMarketplaceMods(download_dir)
     elif type == "mod":
-        curf = rmk("InstalledMods")
-        if not curf:
-            curf = ""
-        if Name not in curf:
-            cfmk("InstalledMods", Name + "," + curf if curf else Name)
         ApplyMarketplaceMods(download_dir)
