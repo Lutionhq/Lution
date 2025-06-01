@@ -2,7 +2,7 @@
 from modules.json.json import UpdateFflags, UpdateSoberConfig,ReadFflagsConfig, ReadSoberConfig, CombineJson
 from modules.configcheck.fontreplacer import *
 from modules.utils.files import OverwriteFiles
-from modules.utils.files import JsonSetup
+from modules.utils.files import JsonSetup, JsonSetup2
 import os
 import shutil
 import os
@@ -160,3 +160,23 @@ def UpdateCursor(cursortype):
         st.error("Invalid cursor type selected.")
 
 
+def ReadLutionMarketplaceConfig(key, filename="Marketplace.json", default=None):
+    JsonSetup2()
+    file_path = os.path.join(os.path.expanduser("~/Documents/Lution/Lution Marketplace/"), filename)
+    if not os.path.exists(file_path):
+        return default
+    with open(file_path, "r") as f:
+        data = json.load(f)
+    return data.get(key, default)
+
+def UpdateLutionMarketplaceConfig(key, value, filename="Marketplace.json"):
+    JsonSetup2()
+    file_path = os.path.join(os.path.expanduser("~/Documents/Lution/Lution Marketplace/"), filename)
+    if os.path.exists(file_path):
+        with open(file_path, "r") as f:
+            data = json.load(f)
+    else:
+        data = {}
+    data[key] = value
+    with open(file_path, "w") as f:
+        json.dump(data, f, indent=4)
