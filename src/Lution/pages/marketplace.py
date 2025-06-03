@@ -15,7 +15,7 @@ def GetItemCached(repo_name, item):
 if "provider" not in st.session_state:
     cf = rmk("marketplaceprd")
     if cf == None:
-        cfmk("marketplaceprd", "triisdang/Lution-mods")
+        cfmk("marketplaceprd", "triisdang/Lution-Marketplace")
         st.session_state.prd = rmk("marketplaceprd")
     else : 
         st.session_state.prd = cf
