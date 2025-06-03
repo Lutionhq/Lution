@@ -11,14 +11,25 @@ def GetItemCached(repo_name, item):
     repo = g().get_repo(repo_name)
     return repo.get_contents(item)
 
-if st.session_state.get("theme") is None:
+
+if "provider" not in st.session_state:
+    cf = rmk("marketplaceprd")
+    if cf == None:
+        cfmk("marketplaceprd", "triisdang/Lution-mods")
+        st.session_state.prd = rmk("marketplaceprd")
+    else : 
+        st.session_state.prd = cf
+    
+if "theme" not in st.session_state:
     content_file = GetItemCached("triisdang/Lution-Mods", "Assets/Themes/content.json")
     st.session_state.theme = json.loads(content_file.decoded_content.decode())
-if st.session_state.get("mod") is None:
+if "mod" not in st.session_state:
     content_file = GetItemCached("triisdang/Lution-Mods", "Assets/Mods/content.json")
     st.session_state.mod = json.loads(content_file.decoded_content.decode())
+def ChangeProvider(md):
+    cfmk("marketplaceprd", md)
 
-marketplace, installed = st.tabs(["Marketplace", "Installed"])
+marketplace, installed,settings = st.tabs(["Marketplace", "Installed","Marketplace Settings"])
 
 global_index = 0
 
@@ -91,3 +102,9 @@ with installed:
             if st.button(f"Apply {m}"):
                 with st.spinner("Applying mod..."):
                     ApplyMarketplace(m, "mod")
+
+with settings:
+    st.header("Markplace Settings")
+    st.write("Here you can change your marketplace provider")
+    st.session_state.pr = st.text_input("Marketplace Provider",st.session_state.prd, help="Change your marketplace provider. e.g Username/LutionMarketplace")
+    st.button("Change Marketplace Provider", on_click=ChangeProvider(st.session_state.pr))

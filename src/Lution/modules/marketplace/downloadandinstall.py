@@ -66,7 +66,7 @@ def GHFiles(repo_name, file_path, output_path, max_retries=3, retry_delay=5):
             raise
 
 def DownloadMarketplace(Name, type):
-    repo_name = "triisdang/Lution-Mods"
+    repo_name = rmk("marketplaceprd")
     repo = g().get_repo(repo_name)
     download_dir = os.path.expanduser(f"~/Documents/Lution/Lution Marketplace/{type}s/{Name}")
     os.makedirs(download_dir, exist_ok=True)
