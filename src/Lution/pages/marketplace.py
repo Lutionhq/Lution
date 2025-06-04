@@ -69,7 +69,7 @@ def create_columns(contents, content_type, cols_per_row=3):
 with marketplace:
     st.header("Marketplace")
     st.write("Welcome to the Lution Marketplace! Here you can find themes and mods to enhance your Roblox experience.")
-    st.markdown("""Add your own mods : [how to add mods](https://github.com/triisdang/Lution-Mods)""")
+    st.markdown("""Docs about creating your own provider or add your own theme : [README.md](https://github.com/Lutionhq/Lution-Marketplace/blob/main/how-to/README.md)""")
 
     st.write("### Themes")
     if st.session_state.get("theme") is not None:
