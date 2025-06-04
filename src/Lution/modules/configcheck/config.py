@@ -180,3 +180,23 @@ def UpdateLutionMarketplaceConfig(key, value, filename="Marketplace.json"):
     data[key] = value
     with open(file_path, "w") as f:
         json.dump(data, f, indent=4)
+def RemoveLutionMarketplaceConfig(key, value_to_remove, filename="Marketplace.json"):
+    JsonSetup2()
+    file_path = os.path.join(os.path.expanduser("~/Documents/Lution/Lution Marketplace/"), filename)
+    if os.path.exists(file_path):
+        with open(file_path, "r") as f:
+            data = json.load(f)
+    else:
+        data = {}
+    if key in data:
+        values = data[key].split(',')
+        values = [v.strip() for v in values]
+        if value_to_remove in values:
+            values.remove(value_to_remove)
+            data[key] = ','.join(values)
+            with open(file_path, "w") as f:
+                json.dump(data, f, indent=4)
+        else:
+            print(f"Value '{value_to_remove}' not found in key '{key}'.") # debug
+    else:
+        print(f"Key '{key}' not found in the dictionary.")

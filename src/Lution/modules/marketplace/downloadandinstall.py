@@ -1,6 +1,6 @@
 from github import Github as g
 from modules.utils.files import ApplyMarketplaceMods, ResetMods2
-from modules.configcheck.config import UpdateLutionMarketplaceConfig as cfmk, ReadLutionMarketplaceConfig as rmk
+from modules.configcheck.config import UpdateLutionMarketplaceConfig as cfmk, ReadLutionMarketplaceConfig as rmk, RemoveLutionMarketplaceConfig as remcf
 import os
 import zipfile
 import requests
@@ -8,6 +8,7 @@ import json
 import time
 import urllib
 import base64
+import shutil
 
 def Unzip(zip_file_path, extract_to_path):
     try:
@@ -116,6 +117,21 @@ def DownloadMarketplace(Name, type):
         else:
             print(f"No mod found with name '{Name}'")
     return None
+
+def RemoveMarketplace(Name, Type):
+    print("funtion called")
+    path = os.path.expanduser(f"~/Documents/Lution/Lution Marketplace/{Type}s/{Name}")
+    if Type == "mod":
+        print(f"type: {Name}")
+        remcf("InstalledMods", Name)
+        if os.path.isdir(path):
+            shutil.rmtree(path)
+    if Type == "theme":
+        print(f"type: {Name}")
+        remcf("InstalledThemes", Name)
+        if os.path.isdir(path):
+            shutil.rmtree(path)
+
 
 def ApplyMarketplace(Name, type):
     ResetMods2()

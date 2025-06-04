@@ -1,6 +1,6 @@
 import streamlit as st
 import json
-from modules.marketplace.downloadandinstall import DownloadMarketplace, ApplyMarketplace
+from modules.marketplace.downloadandinstall import DownloadMarketplace, ApplyMarketplace,RemoveMarketplace
 from github import Github as g
 from modules.configcheck.config import UpdateLutionMarketplaceConfig as cfmk, ReadLutionMarketplaceConfig as rmk
 from modules.utils.sidebar import InitSidebar
@@ -94,6 +94,11 @@ with installed:
             if st.button(f"Apply {t}"):
                 with st.spinner("Applying theme..."):
                     ApplyMarketplace(t, "theme")
+            if st.button(f"Delete", key=f"deletebutton_{t}"):
+                RemoveMarketplace(t, "theme")
+                del st.session_state["theme"]
+                st.rerun()
+
     if mod:
         st.write("### Mods")
         mods = mod.split(",")
@@ -102,7 +107,10 @@ with installed:
             if st.button(f"Apply {m}"):
                 with st.spinner("Applying mod..."):
                     ApplyMarketplace(m, "mod")
-
+            if st.button(f"Delete", key=f"deletebutton_{m}"):
+                RemoveMarketplace(m, "mod")
+                del st.session_state["mod"]
+                st.rerun()
 with settings:
     st.header("Markplace Settings")
     st.write("Here you can change your marketplace provider")
