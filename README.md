@@ -68,7 +68,7 @@ streamlit run main.py
 
 Q. : Does bloxstrap fflags work on Lution?
 
-A. : Yes, Roblox and Sober share the same fflags structure, so is should working on Lution.
+A. : Yes, Roblox and Sober share the same fflags structure, so is should work on Lution.
 
 -----
 # Mics
