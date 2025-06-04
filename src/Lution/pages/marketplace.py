@@ -15,16 +15,16 @@ def GetItemCached(repo_name, item):
 if "provider" not in st.session_state:
     cf = rmk("marketplaceprd")
     if cf == None:
-        cfmk("marketplaceprd", "triisdang/Lution-Marketplace")
+        cfmk("marketplaceprd", "Lutionhq/Lution-Marketplace")
         st.session_state.prd = rmk("marketplaceprd")
     else : 
         st.session_state.prd = cf
     
 if "theme" not in st.session_state:
-    content_file = GetItemCached("triisdang/Lution-Mods", "Assets/Themes/content.json")
+    content_file = GetItemCached("Lutionhq/Lution-Mods", "Assets/Themes/content.json")
     st.session_state.theme = json.loads(content_file.decoded_content.decode())
 if "mod" not in st.session_state:
-    content_file = GetItemCached("triisdang/Lution-Mods", "Assets/Mods/content.json")
+    content_file = GetItemCached("Lutionhq/Lution-Mods", "Assets/Mods/content.json")
     st.session_state.mod = json.loads(content_file.decoded_content.decode())
 def ChangeProvider(md):
     cfmk("marketplaceprd", md)
