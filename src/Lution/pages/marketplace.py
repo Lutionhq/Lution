@@ -52,6 +52,8 @@ def create_columns(contents, content_type, cols_per_row=3):
                         st.image(content.get("image"), use_container_width=True)
                     else:
                         st.image("https://placehold.co/600x400?text=No+Image", use_container_width=True)
+                    if "version" in content :
+                        st.caption(f"WINDOWSPLAYERVERSION: {content.get("version")}")
                     if "creator" in content:
                         st.markdown(f"**By:** {content.get('creator', 'Unknown, Strapped by Lution dev')}")
                     if "sb" in content:
