@@ -1,5 +1,5 @@
 {
-    "TRANSLATION NOTES" : "nothing lol",
+    "TRANSLATION NOTES" : "Try not to modify stuff that in {}",
 
 
     "lution.message.warning.fflags.invalid": "Invalid JSON! Please fix errors in the editor.",
@@ -17,9 +17,13 @@
     "lution.tab.about": "About",
     "lution.marketplace.marketplace.title" : "Marketplace",
     "lution.marketplace.marketplace.decs" : "Welcome to the Lution Marketplace! Here you can find themes and mods to enhance your Roblox experience.",
-    "lution.marketplace.marketplace.tab.marketplace" : "Marketplace",
-    "lution.marketplace.marketplace.tab.installed" : "Installed",
-    "lution.marketplace.marketplace.tab.marketplacesettings" : "Marketplace Settings",
+    "lution.marketplace.tab.themes" : "Themes",
+    "lution.marketplace.tab.mods" : "Mods",
+    "lution.marketplace.installed.title" : "Installed",
+    "lution.marketplace.title.decs" : "Here you can see the themes and mods you have installed.",
+    "lution.marketplace.tab.marketplace" : "Marketplace",
+    "lution.marketplace.tab.installed" : "Installed",
+    "lution.marketplace.tab.marketplacesettings" : "Marketplace Settings",
     "lution.marketplace.marketplace.nodescprovidered" : "No description provided.",
     "lution.marketplace.marketplace.badges.stable": "<span style=\"background-color: #4CAF50; color: white; padding: 2px 8px; border-radius: 8px;\">✅ Stable</span>",
     "lution.marketplace.marketplace.badges.unstable": "<span style=\"background-color: #f44336; color: white; padding: 2px 8px; border-radius: 8px;\">⚠️ Unstable</span>",
