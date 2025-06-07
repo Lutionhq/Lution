@@ -13,7 +13,7 @@ st.session_state.oof = st.toggle(LANG["lution.fflags.toggle.bringbackoof"], valu
 st.session_state.rpc = st.toggle(LANG["lution.fflags.toggle.rpc"], value=st.session_state.rpc)
 st.session_state.disablechat = st.toggle(LANG["lution.fflags.toggle.bbchat"], value=st.session_state.disablechat)
 st.session_state.fpslimit = st.text_input(LANG["lution.fflags.textbox.fpslimit"], st.session_state.fpslimit, max_chars=3)
-st.session_state.fontsize = st.text_input("Font size", value=st.session_state.fontsize, max_chars=2)
+st.session_state.fontsize = st.text_input(LANG["lution.appearance.textbox.fontsize"], value=st.session_state.fontsize, max_chars=2)
 st.session_state.render = st.selectbox(
     LANG["lution.fflags.mutichoices.render"],
     ["OpenGL", "Vulkan"],

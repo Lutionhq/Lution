@@ -2,6 +2,7 @@ import streamlit as st
 import json
 from modules.marketplace.downloadandinstall import DownloadMarketplace, ApplyMarketplace,RemoveMarketplace
 from github import Github as g
+from modules.utils.lang import LANG
 from modules.configcheck.config import UpdateLutionMarketplaceConfig as cfmk, ReadLutionMarketplaceConfig as rmk
 from modules.utils.sidebar import InitSidebar
 
@@ -29,7 +30,7 @@ if "mod" not in st.session_state:
 def ChangeProvider(md):
     cfmk("marketplaceprd", md)
 
-marketplace, installed,settings = st.tabs(["Marketplace", "Installed","Marketplace Settings"])
+marketplace, installed,settings = st.tabs([LANG["lution.marketplace.marketplace.tab.marketplace"], LANG["lution.marketplace.marketplace.tab.installed"],LANG["lution.marketplace.marketplace.tab.marketplacesettings"]])
 
 global_index = 0
 
@@ -47,7 +48,7 @@ def create_columns(contents, content_type, cols_per_row=3):
                 with cols[col_idx]:
                     st.markdown(f"### {content.get('title', 'Untitled')}")
                     if "body" in content:
-                        st.markdown(content.get("body", "No description provided."))
+                        st.markdown(content.get("body", LANG["lution.marketplace.nodescprovidered"]))
                     if "image" in content:
                         st.image(content.get("image"), use_container_width=True)
                     else:
@@ -55,41 +56,41 @@ def create_columns(contents, content_type, cols_per_row=3):
                     if "version" in content :
                         st.caption(f"WINDOWSPLAYERVERSION: {content.get("version")}")
                     if "creator" in content:
-                        st.markdown(f"**By:** {content.get('creator', 'Unknown, Strapped by Lution dev')}")
+                        st.markdown(f"**By:** {content.get('creator', 'Unknown')}")
                     if "sb" in content:
                         if content.get("sb") == "stable":
-                            st.markdown('<span style="background-color: #4CAF50; color: white; padding: 2px 8px; border-radius: 8px;">✅ Stable</span>', unsafe_allow_html=True)
+                            st.markdown(LANG["lution.marketplace.badges.stable"], unsafe_allow_html=True)
                         elif content.get("sb") == "unstable":
-                            st.markdown('<span style="background-color: #f44336; color: white; padding: 2px 8px; border-radius: 8px;">⚠️ Unstable</span>', unsafe_allow_html=True)
+                            st.markdown(LANG["lution.marketplace.badges.unstable"], unsafe_allow_html=True)
                         else:
-                            st.markdown('<span style="background-color: #9e9e9e; color: white; padding: 2px 8px; border-radius: 8px;">❓ Unknown</span>', unsafe_allow_html=True)
+                            st.markdown(LANG["lution.marketplace.badges.unkown"], unsafe_allow_html=True)
                     button_key = f"{content.get('title', 'Untitled')}_{global_index}"
                     if st.button(content.get("button", "Install"), key=button_key):
                         DownloadMarketplace(content.get("title", 'Untitled'), type=content_type)
                     global_index += 1
 
 with marketplace:
-    st.header("Marketplace")
-    st.write("Welcome to the Lution Marketplace! Here you can find themes and mods to enhance your Roblox experience.")
+    st.header(LANG["lution.marketplace.marketplace.title"])
+    st.write(LANG["lution.marketplace.marketplace.decs"])
     st.markdown("""Docs about creating your own provider or add your own theme : [README.md](https://github.com/Lutionhq/Lution-Marketplace/blob/main/how-to/README.md)""")
 
-    st.write("### Themes")
+    st.write(f"### {LANG["lution.marketplace.tab.themes"]}")
     if st.session_state.get("theme") is not None:
-        with st.spinner("Downloading, Please be patient..."):
+        with st.spinner(LANG["lution.marketplace.marketplace.spinner.download"]):
             create_columns(st.session_state.theme, "theme", cols_per_row=3)
 
-    st.write("### Mods")
+    st.write(f"### {LANG["lution.marketplace.tab.mods"]}")
     if st.session_state.get("mod") is not None:
-        with st.spinner("Downloading, Please be patient..."):
+        with st.spinner(LANG["lution.marketplace.marketplace.spinner.download"]):
             create_columns(st.session_state.mod, "mod", cols_per_row=3)
 
 with installed:
-    st.header("Installed")
-    st.write("Here you can see the themes and mods you have installed.")
+    st.header(LANG["lution.marketplace.installed.title"])
+    st.write(LANG["lution.marketplace.title.decs"])
     theme = rmk("InstalledThemes")
     mod = rmk("InstalledMods")
     if theme:
-        st.write("### Themes")
+        st.write(f"### {LANG["lution.marketplace.title.decs"]}")
         themes = theme.split(",")
         for t in themes:
             st.markdown(f"- {t}")

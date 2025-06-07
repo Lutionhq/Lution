@@ -7,24 +7,24 @@ from modules.utils.sidebar import InitSidebar
 InitSidebar()
 
 st.header(LANG["lution.tab.mods"])
-st.session_state.useoldrobloxsounds = st.toggle("Use old roblox sounds", value=st.session_state.useoldrobloxsounds, key="toogle old roblox sounds")
+st.session_state.useoldrobloxsounds = st.toggle(LANG["lution.mods.toggle.useoldsound"], value=st.session_state.useoldrobloxsounds, key="toogle old roblox sounds")
 
 mods = os.path.expanduser("~/Documents/Lution/Mods")
 st.button(
-    "Open Mods Folder",
+    LANG["lution.mods.button.openmods"],
     on_click=lambda : ModsFolder(), 
     key = "mod_button"
 )
-st.caption("By the way, we support bloxstrap mods :) (most of it, if your mod does not work, go to the issues page on github)")
+st.caption(LANG["lution.mods.caption.bloxstrapsupport"])
 st.button(
-    "Apply Mods",
+    LANG["lution.mods.button.applymods"],
     on_click=lambda: ApplyMods(),
     key="apply_mods_button"
 
 )
 
 st.button(
-        "Reset Roblox to default",
+        LANG["lution.mods.button.resetmods"],
         on_click=lambda: ResetMods(),
         key="reset_mods_button"
     )

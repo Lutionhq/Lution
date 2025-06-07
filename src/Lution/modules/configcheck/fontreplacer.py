@@ -31,6 +31,7 @@ def Replace(source_file_path, target_folder_path):
             except Exception as e:
                 print(f"Error replacing content of '{target_file_path}': {e}")
                 error_count += 1
+                continue
         else:
             print(f"Skipping (not a file): {target_file_path}") 
 
