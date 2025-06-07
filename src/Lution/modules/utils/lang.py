@@ -17,6 +17,15 @@ LANG_NAMES = {
     "tram" : "🚡🚡🚡🚡🚡"
 
 }
-lang_path = os.path.join(LANG_DIR, f"{st.session_state.language}.json")
-with open(lang_path, "r") as f:
-    LANG = json.load(f)
+def readlang():
+    lang_path = os.path.join(LANG_DIR, f"{st.session_state.language}.json")
+    with open(lang_path, "r") as f:
+        return json.load(f)
+
+LANG = readlang()
+
+def ApplyLanguage(lang):
+    st.session_state.language = lang
+    print(st.session_state.language)
+    global LANG
+    LANG = readlang()
