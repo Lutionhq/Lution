@@ -173,7 +173,7 @@ def ResetMods2():
 
 
 def OverwriteEmoji(dest_dir):
-    src_file = os.path.join(os.path.dirname(__file__), 'files/RobloxEmoji.ttf')
+    src_file = os.path.abspath(os.path.join(os.path.dirname(__file__), 'files/RobloxEmoji.ttf'))
     os.makedirs(dest_dir, exist_ok=True) 
     dest_file = os.path.join(dest_dir, os.path.basename(src_file))
     shutil.copy2(src_file, dest_file)     
