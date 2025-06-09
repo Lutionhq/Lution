@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="https://raw.githubusercontent.com/Lutionhq/Lution/refs/heads/main/src/Lution/files/lutiontext.svg" width="420">
+  <img src="https://raw.githubusercontent.com/Lutionhq/Lution/refs/heads/latest/src/Lution/files/lutiontext.svg" width="420">
 </p>
 <sub>pls give the repo a star pls im brokie</sub>
 
