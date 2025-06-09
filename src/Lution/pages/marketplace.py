@@ -30,7 +30,7 @@ if "mod" not in st.session_state:
 def ChangeProvider(md):
     cfmk("marketplaceprd", md)
 
-marketplace, installed,settings = st.tabs([LANG["lution.marketplace.marketplace.tab.marketplace"], LANG["lution.marketplace.marketplace.tab.installed"],LANG["lution.marketplace.marketplace.tab.marketplacesettings"]])
+marketplace, installed,settings = st.tabs([LANG["lution.marketplace.tab.marketplace"], LANG["lution.marketplace.tab.installed"],LANG["lution.marketplace.tab.marketplacesettings"]])
 
 global_index = 0
 
@@ -48,7 +48,7 @@ def create_columns(contents, content_type, cols_per_row=3):
                 with cols[col_idx]:
                     st.markdown(f"### {content.get('title', 'Untitled')}")
                     if "body" in content:
-                        st.markdown(content.get("body", LANG["lution.marketplace.nodescprovidered"]))
+                        st.markdown(content.get("body", LANG["lution.marketplace.marketplace.nodescprovidered"]))
                     if "image" in content:
                         st.image(content.get("image"), use_container_width=True)
                     else:
@@ -59,11 +59,11 @@ def create_columns(contents, content_type, cols_per_row=3):
                         st.markdown(f"**By:** {content.get('creator', 'Unknown')}")
                     if "sb" in content:
                         if content.get("sb") == "stable":
-                            st.markdown(LANG["lution.marketplace.badges.stable"], unsafe_allow_html=True)
+                            st.markdown(LANG["lution.marketplace.marketplace.badges.stable"], unsafe_allow_html=True)
                         elif content.get("sb") == "unstable":
-                            st.markdown(LANG["lution.marketplace.badges.unstable"], unsafe_allow_html=True)
+                            st.markdown(LANG["lution.marketplace.marketplace.badges.unstable"], unsafe_allow_html=True)
                         else:
-                            st.markdown(LANG["lution.marketplace.badges.unkown"], unsafe_allow_html=True)
+                            st.markdown(LANG["lution.marketplace.marketplace.badges.unkown"], unsafe_allow_html=True)
                     button_key = f"{content.get('title', 'Untitled')}_{global_index}"
                     if st.button(content.get("button", "Install"), key=button_key):
                         DownloadMarketplace(content.get("title", 'Untitled'), type=content_type)
