@@ -2,6 +2,7 @@ import streamlit as st
 import json
 from modules.marketplace.downloadandinstall import DownloadMarketplace, ApplyMarketplace,RemoveMarketplace
 from github import Github as g
+from github.GithubException import UnknownObjectException
 from modules.utils.lang import LANG
 from modules.configcheck.config import UpdateLutionMarketplaceConfig as cfmk, ReadLutionMarketplaceConfig as rmk
 from modules.utils.sidebar import InitSidebar
@@ -9,9 +10,11 @@ from modules.utils.sidebar import InitSidebar
 InitSidebar()
 @st.cache_data(ttl=3600)  # Cache for 1 hour
 def GetItemCached(repo_name, item):
-    repo = g().get_repo(repo_name)
-    return repo.get_contents(item)
-
+    try :
+        repo = g().get_repo(repo_name) 
+        return repo.get_contents(item)
+    except UnknownObjectException:
+        return "Not found"
 
 if "provider" not in st.session_state:
     cf = rmk("marketplaceprd")
@@ -23,10 +26,22 @@ if "provider" not in st.session_state:
     
 if "theme" not in st.session_state:
     content_file = GetItemCached(st.session_state.prd, "Assets/Themes/content.json")
-    st.session_state.theme = json.loads(content_file.decoded_content.decode())
+    if not content_file == "Not found":
+        avdthemes = True
+        st.session_state.theme = json.loads(content_file.decoded_content.decode())
+    else :
+        avdthemes = False
+        st.error("NOT FOUND")
 if "mod" not in st.session_state:
     content_file = GetItemCached(st.session_state.prd, "Assets/Mods/content.json")
-    st.session_state.mod = json.loads(content_file.decoded_content.decode())
+    if not content_file == "Not found":
+        avdmods = True
+        st.session_state.mod = json.loads(content_file.decoded_content.decode())
+    else :
+        avdmods = False
+        st.error("NOT FOUND")
+
+
 def ChangeProvider(md):
     cfmk("marketplaceprd", md)
 
@@ -75,14 +90,20 @@ with marketplace:
     st.markdown("""Docs about creating your own provider or add your own theme : [README.md](https://github.com/Lutionhq/Lution-Marketplace/blob/main/how-to/README.md)""")
 
     st.write(f"### {LANG["lution.marketplace.tab.themes"]}")
-    if st.session_state.get("theme") is not None:
-        with st.spinner(LANG["lution.marketplace.marketplace.spinner.download"]):
-            create_columns(st.session_state.theme, "theme", cols_per_row=3)
+    if not avdthemes == False:
+        if st.session_state.get("theme") is not None:
+            with st.spinner(LANG["lution.marketplace.marketplace.spinner.download"]):
+                create_columns(st.session_state.theme, "theme", cols_per_row=3)
+    else: 
+        st.write("Your provider does not have themes. Change your provider now.")
 
     st.write(f"### {LANG["lution.marketplace.tab.mods"]}")
-    if st.session_state.get("mod") is not None:
-        with st.spinner(LANG["lution.marketplace.marketplace.spinner.download"]):
-            create_columns(st.session_state.mod, "mod", cols_per_row=3)
+    if not avdmods == False:
+        if st.session_state.get("mod") is not None:
+            with st.spinner(LANG["lution.marketplace.marketplace.spinner.download"]):
+                create_columns(st.session_state.mod, "mod", cols_per_row=3)
+    else :
+        st.write("Your provider does not have mods. Change your provider now.")
 
 with installed:
     st.header(LANG["lution.marketplace.installed.title"])
