@@ -16,42 +16,7 @@ file_path = os.path.expanduser("~/.var/app/org.vinegarhq.Sober/config/sober/conf
 
 log.info("Page : Home")
 
-# try:
-#     log.info("Trying to read sober config...")
-#     with open(file_path, 'r') as f:
-#         sober_config = json.load(f)
-# except FileNotFoundError:
-#     st.sidebar.error(LANG[f"lution.message.error.filenotfound"])
-#     log.error(f"The file '{file_path}' was not found.")
-# except json.JSONDecodeError:
-#     st.sidebar.error(LANG[f"lution.message.error.jsondecode"])
-#     log.error(f"Could not decode JSON from the file '{file_path}'.")
-# except Exception as e:
-#     st.sidebar.error(LANG["lution.message.error.unknown"])
-#     log.error(f"An unexpected error occurred: {e}")
 
-
-
-
-
-
-# if "page" not in st.session_state:
-#     st.session_state.page = "Mods"
-# if st.sidebar.button(LANG["lution.tab.mods"]):
-#     st.session_state.page = "Mods"
-# if st.sidebar.button(LANG["lution.tab.appearance"]):
-#     st.session_state.page = "Appearance"
-# if st.sidebar.button(LANG["lution.tab.fflags"]):
-#     st.session_state.page = "Fast Flags"
-# if st.sidebar.button(LANG["lution.tab.apply"]):
-#     st.session_state.page = "Apply Changes & Config"
-# if st.sidebar.button(LANG["lution.tab.lutionsettings"]):
-#     st.session_state.page = "Lution Settings"
-# if st.sidebar.button(LANG["lution.tab.about"], key="about_button"):
-#     st.session_state.page = "About"
-
-
-# page = st.session_state.page
 
 # Set default values so they're always defined
 if "fpslimit" not in st.session_state:
