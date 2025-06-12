@@ -25,7 +25,7 @@ class LTjson:
             st.error(f"Failed to read fflag '{flag_name}': {e}")
             return None
 
-    def update_fflags(self, flag_name, flag_value):
+    def UpdateFflags(self, flag_name, flag_value):
         try:
             with open(self.file_path, "r") as f:
                 config = json.load(f)
@@ -36,7 +36,7 @@ class LTjson:
         except Exception as e:
             st.error(f"Failed to update fflags: {e}")
 
-    def update_sober_config(self, key, value):
+    def UpdateSoberConfig(self, key, value):
         try:
             with open(self.file_path, "r") as f:
                 config = json.load(f)
@@ -47,7 +47,7 @@ class LTjson:
         except Exception as e:
             st.error(f"Failed to update config: {e}")
 
-    def combine_json(self, *json_objs):
+    def CombineJson(self, *json_objs):
         result = {}
         for obj in json_objs:
             if isinstance(obj, dict):
