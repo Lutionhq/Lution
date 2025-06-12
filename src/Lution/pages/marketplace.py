@@ -11,8 +11,7 @@ from modules.utils.sidebar import InitSidebar
 InitSidebar()
 log.info("Page : Marketplace")
 
-@st.cache_data(ttl=3600)  # Cache for 1 hour
-
+@st.cache_data(ttl=3600)
 def GetItemCached(repo_name, item):
     try:
         repo = g().get_repo(repo_name)
@@ -33,11 +32,9 @@ avdthemes = False
 
 def initvar():
     global avdmods, avdthemes
-    content_file = GetItemCached(st.session_state.prd, "Assets/Mods/content.json")
-    if content_file != "Not found":
+    if GetItemCached(st.session_state.prd, "Assets/Mods/content.json") != "Not found":
         avdmods = True
-    content_file = GetItemCached(st.session_state.prd, "Assets/Themes/content.json")
-    if content_file != "Not found":
+    if GetItemCached(st.session_state.prd, "Assets/Themes/content.json") != "Not found":
         avdthemes = True
 
 initvar()
@@ -57,11 +54,11 @@ if "mod" not in st.session_state:
         st.error("NOT FOUND")
 
 def ChangeProvider():
-    cfmk("marketplaceprd", st.session_state.pr)
-
-def ChangeProvider(md):
-    cfmk("marketplaceprd", md)
-    log.warn(f"Changed marketplace provider to : {md}")
+    new_provider = st.session_state.get("pr")
+    if new_provider:
+        cfmk("marketplaceprd", new_provider)
+        log.warn(f"Changed marketplace provider to: {new_provider}")
+        st.rerun()
 
 marketplace, installed, settings = st.tabs([
     LANG["lution.marketplace.tab.marketplace"],
@@ -83,21 +80,19 @@ def create_columns(contents, content_type, cols_per_row=3):
                 content = contents[content_index]
                 with cols[col_idx]:
                     st.markdown(f"### {content.get('title', 'Untitled')}")
-                    if "body" in content:
-                        st.markdown(content.get("body", LANG["lution.marketplace.marketplace.nodescprovidered"]))
+                    st.markdown(content.get("body", LANG["lution.marketplace.marketplace.nodescprovidered"]))
                     st.image(content.get("image", "https://placehold.co/600x400?text=No+Image"), use_container_width=True)
                     if "version" in content:
                         st.caption(f"WINDOWSPLAYERVERSION: {content.get('version')}")
                     if "creator" in content:
                         st.markdown(f"**By:** {content.get('creator', 'Unknown')}")
-                    if "sb" in content:
-                        sb = content.get("sb")
-                        if sb == "stable":
-                            st.markdown(LANG["lution.marketplace.marketplace.badges.stable"], unsafe_allow_html=True)
-                        elif sb == "unstable":
-                            st.markdown(LANG["lution.marketplace.marketplace.badges.unstable"], unsafe_allow_html=True)
-                        else:
-                            st.markdown(LANG["lution.marketplace.marketplace.badges.unkown"], unsafe_allow_html=True)
+                    sb = content.get("sb")
+                    if sb == "stable":
+                        st.markdown(LANG["lution.marketplace.marketplace.badges.stable"], unsafe_allow_html=True)
+                    elif sb == "unstable":
+                        st.markdown(LANG["lution.marketplace.marketplace.badges.unstable"], unsafe_allow_html=True)
+                    else:
+                        st.markdown(LANG["lution.marketplace.marketplace.badges.unkown"], unsafe_allow_html=True)
                     button_key = f"{content.get('title', 'Untitled')}_{global_index}"
                     if st.button(content.get("button", "Install"), key=button_key):
                         log.info(f"Installing {content.get('title', 'Untitled')}")
@@ -110,20 +105,18 @@ with marketplace:
     st.markdown("[README.md](https://github.com/Lutionhq/Lution-Marketplace/blob/main/how-to/README.md)")
 
     st.write(f"### {LANG['lution.marketplace.tab.themes']}")
-    if avdthemes:
-        if st.session_state.get("theme"):
-            with st.spinner(LANG["lution.marketplace.marketplace.spinner.download"]):
-                log.info("Creating Themes col")
-                create_columns(st.session_state.theme, "theme", cols_per_row=3)
-    else: 
+    if avdthemes and st.session_state.get("theme"):
+        with st.spinner(LANG["lution.marketplace.marketplace.spinner.download"]):
+            log.info("Creating Themes col")
+            create_columns(st.session_state.theme, "theme", cols_per_row=3)
+    else:
         st.write("Your provider does not have themes. Change your provider now.")
 
     st.write(f"### {LANG['lution.marketplace.tab.mods']}")
-    if avdmods:
-        if st.session_state.get("mod"):
-            with st.spinner(LANG["lution.marketplace.marketplace.spinner.download"]):
-                log.info("Creating Mods col")
-                create_columns(st.session_state.mod, "mod")
+    if avdmods and st.session_state.get("mod"):
+        with st.spinner(LANG["lution.marketplace.marketplace.spinner.download"]):
+            log.info("Creating Mods col")
+            create_columns(st.session_state.mod, "mod")
     else:
         st.write("Your provider does not have mods. Change your provider now.")
 
@@ -157,7 +150,6 @@ with installed:
                     ApplyMarketplace(m, "mod")
             if st.button(f"Delete", key=f"deletebutton_{m}"):
                 log.info(f"Deleted {m}")
-
                 RemoveMarketplace(m, "mod")
                 del st.session_state["mod"]
                 st.rerun()
