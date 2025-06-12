@@ -98,7 +98,6 @@ if "useoldrobloxsounds" not in st.session_state:
 
 
 Firstrun = sysjson.ReadLutionConfig("FirstRun")
-print(Firstrun)
 if Firstrun == None :
     sysjson.UpdateLutionConfig("FirstRun",False)
     @st.dialog("What App you are using?")
