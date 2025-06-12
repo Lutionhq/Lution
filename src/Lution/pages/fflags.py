@@ -1,12 +1,14 @@
 import streamlit as st
 import json
 from modules.utils.lang import LANG
+from modules.utils.logging import log
 from modules.utils.files import OverlaySetup
 from modules.configcheck.config import ReadSoberConfig
 from modules.utils.sidebar import InitSidebar
 
 InitSidebar()
 
+log.info("Page : Fflags")
 
 st.header(LANG["lution.tab.fflags"])
 st.session_state.oof = st.toggle(LANG["lution.fflags.toggle.bringbackoof"], value=st.session_state.oof)
@@ -40,6 +42,7 @@ try:
     parsed = json.loads(fflags_text)
     st.session_state.fflagseditor = parsed
 except Exception:
+    log.warn("Invalid fflags config")
     st.warning(LANG["lution.message.warning.fflags.invalid"])
 
 st.write(LANG["lution.fflags.text.mics"])
