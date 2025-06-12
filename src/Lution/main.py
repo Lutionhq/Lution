@@ -2,7 +2,7 @@
 import streamlit as st 
 import os 
 import json
-import logging
+from modules.utils.logging import log
 from modules.json.json import *
 from modules.utils.messages import *
 from modules.utils.files import *
@@ -14,21 +14,21 @@ InitSidebar()
 
 file_path = os.path.expanduser("~/.var/app/org.vinegarhq.Sober/config/sober/config.json")
 
+log.info("Page : Home")
 
-
-
-try:
-    with open(file_path, 'r') as f:
-        sober_config = json.load(f)
-except FileNotFoundError:
-    st.sidebar.error(LANG[f"lution.message.error.filenotfound"])
-    print(f"Error: The file '{file_path}' was not found.")
-except json.JSONDecodeError:
-    st.sidebar.error(LANG[f"lution.message.error.jsondecode"])
-    print(f"Error: Could not decode JSON from the file '{file_path}'.")
-except Exception as e:
-    st.sidebar.error(LANG["lution.message.error.unknown"])
-    print(f"An unexpected error occurred: {e}")
+# try:
+#     log.info("Trying to read sober config...")
+#     with open(file_path, 'r') as f:
+#         sober_config = json.load(f)
+# except FileNotFoundError:
+#     st.sidebar.error(LANG[f"lution.message.error.filenotfound"])
+#     log.error(f"The file '{file_path}' was not found.")
+# except json.JSONDecodeError:
+#     st.sidebar.error(LANG[f"lution.message.error.jsondecode"])
+#     log.error(f"Could not decode JSON from the file '{file_path}'.")
+# except Exception as e:
+#     st.sidebar.error(LANG["lution.message.error.unknown"])
+#     log.error(f"An unexpected error occurred: {e}")
 
 
 
@@ -55,32 +55,43 @@ except Exception as e:
 
 # Set default values so they're always defined
 if "fpslimit" not in st.session_state:
+    log.info("Reading fpslimit")
     fpslimit = ReadFflagsConfig("DFIntTaskSchedulerTargetFps")
     st.session_state.fpslimit = fpslimit
 if "lightingtech" not in st.session_state: 
+    log.info("Reading Lighting technology")
     tech = LoadLightTechConfig()
     st.session_state.lightingtech = tech
 if "oof" not in st.session_state:
+    log.info("Reading Oof")
     oof = ReadSoberConfig("bring_back_oof")
     st.session_state.oof = oof
 if "rpc" not in st.session_state:
+    log.info("Reading Discord RPC")
     drpc = ReadSoberConfig("discord_rpc_enabled")
     st.session_state.rpc = drpc
 if "render" not in st.session_state:
+    log.info("Reading Render technology")
     st.session_state.render = UsingOpenGl()
 if "disablechat" not in st.session_state:
+    log.info("Reading FFlag Disnable chat service")
     disablechat = ReadFflagsConfig("FFlagEnableBubbleChatFromChatService")
     st.session_state.disablechat = disablechat
 if "customfont" not in st.session_state:
+    log.info("Reading custom font")
     st.session_state.customfont = None
 if "language" not in st.session_state:
+    log.info("Reading language")
     st.session_state.language = "en"
 if "fflagseditor" not in st.session_state:
+    log.info("Reading FFlags editor")
     Currfflags = ReadSoberConfig("fflags")
     st.session_state.fflagseditor = Currfflags
 if "fontsize" not in st.session_state:
+    log.info("Reading FFlag Fon size")
     st.session_state.fontsize = ReadFflagsConfig("FIntFontSizePadding")
 if "useoldrobloxsounds" not in st.session_state:
+    log.info("Reading Old roblox sounds")
     a = ReadLutionConfig("OldRlbxSd")
     if a is None:
         a = False  
