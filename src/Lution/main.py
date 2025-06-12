@@ -1,9 +1,8 @@
 # src/sostrapter/app.py
 import streamlit as st 
 import os 
-import json
 from pathlib import Path
-from modules.json.json import *
+from modules.json.json import LTjson
 from modules.utils.messages import *
 from modules.utils.files import *
 from modules.configcheck.config import *
@@ -14,6 +13,7 @@ InitSidebar()
 
 file_path = os.path.expanduser("~/.var/app/org.vinegarhq.Sober/config/sober/config.json")
 
+sysjson = LTjson()
 
 
 
@@ -64,31 +64,31 @@ st.html(
 
 # Set default values so they're always defined
 if "fpslimit" not in st.session_state:
-    fpslimit = ReadFflagsConfig("DFIntTaskSchedulerTargetFps")
+    fpslimit = sysjson.ReadFflagsConfig(flag_name="DFIntTaskSchedulerTargetFps")
     st.session_state.fpslimit = fpslimit
 if "lightingtech" not in st.session_state: 
     tech = LoadLightTechConfig()
     st.session_state.lightingtech = tech
 if "oof" not in st.session_state:
-    oof = ReadSoberConfig("bring_back_oof")
+    oof = sysjson.ReadSoberConfig(key="bring_back_oof")
     st.session_state.oof = oof
 if "rpc" not in st.session_state:
-    drpc = ReadSoberConfig("discord_rpc_enabled")
+    drpc = sysjson.ReadSoberConfig(key="discord_rpc_enabled")
     st.session_state.rpc = drpc
 if "render" not in st.session_state:
     st.session_state.render = UsingOpenGl()
 if "disablechat" not in st.session_state:
-    disablechat = ReadFflagsConfig("FFlagEnableBubbleChatFromChatService")
+    disablechat = sysjson.ReadFflagsConfig(flag_name="FFlagEnableBubbleChatFromChatService")
     st.session_state.disablechat = disablechat
 if "customfont" not in st.session_state:
     st.session_state.customfont = None
 if "language" not in st.session_state:
     st.session_state.language = "en"
 if "fflagseditor" not in st.session_state:
-    Currfflags = ReadSoberConfig("fflags")
+    Currfflags = sysjson.ReadSoberConfig(key="fflags")
     st.session_state.fflagseditor = Currfflags
 if "fontsize" not in st.session_state:
-    st.session_state.fontsize = ReadFflagsConfig("FIntFontSizePadding")
+    st.session_state.fontsize = sysjson.ReadFflagsConfig(flag_name="FIntFontSizePadding")
 if "useoldrobloxsounds" not in st.session_state:
     a = ReadLutionConfig("OldRlbxSd")
     if a is None:

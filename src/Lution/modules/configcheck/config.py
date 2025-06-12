@@ -1,5 +1,5 @@
 #src/sostrapter/modules/json/json.py
-from modules.json.json import UpdateFflags, UpdateSoberConfig,ReadFflagsConfig, ReadSoberConfig, CombineJson
+from modules.json.json import LTjson
 from modules.configcheck.fontreplacer import *
 from modules.utils.files import OverwriteFiles
 from modules.utils.files import JsonSetup, JsonSetup2
@@ -11,42 +11,45 @@ import platform
 import streamlit as st
 import json
 
+sysjson = LTjson()
+
+
 def ApplyChanges(fpslimit, lightingtech, oof1, rpc1, rendertech, bbchat, FFlags, fontsize, useoldrobloxsounds):
     """Apply changes based on user input."""
     # Lighting Tech
     if lightingtech == "Voxel Lighting (Phase 1)" : 
-        UpdateFflags("DFFlagDebugRenderForceTechnologyVoxel",True)
-        UpdateFflags("FFlagDebugForceFutureIsBrightPhase2",False)
-        UpdateFflags("FFlagDebugForceFutureIsBrightPhase3",False)
+        sysjson.UpdateFflags("DFFlagDebugRenderForceTechnologyVoxel",True)
+        sysjson.UpdateFflags("FFlagDebugForceFutureIsBrightPhase2",False)
+        sysjson.UpdateFflags("FFlagDebugForceFutureIsBrightPhase3",False)
     if lightingtech == "Shadowmap Lighting (Phase 2)" :
-        UpdateFflags("DFFlagDebugRenderForceTechnologyVoxel",False)
-        UpdateFflags("FFlagDebugForceFutureIsBrightPhase2",True)
-        UpdateFflags("FFlagDebugForceFutureIsBrightPhase3",False)
+        sysjson.UpdateFflags("DFFlagDebugRenderForceTechnologyVoxel",False)
+        sysjson.UpdateFflags("FFlagDebugForceFutureIsBrightPhase2",True)
+        sysjson.UpdateFflags("FFlagDebugForceFutureIsBrightPhase3",False)
     if lightingtech == "Future Lighting (Phase 3)" :
-        UpdateFflags("DFFlagDebugRenderForceTechnologyVoxel",False)
-        UpdateFflags("FFlagDebugForceFutureIsBrightPhase2",False)
-        UpdateFflags("FFlagDebugForceFutureIsBrightPhase3",True)
+        sysjson.UpdateFflags("DFFlagDebugRenderForceTechnologyVoxel",False)
+        sysjson.UpdateFflags("FFlagDebugForceFutureIsBrightPhase2",False)
+        sysjson.UpdateFflags("FFlagDebugForceFutureIsBrightPhase3",True)
     # FPS limit
-    UpdateFflags("DFIntTaskSchedulerTargetFps",fpslimit)
-    UpdateFflags("FFlagGameBasicSettingsFramerateCap5",False)
-    UpdateFflags("FFlagTaskSchedulerLimitTargetFpsTo2402",False)
+    sysjson.UpdateFflags("DFIntTaskSchedulerTargetFps",fpslimit)
+    sysjson.UpdateFflags("FFlagGameBasicSettingsFramerateCap5",False)
+    sysjson.UpdateFflags("FFlagTaskSchedulerLimitTargetFpsTo2402",False)
     #Bringbackoof - ts is a hashtag lol 🥀
-    UpdateSoberConfig("bring_back_oof",oof1)
+    sysjson.UpdateSoberConfig("bring_back_oof",oof1)
     # Disnabel Discord RPC
-    UpdateSoberConfig("discord_rpc_enabled",rpc1)
+    sysjson.UpdateSoberConfig("discord_rpc_enabled",rpc1)
     # Render Technology
     if rendertech == "OpenGL":
-        UpdateSoberConfig("use_opengl", True)
+        sysjson.UpdateSoberConfig("use_opengl", True)
     elif rendertech == "Vulkan":
-        UpdateSoberConfig("use_opengl", False)
+        sysjson.UpdateSoberConfig("use_opengl", False)
     # Bubble Chat
-    UpdateSoberConfig("FFlagEnableBubbleChatFromChatService", bbchat)
+    sysjson.UpdateSoberConfig("FFlagEnableBubbleChatFromChatService", bbchat)
     # FFlags Editor
-    Currfflags = ReadSoberConfig("fflags")
-    Combine = CombineJson(Currfflags, FFlags)
-    UpdateSoberConfig("fflags", Combine)
+    Currfflags = LTjson.ReadSoberConfig("fflags")
+    Combine = LTjson.CombineJson(Currfflags, FFlags)
+    sysjson.UpdateSoberConfig("fflags", Combine)
     # Font Size
-    UpdateFflags("FIntFontSizePadding", fontsize)
+    sysjson.UpdateFflags("FIntFontSizePadding", fontsize)
     # force Overwrite meshes
     OverwriteFiles(
         os.path.expanduser("~/.var/app/org.vinegarhq.Sober/data/sober/asset_overlay/content/avatar/meshes/"),
@@ -74,22 +77,26 @@ def ApplyChanges(fpslimit, lightingtech, oof1, rpc1, rendertech, bbchat, FFlags,
 
 
 def LoadLightTechConfig():
-    """Load Lighting techs Sober configs into session state."""
-    Voxel = ReadFflagsConfig("DFFlagDebugRenderForceTechnologyVoxel")
-    Phase2 = ReadFflagsConfig("FFlagDebugForceFutureIsBrightPhase2")
-    Phase3 = ReadFflagsConfig("FFlagDebugForceFutureIsBrightPhase3")
-    if Voxel:
+    sysjson = LTjson()  # instantiate the class
+
+    voxel = sysjson.ReadFflagsConfig("DFFlagDebugRenderForceTechnologyVoxel")
+    phase2 = sysjson.ReadFflagsConfig("FFlagDebugForceFutureIsBrightPhase2")
+    phase3 = sysjson.ReadFflagsConfig("FFlagDebugForceFutureIsBrightPhase3")
+
+    if voxel:
         return "Voxel Lighting (Phase 1)"
-    elif Phase2:
+    elif phase2:
         return "Shadowmap Lighting (Phase 2)"
-    elif Phase3:
+    elif phase3:
         return "Future Lighting (Phase 3)"
     else:
-        return "Voxel Lighting (Phase 1)"  # Default fallback
+        return "Voxel Lighting (Phase 1)"
+
 
 def UsingOpenGl():
     """Load Render Tech from Sober config."""
-    Open_gl = ReadSoberConfig("use_opengl")
+    sysjson = LTjson()
+    Open_gl = sysjson.ReadSoberConfig(key="use_opengl")
     if Open_gl:
         return True
     else:

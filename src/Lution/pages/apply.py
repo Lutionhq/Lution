@@ -1,9 +1,12 @@
 import streamlit as st
-from modules.configcheck.config import ApplyChanges, ReadSoberConfig
+from modules.configcheck.config import ApplyChanges
+from modules.json.json import LTjson
 from modules.utils.lang import LANG
 from modules.utils.sidebar import InitSidebar
 
 InitSidebar()
+
+sysjson = LTjson()
 
 def AppyAndUpdate():
     ApplyChanges(
@@ -17,13 +20,13 @@ def AppyAndUpdate():
         st.session_state.fontsize,
         st.session_state.useoldrobloxsounds
     )
-    Currfflags = ReadSoberConfig("fflags")
+    Currfflags = sysjson.ReadSoberConfig("fflags")
     st.session_state.fflagseditor = Currfflags
 
-Currfflags = ReadSoberConfig("fflags")
+Currfflags = sysjson.ReadSoberConfig("fflags")
 st.session_state.fflagseditor = Currfflags
 st.button(
     LANG["lution.save.button.apply"],
-    on_click=AppyAndUpdate(),
+    on_click=lambda : AppyAndUpdate(),
     key="apply_changes_button"
 )

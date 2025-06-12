@@ -3,6 +3,7 @@ import os
 import streamlit as st
 
 class LTjson:
+    robloxpath = "sigmapath"
     def __init__(self):
         self.file_path = os.path.expanduser("~/.var/app/org.vinegarhq.Sober/config/sober/config.json")
 

@@ -2,11 +2,12 @@ import streamlit as st
 import json
 from modules.utils.lang import LANG
 from modules.utils.files import OverlaySetup
-from modules.configcheck.config import ReadSoberConfig
+from modules.configcheck.config import LTjson
 from modules.utils.sidebar import InitSidebar
 
 InitSidebar()
 
+sysjson = LTjson()
 
 st.header(LANG["lution.tab.fflags"])
 st.session_state.oof = st.toggle(LANG["lution.fflags.toggle.bringbackoof"], value=st.session_state.oof)
@@ -27,7 +28,7 @@ st.session_state.lightingtech = st.selectbox(
 st.write(LANG["lution.fflags.text.advanded"])
 st.button(
     LANG["lution.fflags.button.reseteditor"],
-    on_click=lambda: st.session_state.update({"fflagseditor": ReadSoberConfig("fflags")})
+    on_click=lambda: st.session_state.update({"fflagseditor": sysjson.ReadSoberConfig("fflags")})
 )
 
 # fflags editor
