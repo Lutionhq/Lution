@@ -1,4 +1,5 @@
 import streamlit as st
+from modules.utils.logging import log
 from modules.configcheck.config import ApplyChanges, ReadSoberConfig
 from modules.utils.lang import LANG
 from modules.utils.sidebar import InitSidebar
@@ -18,6 +19,7 @@ def AppyAndUpdate():
         st.session_state.useoldrobloxsounds
     )
     Currfflags = ReadSoberConfig("fflags")
+    log.info("Applying changes...")
     st.session_state.fflagseditor = Currfflags
 
 Currfflags = ReadSoberConfig("fflags")

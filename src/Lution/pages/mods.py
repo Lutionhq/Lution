@@ -2,9 +2,12 @@ import streamlit as st
 import os 
 from modules.utils.files import *
 from modules.utils.lang import LANG
+from modules.utils.logging import log
 from modules.utils.sidebar import InitSidebar
 
 InitSidebar()
+
+log.info("Page : Mods")
 
 st.header(LANG["lution.tab.mods"])
 st.session_state.useoldrobloxsounds = st.toggle(LANG["lution.mods.toggle.useoldsound"], value=st.session_state.useoldrobloxsounds, key="toogle old roblox sounds")
