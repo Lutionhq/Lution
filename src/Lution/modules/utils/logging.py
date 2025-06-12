@@ -17,3 +17,5 @@ class log():
         logging.warning(mes)
     def error(mes):
         logging.error(mes)
+    def debug(mes):
+        logging.debug(mes)
