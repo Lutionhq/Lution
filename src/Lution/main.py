@@ -110,9 +110,11 @@ if Firstrun == None :
         if left.button("I'am using Equinox",use_container_width=True) :
             sysjson.UpdateLutionConfig(key="Using",value="equinox")
             st.rerun()
+            print(sysjson.robloxpath)
         if right.button("I'am using Sober",use_container_width=True) :
             sysjson.UpdateLutionConfig(key="Using", value="sober")
             st.rerun()
+            print(sysjson.robloxpath)
         
     dialog()
 

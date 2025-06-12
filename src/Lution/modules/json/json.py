@@ -4,9 +4,16 @@ import streamlit as st
 from modules.utils.files import JsonSetup
 
 class LTjson:
-    robloxpath = "sigmapath"
     def __init__(self):
-        self.file_path = os.path.expanduser("~/.var/app/org.vinegarhq.Sober/config/sober/config.json")
+        using = self.ReadLutionConfig(key="Using")
+        print(using)
+        if using == "equinox" :
+            self.robloxpath = "tell tray to do the accet overlay for equinox"
+            self.file_path = os.path.expanduser("@xtrayambak on discord now!111")
+        if using == "sober" :
+            self.robloxpath = os.path.expanduser("~/.var/app/org.vinegarhq.Sober/data/sober/asset_overlay/")
+            self.file_path = os.path.expanduser("~/.var/app/org.vinegarhq.Sober/config/sober/config.json")
+
 
     def ReadSoberConfig(self, key):
         try:
@@ -56,6 +63,7 @@ class LTjson:
             else:
                 st.warning(f"Skipped non-dict object in combine_json: {type(obj)}")
         return result
+    
     def ReadLutionConfig(self, key, filename="LutionConfig.json", default=None):
         JsonSetup()
         file_path = os.path.join(os.path.expanduser("~/Documents/Lution"), filename)
@@ -76,3 +84,4 @@ class LTjson:
         data[key] = value
         with open(file_path, "w") as f:
             json.dump(data, f, indent=4)
+
