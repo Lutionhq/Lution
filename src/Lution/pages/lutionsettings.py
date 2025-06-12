@@ -1,10 +1,12 @@
 #src/lution/pages/lutionsettings.py
 import streamlit as st
 from modules.utils.lang import LANG , LANG_CODES, LANG_NAMES, ApplyLanguage
+from modules.utils.logging import log
 from modules.utils.sidebar import InitSidebar
 
 InitSidebar()
 
+log.info("Page : Lution settings")
 
 if "language" not in st.session_state:
     st.session_state.language = LANG_CODES[0]
@@ -18,6 +20,7 @@ lang_choice = st.selectbox(
 
 def langcallback():
     ApplyLanguage(lang_choice)
+    log.info(f"Changed language to {lang_choice}")
 
 st.button(
     "Apply Language",
