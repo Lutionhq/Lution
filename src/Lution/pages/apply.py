@@ -22,8 +22,10 @@ def AppyAndUpdate():
 
 Currfflags = ReadSoberConfig("fflags")
 st.session_state.fflagseditor = Currfflags
-st.button(
+
+left,mid,right = st.columns(3)
+mid.button(
     LANG["lution.save.button.apply"],
-    on_click=AppyAndUpdate(),
+    on_click=lambda : AppyAndUpdate(),
     key="apply_changes_button"
 )
