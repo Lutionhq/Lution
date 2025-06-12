@@ -9,3 +9,11 @@ logging.basicConfig(
         logging.StreamHandler()
     ]
 )
+
+class log():
+    def info(mes) :
+        logging.info(mes)
+    def warn(mes):
+        logging.warning(mes)
+    def error(mes):
+        logging.error(mes)
