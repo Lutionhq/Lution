@@ -31,7 +31,16 @@ except Exception as e:
     print(f"An unexpected error occurred: {e}")
 
 
-
+st.html(
+    """
+    <style>
+    div[aria-label="dialog"] > button[aria-label="Close"] {
+        display: none;
+    }
+    div.stDialog backdrop-selector { pointer-events: none; }
+    </style>
+    """
+)
 
 
 
@@ -88,3 +97,27 @@ if "useoldrobloxsounds" not in st.session_state:
 
 
 
+Firstrun = ReadLutionConfig("FirstRun")
+print(Firstrun)
+if Firstrun == None :
+    UpdateLutionConfig("FirstRun",False)
+    @st.dialog("What App you are using?")
+    def dialog():
+        st.write("Let us know you are usint Equinox or using sober")
+
+        # pos the buttons
+        left,right = st.columns(2)
+        if left.button("I'am using Equinox",use_container_width=True) :
+            UpdateLutionConfig("Using","equinox")
+            st.rerun()
+        if right.button("I'am using Sober",use_container_width=True) :
+            UpdateLutionConfig("Using", "sober")
+            st.rerun()
+        
+    dialog()
+
+
+st.write("This is home.")
+if st.button("test"):
+    UpdateLutionConfig("FirstRun",None)
+    
