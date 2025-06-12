@@ -90,17 +90,17 @@ if "fflagseditor" not in st.session_state:
 if "fontsize" not in st.session_state:
     st.session_state.fontsize = sysjson.ReadFflagsConfig(flag_name="FIntFontSizePadding")
 if "useoldrobloxsounds" not in st.session_state:
-    a = ReadLutionConfig("OldRlbxSd")
+    a = sysjson.ReadLutionConfig("OldRlbxSd")
     if a is None:
         a = False  
     st.session_state.useoldrobloxsounds = a
 
 
 
-Firstrun = ReadLutionConfig("FirstRun")
+Firstrun = sysjson.ReadLutionConfig("FirstRun")
 print(Firstrun)
 if Firstrun == None :
-    UpdateLutionConfig("FirstRun",False)
+    sysjson.UpdateLutionConfig("FirstRun",False)
     @st.dialog("What App you are using?")
     def dialog():
         st.write("Let us know you are usint Equinox or using sober")
@@ -108,10 +108,10 @@ if Firstrun == None :
         # pos the buttons
         left,right = st.columns(2)
         if left.button("I'am using Equinox",use_container_width=True) :
-            UpdateLutionConfig("Using","equinox")
+            sysjson.UpdateLutionConfig(key="Using",value="equinox")
             st.rerun()
         if right.button("I'am using Sober",use_container_width=True) :
-            UpdateLutionConfig("Using", "sober")
+            sysjson.UpdateLutionConfig(key="Using", value="sober")
             st.rerun()
         
     dialog()
@@ -119,5 +119,5 @@ if Firstrun == None :
 
 st.write("This is home.")
 if st.button("test"):
-    UpdateLutionConfig("FirstRun",None)
+    sysjson.UpdateLutionConfig(key="FirstRun",value=None)
     

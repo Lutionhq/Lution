@@ -28,7 +28,7 @@ st.session_state.lightingtech = st.selectbox(
 st.write(LANG["lution.fflags.text.advanded"])
 st.button(
     LANG["lution.fflags.button.reseteditor"],
-    on_click=lambda: st.session_state.update({"fflagseditor": sysjson.ReadSoberConfig("fflags")})
+    on_click=lambda: st.session_state.update({"fflagseditor": sysjson.ReadSoberConfig(key="fflags")})
 )
 
 # fflags editor

@@ -2,7 +2,7 @@
 from modules.json.json import LTjson
 from modules.configcheck.fontreplacer import *
 from modules.utils.files import OverwriteFiles
-from modules.utils.files import JsonSetup, JsonSetup2
+from modules.utils.files import JsonSetup2
 import os
 import shutil
 import os
@@ -62,7 +62,7 @@ def ApplyChanges(fpslimit, lightingtech, oof1, rpc1, rendertech, bbchat, FFlags,
         ]
     )
     # use old roblox sounds
-    UpdateLutionConfig("OldRlbxSd",useoldrobloxsounds)
+    sysjson.UpdateLutionConfig(key="OldRlbxSd",value=useoldrobloxsounds)
     if useoldrobloxsounds:
         OverwriteFiles(
             os.path.expanduser("~/.var/app/org.vinegarhq.Sober/data/sober/asset_overlay/content/sounds/"),
@@ -105,26 +105,7 @@ def UsingOpenGl():
 
 
 
-def ReadLutionConfig(key, filename="LutionConfig.json", default=None):
-    JsonSetup()
-    file_path = os.path.join(os.path.expanduser("~/Documents/Lution"), filename)
-    if not os.path.exists(file_path):
-        return default
-    with open(file_path, "r") as f:
-        data = json.load(f)
-    return data.get(key, default)
 
-def UpdateLutionConfig(key, value, filename="LutionConfig.json"):
-    JsonSetup()
-    file_path = os.path.join(os.path.expanduser("~/Documents/Lution"), filename)
-    if os.path.exists(file_path):
-        with open(file_path, "r") as f:
-            data = json.load(f)
-    else:
-        data = {}
-    data[key] = value
-    with open(file_path, "w") as f:
-        json.dump(data, f, indent=4)
 
 def UpdateCursor(cursortype):
     base_dir = os.path.abspath(os.path.join(os.path.dirname(__file__), "../../files"))
@@ -142,7 +123,7 @@ def UpdateCursor(cursortype):
                 cursor_file("customcursor", "new", "IBeamCursor.png"),
             ]
         )
-        UpdateLutionConfig("CursorType", "Default")
+        sysjson.UpdateLutionConfig(key="CursorType", value="Default")
     elif cursortype == "Old 2007 Cursor":
         OverwriteFiles(
             CursorFolder,
@@ -152,7 +133,7 @@ def UpdateCursor(cursortype):
                 cursor_file("customcursor", "old2006", "IBeamCursor.png"),
             ]
         )
-        UpdateLutionConfig("CursorType", "Old 2007 Cursor")
+        sysjson.UpdateLutionConfig(key="CursorType", value="Old 2007 Cursor")
     elif cursortype == "Old 2013 Cursor":
         OverwriteFiles(
             CursorFolder,
@@ -162,7 +143,7 @@ def UpdateCursor(cursortype):
                 cursor_file("customcursor", "old2013", "IBeamCursor.png"),
             ]
         )
-        UpdateLutionConfig("CursorType", "Old 2013 Cursor")
+        sysjson.UpdateLutionConfig(key="CursorType", value="Old 2013 Cursor")
     else:
         st.error("Invalid cursor type selected.")
 

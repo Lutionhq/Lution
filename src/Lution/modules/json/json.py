@@ -1,6 +1,7 @@
 import json
 import os
 import streamlit as st
+from modules.utils.files import JsonSetup
 
 class LTjson:
     robloxpath = "sigmapath"
@@ -55,3 +56,23 @@ class LTjson:
             else:
                 st.warning(f"Skipped non-dict object in combine_json: {type(obj)}")
         return result
+    def ReadLutionConfig(self, key, filename="LutionConfig.json", default=None):
+        JsonSetup()
+        file_path = os.path.join(os.path.expanduser("~/Documents/Lution"), filename)
+        if not os.path.exists(file_path):
+            return default
+        with open(file_path, "r") as f:
+            data = json.load(f)
+        return data.get(key, default)
+
+    def UpdateLutionConfig(self, key, value, filename="LutionConfig.json"):
+        JsonSetup()
+        file_path = os.path.join(os.path.expanduser("~/Documents/Lution"), filename)
+        if os.path.exists(file_path):
+            with open(file_path, "r") as f:
+                data = json.load(f)
+        else:
+            data = {}
+        data[key] = value
+        with open(file_path, "w") as f:
+            json.dump(data, f, indent=4)
