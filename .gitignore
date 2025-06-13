@@ -31,3 +31,4 @@ env/
 *.spec
 *.orig
 *.ipynb_checkpoints
+app.log
