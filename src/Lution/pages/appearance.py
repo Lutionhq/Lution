@@ -1,8 +1,11 @@
 import streamlit as st
 from modules.utils.files import ApplyFont
 from modules.utils.lang import LANG
-from modules.configcheck.config import UpdateCursor, ReadLutionConfig, JsonSetup
+from modules.configcheck.config import UpdateCursor,JsonSetup
 from modules.utils.logging import log
+from modules.configcheck.config import UpdateCursor
+from modules.utils.files import JsonSetup
+from modules.json.json import LTjson
 from modules.utils.sidebar import InitSidebar
 
 InitSidebar()
@@ -10,7 +13,10 @@ InitSidebar()
 log.info('Page : Apperance')
 
 JsonSetup()
-curcf = ReadLutionConfig("CursorType")
+
+sysjson = LTjson()
+
+curcf = sysjson.ReadLutionConfig(key="CursorType")
 
 if "cursor" not in st.session_state:
     st.session_state.cursor = "Default"

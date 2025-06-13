@@ -1,10 +1,13 @@
 import streamlit as st
 from modules.utils.logging import log
-from modules.configcheck.config import ApplyChanges, ReadSoberConfig
+from modules.configcheck.config import ApplyChanges
+from modules.json.json import LTjson
 from modules.utils.lang import LANG
 from modules.utils.sidebar import InitSidebar
 
 InitSidebar()
+
+sysjson = LTjson()
 
 def AppyAndUpdate():
     ApplyChanges(
@@ -18,11 +21,12 @@ def AppyAndUpdate():
         st.session_state.fontsize,
         st.session_state.useoldrobloxsounds
     )
-    Currfflags = ReadSoberConfig("fflags")
+
     log.info("Applying changes...")
+    Currfflags = sysjson.ReadSoberConfig("fflags")
     st.session_state.fflagseditor = Currfflags
 
-Currfflags = ReadSoberConfig("fflags")
+Currfflags = sysjson.ReadSoberConfig("fflags")
 st.session_state.fflagseditor = Currfflags
 
 left,mid,right = st.columns(3)
