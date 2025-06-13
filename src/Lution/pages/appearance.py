@@ -2,9 +2,12 @@ import streamlit as st
 from modules.utils.files import ApplyFont
 from modules.utils.lang import LANG
 from modules.configcheck.config import UpdateCursor, ReadLutionConfig, JsonSetup
+from modules.utils.logging import log
 from modules.utils.sidebar import InitSidebar
 
 InitSidebar()
+
+log.info('Page : Apperance')
 
 JsonSetup()
 curcf = ReadLutionConfig("CursorType")
@@ -18,7 +21,7 @@ elif curcf == "Old 2013 Cursor":
     st.session_state.cursor = "Old 2013 Cursor"
 
 st.header(LANG["lution.tab.appearance"])
-    
+
 
 st.session_state.customfont = st.file_uploader(
     LANG["lution.appearance.uploader.customfont"],
@@ -41,12 +44,11 @@ st.button(
     )
 
 
-        
+
 
 st.markdown(LANG["lution.appearance.text.laucher"])
 st.markdown("""
 Maybe not possible,Sober itself is not very customizable, but you can wait to Vinegarhq-
-    
+
 (Aka Sober team) to add a api to change the appearance of the launcher.
 """)
-

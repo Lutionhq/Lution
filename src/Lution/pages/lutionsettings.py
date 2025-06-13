@@ -6,7 +6,6 @@ from modules.utils.sidebar import InitSidebar
 
 InitSidebar()
 
-log.info("Page : Lution settings")
 
 if "language" not in st.session_state:
     st.session_state.language = LANG_CODES[0]

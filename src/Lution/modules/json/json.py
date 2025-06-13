@@ -1,4 +1,4 @@
-#src/sostrapter/modules/json/json.py
+#src/Lution/modules/json/json.py
 import json
 import os
 import streamlit as st
