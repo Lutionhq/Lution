@@ -58,7 +58,6 @@ def ChangeProvider():
     if new_provider:
         cfmk("marketplaceprd", new_provider)
         log.warn(f"Changed marketplace provider to: {new_provider}")
-        st.rerun()
 
 marketplace, installed, settings = st.tabs([
     LANG["lution.marketplace.tab.marketplace"],
@@ -157,5 +156,5 @@ with installed:
 with settings:
     st.header("Marketplace Settings")
     st.write("Here you can change your marketplace provider")
-    st.session_state.pr = st.text_input("Marketplace Provider", st.session_state.prd, help="e.g Username/LutionMarketplace")
-    st.button("Change Marketplace Provider", on_click=ChangeProvider)
+    st.text_input("Marketplace Provider", value=st.session_state.prd, key="pr", help="e.g Username/LutionMarketplace")
+    st.button("Change Marketplace Provider", on_click=lambda : ChangeProvider() )
