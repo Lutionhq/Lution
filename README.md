@@ -1,86 +1,97 @@
+---
+
 <p align="center">
   <img src="https://raw.githubusercontent.com/Lutionhq/Lution/refs/heads/latest/src/Lution/files/lutiontext.svg" width="420">
 </p>
-<sub>pls give the repo a star pls im brokie</sub>
+<sub>⭐ Star the repo if you like it — I'm broke fr 😭</sub>
 
 <div align="center">
 
-[![Discord](https://img.shields.io/badge/Discord-%235865F2.svg?style=for-the-badge&logo=discord&logoColor=white)](https://discord.gg/BXT7FYjTBa)
+[![Discord](https://img.shields.io/badge/Discord-%235865F2.svg?style=for-the-badge\&logo=discord\&logoColor=white)](https://discord.gg/BXT7FYjTBa)
 
 </div>
 
-----
+---
 
 # What is Lution?
 
-Lution is a third-party application designed to enhance your experience with Sober by providing quality-of-life improvements and additional features. Similar to other bootstrappers like [Lucem](https://github.com/xTrayambak/lucem) and [Bloxstrap](https://github.com/bloxstraplabs/bloxstrap), Lution stands out because it's built entirely with **Python**.
+Lution is a third-party app that upgrades your Sober experience with quality-of-life tweaks and extra features. It’s kind of like [Lucem](https://github.com/xTrayambak/lucem) or [Bloxstrap](https://github.com/bloxstraplabs/bloxstrap), but built entirely in **Python** .
 
-And yes **This app can work with bloxstrap mods!!!11** 
+Oh, and yes — **it works with Bloxstrap mods too!!111**
 
-<sub>If your bloxstrap mods not working please report your mods into the github issues page so we can know (Our fault)</sub>
+<sub>If your mods aren't working, drop an issue on GitHub so we can take a look (might be our bad tbh)</sub>
 
+---
 
------
+# Get Started
 
-# Get Started (Install or Contribute)
+Wanna run Lution or help improve it? Here's how:
 
-Ready to try Lution or contribute to its development? Follow these simple steps:
+### 1. Install Python
 
-### 1\. Get Python
+Make sure Python is installed on your system.
 
-Make sure you have **Python** installed on your system.
-
-### 2\. Clone the Project
-
-Open your terminal or command prompt and run:
+### 2. Run Lution
 
 ```bash
-git clone https://github.com/triisdang/Lution.git
+cd Lution/src
+./run.sh
+```
+
+---
+
+# Contributing
+
+### 1. Clone the Repo
+
+```bash
+git clone https://github.com/Lutionhq/Lution.git
 cd Lution
 ```
 
-### 3\. Create a New Environment
-
-It's good practice to create a virtual environment to manage dependencies:
+### 2. Set Up a Virtual Environment
 
 ```bash
 python3 -m venv venv
-source venv/bin/activate 
+source venv/bin/activate
 ```
 
-### 4\. Install Requirements
-
-Install all necessary packages:
+### 3. Install Dependencies
 
 ```bash
 cd src/Lution
 pip install -r requirements.txt
 ```
 
-### 5\. Run Lution
-
+### 4. Run It
 
 ```bash
-python3 streamlit run main.py
+python3 -m streamlit run main.py
 ```
-OR
+
+or
+
 ```bash
 streamlit run main.py
 ```
 
-----
+---
 
 # FAQ
 
-Q. : Does bloxstrap fflags work on Lution?
+**Q:** Does Bloxstrap’s fflags work with Lution?
+**A:** Yep! Roblox and Sober use the same fflags structure, so it should just work.
 
-A. : Yes, Roblox and Sober share the same fflags structure, so is should work on Lution.
+---
 
------
-# Mics
+# Misc
 
 ### How It Works
-The app navigates to the **Assets Overlay** path and modifies the contents within it.
-### Lution marketplace
-[Its here](https://github.com/triisdang/Lution-Marketplace)
 
+Lution edits the contents in your **Assets Overlay** path to apply changes.
+
+### Lution Marketplace
+
+Find it [here](https://github.com/triisdang/Lution-Marketplace)
+
+---
