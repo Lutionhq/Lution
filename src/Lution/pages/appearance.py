@@ -1,7 +1,6 @@
 import streamlit as st
 from modules.utils.files import ApplyFont
 from modules.utils.lang import LANG
-from modules.configcheck.config import UpdateCursor,JsonSetup
 from modules.utils.logging import log
 from modules.configcheck.config import UpdateCursor
 from modules.utils.files import JsonSetup

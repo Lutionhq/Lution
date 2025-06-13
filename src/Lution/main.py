@@ -79,18 +79,18 @@ if Firstrun == None :
     sysjson.UpdateLutionConfig("FirstRun",False)
     @st.dialog("What App you are using?")
     def dialog():
-        st.write("Let us know you are usint Equinox or using sober")
+        st.write("Let us know you are using Equinox or using sober")
 
         # pos the buttons
         left,right = st.columns(2)
         if left.button("I'am using Equinox",use_container_width=True) :
             sysjson.UpdateLutionConfig(key="Using",value="equinox")
             st.rerun()
-            print(sysjson.robloxpath)
+            #print(sysjson.robloxpath)
         if right.button("I'am using Sober",use_container_width=True) :
             sysjson.UpdateLutionConfig(key="Using", value="sober")
             st.rerun()
-            print(sysjson.robloxpath)
+            #print(sysjson.robloxpath)
 
     dialog()
 

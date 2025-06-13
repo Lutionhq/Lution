@@ -7,7 +7,7 @@ from modules.utils.files import JsonSetup
 class LTjson:
     def __init__(self):
         using = self.ReadLutionConfig(key="Using")
-        print(using)
+        # print(using)
         if using == "equinox" :
             self.robloxpath = "tell tray to do the accet overlay for equinox"
             self.file_path = os.path.expanduser("@xtrayambak on discord now!111")
@@ -64,7 +64,7 @@ class LTjson:
             else:
                 st.warning(f"Skipped non-dict object in combine_json: {type(obj)}")
         return result
-    
+
     def ReadLutionConfig(self, key, filename="LutionConfig.json", default=None):
         JsonSetup()
         file_path = os.path.join(os.path.expanduser("~/Documents/Lution"), filename)
