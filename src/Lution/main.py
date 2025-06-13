@@ -83,7 +83,7 @@ if Firstrun == None :
 
         # pos the buttons
         left,right = st.columns(2)
-        if left.button("I'am using Equinox",use_container_width=True) :
+        if left.button("I'am using Equinox",use_container_width=True,disabled=True) :
             sysjson.UpdateLutionConfig(key="Using",value="equinox")
             st.rerun()
             #print(sysjson.robloxpath)
