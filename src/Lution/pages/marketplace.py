@@ -11,6 +11,7 @@ from modules.utils.sidebar import InitSidebar
 InitSidebar()
 log.info("Page : Marketplace")
 
+
 @st.cache_data(ttl=3600)
 def GetItemCached(repo_name, item):
     try:
@@ -27,31 +28,35 @@ if "provider" not in st.session_state:
     else:
         st.session_state.prd = cf
 
-avdmods = False
-avdthemes = False
+def loadbar():
+    progress = st.progress(0)
+    progress.progress(10)
 
-def initvar():
-    global avdmods, avdthemes
-    if GetItemCached(st.session_state.prd, "Assets/Mods/content.json") != "Not found":
-        avdmods = True
-    if GetItemCached(st.session_state.prd, "Assets/Themes/content.json") != "Not found":
-        avdthemes = True
+    avdmods = GetItemCached(st.session_state.prd, "Assets/Mods/content.json") != "Not found"
+    progress.progress(30)
 
-initvar()
+    avdthemes = GetItemCached(st.session_state.prd, "Assets/Themes/content.json") != "Not found"
+    progress.progress(50)
 
-if "theme" not in st.session_state:
-    content_file = GetItemCached(st.session_state.prd, "Assets/Themes/content.json")
-    if content_file != "Not found":
-        st.session_state.theme = json.loads(content_file.decoded_content.decode())
-    else:
-        st.error("NOT FOUND")
+    def loadcontent(key, path, prog_value):
+        if key not in st.session_state:
+            content_file = GetItemCached(st.session_state.prd, path)
+            if content_file != "Not found":
+                st.session_state[key] = json.loads(content_file.decoded_content.decode())
+            else:
+                st.error(f"{key.upper()} NOT FOUND")
+        progress.progress(prog_value)
 
-if "mod" not in st.session_state:
-    content_file = GetItemCached(st.session_state.prd, "Assets/Mods/content.json")
-    if content_file != "Not found":
-        st.session_state.mod = json.loads(content_file.decoded_content.decode())
-    else:
-        st.error("NOT FOUND")
+    loadcontent("theme", "Assets/Themes/content.json", 75)
+    loadcontent("mod", "Assets/Mods/content.json", 100)
+
+    progress.empty()
+    return avdmods, avdthemes
+
+
+
+avdmods, avdthemes = loadbar()
+
 
 def ChangeProvider():
     new_provider = st.session_state.get("pr")
