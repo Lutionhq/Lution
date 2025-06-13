@@ -3,10 +3,7 @@ import streamlit as st
 import os
 from modules.utils.logging import log
 from modules.json.json import LTjson
-from modules.utils.messages import *
-from modules.utils.files import *
-from modules.configcheck.config import *
-from modules.utils.lang import LANG , LANG_CODES, LANG_NAMES
+from modules.configcheck.config import LoadLightTechConfig, UsingOpenGl
 from modules.utils.sidebar import InitSidebar
 
 InitSidebar()
@@ -20,21 +17,6 @@ log.info("Page : Home")
 
 
 sysjson = LTjson()
-
-
-
-try:
-    with open(file_path, 'r') as f:
-        sober_config = json.load(f)
-except FileNotFoundError:
-    st.sidebar.error(LANG[f"lution.message.error.filenotfound"])
-    print(f"Error: The file '{file_path}' was not found.")
-except json.JSONDecodeError:
-    st.sidebar.error(LANG[f"lution.message.error.jsondecode"])
-    print(f"Error: Could not decode JSON from the file '{file_path}'.")
-except Exception as e:
-    st.sidebar.error(LANG["lution.message.error.unknown"])
-    print(f"An unexpected error occurred: {e}")
 
 
 st.html(
