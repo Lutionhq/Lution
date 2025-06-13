@@ -1,6 +1,7 @@
 # src/sostrapter/app.py
-import streamlit as st 
-import os 
+import streamlit as st
+import os
+from modules.utils.logging import log
 from modules.json.json import LTjson
 from modules.utils.messages import *
 from modules.utils.files import *
@@ -51,7 +52,7 @@ st.html(
 if "fpslimit" not in st.session_state:
     log.info("Reading fpslimit")
     fpslimit = sysjson.ReadFflagsConfig("DFIntTaskSchedulerTargetFps")
-if "lightingtech" not in st.session_state: 
+if "lightingtech" not in st.session_state:
     log.info("Reading Lighting technology")
     tech = LoadLightTechConfig()
     st.session_state.lightingtech = tech
@@ -60,7 +61,7 @@ if "oof" not in st.session_state:
     st.session_state.oof = oof
 if "rpc" not in st.session_state:
     log.info("Reading Discord RPC")
-    oof = sysjson.ReadSoberConfig(key="bring_back_oof")
+    drpc = sysjson.ReadSoberConfig("discord_rpc_enabled")
     st.session_state.rpc = drpc
 if "render" not in st.session_state:
     log.info("Reading Render technology")
@@ -86,7 +87,7 @@ if "useoldrobloxsounds" not in st.session_state:
     log.info("Reading Old roblox sounds")
     a = sysjson.ReadLutionConfig("OldRlbxSd")
     if a is None:
-        a = False  
+        a = False
     st.session_state.useoldrobloxsounds = a
 
 
@@ -108,11 +109,10 @@ if Firstrun == None :
             sysjson.UpdateLutionConfig(key="Using", value="sober")
             st.rerun()
             print(sysjson.robloxpath)
-        
+
     dialog()
 
 
 st.write("This is home.")
 if st.button("test"):
     sysjson.UpdateLutionConfig(key="FirstRun",value=None)
-    
