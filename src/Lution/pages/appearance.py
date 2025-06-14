@@ -30,7 +30,7 @@ st.session_state.customfont = st.file_uploader(
 )
 st.button(
     LANG["lution.appearance.button.applyfont"],
-    on_click=ApplyFont
+    on_click=lambda : ApplyFont()
     )
 st.session_state.cursor = st.selectbox(
         LANG["lution.appearance.mutichoices.cursor"],

@@ -45,7 +45,7 @@ def OverwriteFolders(dest_dir, src_dirs, no_success=False):
     if not no_success:
         print("u suck at code")
         success()
-    
+
 
 
 def JsonSetup(filename="LutionConfig.json", default_data=None):
@@ -81,16 +81,12 @@ def OpenFolder(path):
         subprocess.Popen(["open", path])
     else:  # Linux and others
         subprocess.Popen(["xdg-open", path])
-        
 
 
-    
+
 def OverlaySetup():
-    dest_dir = os.path.expanduser("~/.var/app/org.vinegarhq.Sober/data/sober/asset_overlay/content")
-    src_dir = os.path.expanduser("~/.var/app/org.vinegarhq.Sober/data/sober/assets/content")
-    
-    if os.path.isdir(dest_dir):
-        return
+    dest_dir = os.path.expanduser("~/.var/app/org.vinegarhq.Sober/data/sober/asset_overlay")
+    src_dir = os.path.expanduser("~/.var/app/org.vinegarhq.Sober/data/sober/assets")
 
     os.makedirs(dest_dir, exist_ok=True)
 
@@ -99,10 +95,29 @@ def OverlaySetup():
             s = os.path.join(src_dir, item)
             d = os.path.join(dest_dir, item)
             if os.path.isdir(s):
+                if os.path.exists(d):
+                    shutil.rmtree(d)
                 shutil.copytree(s, d)
             else:
                 shutil.copy2(s, d)
 
+
+def Fontsetup():
+    dest_dir = os.path.expanduser("~/.var/app/org.vinegarhq.Sober/data/sober/asset_overlay/content/fonts/")
+    src_dir = os.path.expanduser("~/.var/app/org.vinegarhq.Sober/data/sober/assets/content/fonts/")
+
+    os.makedirs(dest_dir, exist_ok=True)
+
+    if os.path.isdir(src_dir):
+        for item in os.listdir(src_dir):
+            s = os.path.join(src_dir, item)
+            d = os.path.join(dest_dir, item)
+            if os.path.isdir(s):
+                if os.path.exists(d):
+                    shutil.rmtree(d)
+                shutil.copytree(s, d)
+            else:
+                shutil.copy2(s, d)
 
 def ApplyMods():
     with st.spinner("Applying mods..."):
@@ -174,9 +189,9 @@ def ResetMods2():
 
 def OverwriteEmoji(dest_dir):
     src_file = os.path.abspath(os.path.join(os.path.dirname(__file__), '../../files/RobloxEmoji.ttf'))
-    os.makedirs(dest_dir, exist_ok=True) 
+    os.makedirs(dest_dir, exist_ok=True)
     dest_file = os.path.join(dest_dir, os.path.basename(src_file))
-    shutil.copy2(src_file, dest_file)     
+    shutil.copy2(src_file, dest_file)
 
 
 
@@ -186,7 +201,7 @@ def ApplyFont():
     with st.spinner(LANG["lution.spinner.applyfont"]):
         if st.session_state.customfont:
             # setup the overlay
-            OverlaySetup()
+            Fontsetup()
             font_dir = os.path.expanduser("~/.var/app/org.vinegarhq.Sober/data/sober/asset_overlay/content/fonts")
             os.makedirs(font_dir, exist_ok=True)
             font_path = os.path.join(font_dir, st.session_state.customfont.name)
@@ -203,4 +218,4 @@ def ApplyFont():
             OverwriteEmoji(os.path.expanduser("~/.var/app/org.vinegarhq.Sober/data/sober/asset_overlay/content/fonts"))
             st.success(LANG["lution.message.success.fontapplied"])
         else:
-            st.warning(LANG["lution.message.warning.customfontnotuploaded"])
+            st.warning(LANG["lution.appearance.warning.customfontnotuploaded"])
