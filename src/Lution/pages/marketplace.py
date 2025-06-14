@@ -108,19 +108,23 @@ with marketplace:
     st.write(LANG["lution.marketplace.marketplace.decs"])
     st.markdown("[README.md](https://github.com/Lutionhq/Lution-Marketplace/blob/main/how-to/README.md)")
 
-    st.write(f"### {LANG['lution.marketplace.tab.themes']}")
+    #st.write(f"### {LANG['lution.marketplace.tab.themes']}")
     if avdthemes and st.session_state.get("theme"):
         with st.spinner(LANG["lution.marketplace.marketplace.spinner.download"]):
             log.info("Creating Themes col")
-            create_columns(st.session_state.theme, "theme", cols_per_row=3)
+            themeexpander = st.expander(LANG['lution.marketplace.tab.themes'])
+            with themeexpander:
+                create_columns(st.session_state.theme, "theme", cols_per_row=3)
     else:
         st.write("Your provider does not have themes. Change your provider now.")
 
-    st.write(f"### {LANG['lution.marketplace.tab.mods']}")
+    #st.write(f"### {LANG['lution.marketplace.tab.mods']}")
     if avdmods and st.session_state.get("mod"):
         with st.spinner(LANG["lution.marketplace.marketplace.spinner.download"]):
             log.info("Creating Mods col")
-            create_columns(st.session_state.mod, "mod")
+            modsexpander = st.expander(LANG['lution.marketplace.tab.mods'])
+            with modsexpander:
+                create_columns(st.session_state.mod, "mod")
     else:
         st.write("Your provider does not have mods. Change your provider now.")
 
