@@ -1,4 +1,5 @@
 from github import Github as g
+from rich.progress import Progress
 from modules.utils.files import ApplyMarketplaceMods, ResetMods2
 from modules.configcheck.config import UpdateLutionMarketplaceConfig as cfmk, ReadLutionMarketplaceConfig as rmk, RemoveLutionMarketplaceConfig as remcf
 import os
@@ -45,8 +46,8 @@ def GHFiles(repo_name, file_path, output_path, max_retries=3, retry_delay=5):
 
             with open(output_path, "wb") as f:
                 f.write(content)
-            response = requests.get(url)  
-            response.raise_for_status() 
+            response = requests.get(url)
+            response.raise_for_status()
             with open(output_path, "wb") as f:
                 f.write(response.content)
 
@@ -72,50 +73,69 @@ def DownloadMarketplace(Name, type):
     download_dir = os.path.expanduser(f"~/Documents/Lution/Lution Marketplace/{type}s/{Name}")
     os.makedirs(download_dir, exist_ok=True)
 
-    if type == "theme":
-        curf = rmk("InstalledThemes")
-        if not curf:
-            curf = ""
-        if Name not in curf:
-            cfmk("InstalledThemes", Name + "," + curf if curf else Name)
-        info_file_path = "Assets/Themes/info.json"
-        content = repo.get_contents(info_file_path)
-        info_list = json.loads(content.decoded_content.decode())
-        entry = next((item for item in info_list if item["name"] == Name), None)
-        if entry:
-            zip_path = entry["path"]
-            local_zip_path = os.path.join(download_dir, os.path.basename(zip_path))
-            GHFiles(repo_name, zip_path, local_zip_path)
-            if zipfile.is_zipfile(local_zip_path):
-                Unzip(local_zip_path, download_dir)
-                os.remove(local_zip_path)
-                return download_dir
+    with Progress() as progress:
+        task = progress.add_task(f"[cyan]Installing {type} '{Name}'...", total=4)
+
+        if type == "theme":
+            curf = rmk("InstalledThemes")
+            if not curf:
+                curf = ""
+            if Name not in curf:
+                cfmk("InstalledThemes", Name + "," + curf if curf else Name)
+            progress.advance(task)
+
+            info_file_path = "Assets/Themes/info.json"
+            content = repo.get_contents(info_file_path)
+            info_list = json.loads(content.decoded_content.decode())
+            entry = next((item for item in info_list if item["name"] == Name), None)
+            progress.advance(task)
+
+            if entry:
+                zip_path = entry["path"]
+                local_zip_path = os.path.join(download_dir, os.path.basename(zip_path))
+                GHFiles(repo_name, zip_path, local_zip_path)
+                progress.advance(task)
+
+                if zipfile.is_zipfile(local_zip_path):
+                    Unzip(local_zip_path, download_dir)
+                    os.remove(local_zip_path)
+                    progress.advance(task)
+                    return download_dir
+                else:
+                    print(f"Error: {local_zip_path} is not a valid zip file.")
             else:
-                print(f"Error: {local_zip_path} is not a valid zip file.")
-        else:
-            print(f"No theme found with name '{Name}'")
-    elif type == "mod":
-        curf = rmk("InstalledMods")
-        if not curf:
-            curf = ""
-        if Name not in curf:
-            cfmk("InstalledMods", Name + "," + curf if curf else Name)
-        info_file_path = "Assets/Mods/info.json"
-        content = repo.get_contents(info_file_path)
-        info_list = json.loads(content.decoded_content.decode())
-        entry = next((item for item in info_list if item["name"] == Name), None)
-        if entry:
-            zip_path = entry["path"]
-            local_zip_path = os.path.join(download_dir, os.path.basename(zip_path))
-            GHFiles(repo_name, zip_path, local_zip_path)
-            if zipfile.is_zipfile(local_zip_path):
-                Unzip(local_zip_path, download_dir)
-                os.remove(local_zip_path)
-                return download_dir
+                print(f"No theme found with name '{Name}'")
+
+        elif type == "mod":
+            curf = rmk("InstalledMods")
+            if not curf:
+                curf = ""
+            if Name not in curf:
+                cfmk("InstalledMods", Name + "," + curf if curf else Name)
+            progress.advance(task)
+
+            info_file_path = "Assets/Mods/info.json"
+            content = repo.get_contents(info_file_path)
+            info_list = json.loads(content.decoded_content.decode())
+            entry = next((item for item in info_list if item["name"] == Name), None)
+            progress.advance(task)
+
+            if entry:
+                zip_path = entry["path"]
+                local_zip_path = os.path.join(download_dir, os.path.basename(zip_path))
+                GHFiles(repo_name, zip_path, local_zip_path)
+                progress.advance(task)
+
+                if zipfile.is_zipfile(local_zip_path):
+                    Unzip(local_zip_path, download_dir)
+                    os.remove(local_zip_path)
+                    progress.advance(task)
+                    return download_dir
+                else:
+                    print(f"Error: {local_zip_path} is not a valid zip file.")
             else:
-                print(f"Error: {local_zip_path} is not a valid zip file.")
-        else:
-            print(f"No mod found with name '{Name}'")
+                print(f"No mod found with name '{Name}'")
+
     return None
 
 def RemoveMarketplace(Name, Type):

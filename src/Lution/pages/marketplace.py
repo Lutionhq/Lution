@@ -11,6 +11,7 @@ from modules.utils.sidebar import InitSidebar
 InitSidebar()
 log.info("Page : Marketplace")
 
+
 @st.cache_data(ttl=3600)
 def GetItemCached(repo_name, item):
     try:
@@ -27,31 +28,35 @@ if "provider" not in st.session_state:
     else:
         st.session_state.prd = cf
 
-avdmods = False
-avdthemes = False
+def loadbar():
+    progress = st.progress(0)
+    progress.progress(10)
 
-def initvar():
-    global avdmods, avdthemes
-    if GetItemCached(st.session_state.prd, "Assets/Mods/content.json") != "Not found":
-        avdmods = True
-    if GetItemCached(st.session_state.prd, "Assets/Themes/content.json") != "Not found":
-        avdthemes = True
+    avdmods = GetItemCached(st.session_state.prd, "Assets/Mods/content.json") != "Not found"
+    progress.progress(30)
 
-initvar()
+    avdthemes = GetItemCached(st.session_state.prd, "Assets/Themes/content.json") != "Not found"
+    progress.progress(50)
 
-if "theme" not in st.session_state:
-    content_file = GetItemCached(st.session_state.prd, "Assets/Themes/content.json")
-    if content_file != "Not found":
-        st.session_state.theme = json.loads(content_file.decoded_content.decode())
-    else:
-        st.error("NOT FOUND")
+    def loadcontent(key, path, prog_value):
+        if key not in st.session_state:
+            content_file = GetItemCached(st.session_state.prd, path)
+            if content_file != "Not found":
+                st.session_state[key] = json.loads(content_file.decoded_content.decode())
+            else:
+                st.error(f"{key.upper()} NOT FOUND")
+        progress.progress(prog_value)
 
-if "mod" not in st.session_state:
-    content_file = GetItemCached(st.session_state.prd, "Assets/Mods/content.json")
-    if content_file != "Not found":
-        st.session_state.mod = json.loads(content_file.decoded_content.decode())
-    else:
-        st.error("NOT FOUND")
+    loadcontent("theme", "Assets/Themes/content.json", 75)
+    loadcontent("mod", "Assets/Mods/content.json", 100)
+
+    progress.empty()
+    return avdmods, avdthemes
+
+
+
+avdmods, avdthemes = loadbar()
+
 
 def ChangeProvider():
     new_provider = st.session_state.get("pr")
@@ -103,19 +108,23 @@ with marketplace:
     st.write(LANG["lution.marketplace.marketplace.decs"])
     st.markdown("[README.md](https://github.com/Lutionhq/Lution-Marketplace/blob/main/how-to/README.md)")
 
-    st.write(f"### {LANG['lution.marketplace.tab.themes']}")
+    #st.write(f"### {LANG['lution.marketplace.tab.themes']}")
     if avdthemes and st.session_state.get("theme"):
         with st.spinner(LANG["lution.marketplace.marketplace.spinner.download"]):
             log.info("Creating Themes col")
-            create_columns(st.session_state.theme, "theme", cols_per_row=3)
+            themeexpander = st.expander(LANG['lution.marketplace.tab.themes'])
+            with themeexpander:
+                create_columns(st.session_state.theme, "theme", cols_per_row=3)
     else:
         st.write("Your provider does not have themes. Change your provider now.")
 
-    st.write(f"### {LANG['lution.marketplace.tab.mods']}")
+    #st.write(f"### {LANG['lution.marketplace.tab.mods']}")
     if avdmods and st.session_state.get("mod"):
         with st.spinner(LANG["lution.marketplace.marketplace.spinner.download"]):
             log.info("Creating Mods col")
-            create_columns(st.session_state.mod, "mod")
+            modsexpander = st.expander(LANG['lution.marketplace.tab.mods'])
+            with modsexpander:
+                create_columns(st.session_state.mod, "mod")
     else:
         st.write("Your provider does not have mods. Change your provider now.")
 
@@ -124,34 +133,44 @@ with installed:
     st.write(LANG["lution.marketplace.title.decs"])
     theme = rmk("InstalledThemes")
     mod = rmk("InstalledMods")
-
+    st.write(f"### {LANG['lution.marketplace.title.decs']}")
     if theme:
-        st.write(f"### {LANG['lution.marketplace.title.decs']}")
-        for t in theme.split(","):
-            st.markdown(f"- {t}")
-            if st.button(f"Apply {t}"):
-                with st.spinner("Applying theme..."):
-                    log.info(f"Applying {t}")
-                    ApplyMarketplace(t, "theme")
-            if st.button(f"Delete", key=f"deletebutton_{t}"):
-                log.info(f"Deleted {t}")
-                RemoveMarketplace(t, "theme")
-                del st.session_state["theme"]
-                st.rerun()
+        themesexpander = st.expander("Themes", expanded=True)
+        with themesexpander:
+            for t in theme.split(","):
+                colleft1, colmid1,colright1 = st.columns(3)
+                with colleft1:
+                    st.markdown(f"- {t}")
+                with colmid1:
+                    if st.button(f"Apply {t}", use_container_width=True):
+                        with st.spinner("Applying theme..."):
+                            log.info(f"Applying {t}")
+                            ApplyMarketplace(t, "theme")
+                with colright1:
+                    if st.button(f"Delete", key=f"deletebutton_{t}",use_container_width=True):
+                        log.info(f"Deleted {t}")
+                        RemoveMarketplace(t, "theme")
+                        del st.session_state["theme"]
+                        st.rerun()
 
     if mod:
-        st.write("### Mods")
-        for m in mod.split(","):
-            st.markdown(f"- {m}")
-            if st.button(f"Apply {m}"):
-                with st.spinner("Applying mod..."):
-                    log.info(f"Applying {m}")
-                    ApplyMarketplace(m, "mod")
-            if st.button(f"Delete", key=f"deletebutton_{m}"):
-                log.info(f"Deleted {m}")
-                RemoveMarketplace(m, "mod")
-                del st.session_state["mod"]
-                st.rerun()
+        modsexpander = st.expander("Mods", expanded=True)
+        with modsexpander:
+            for m in mod.split(","):
+                colleft2, colmid2, colright2 = st.columns(3)
+                with colleft2:
+                    st.markdown(f"- {m}")
+                with colmid2:
+                    if st.button(f"Apply {m}", use_container_width=True):
+                        with st.spinner("Applying mod..."):
+                            log.info(f"Applying {m}")
+                            ApplyMarketplace(m, "mod")
+                with colright2:
+                    if st.button(f"Delete", key=f"deletebutton_{m}", use_container_width=True):
+                        log.info(f"Deleted {m}")
+                        RemoveMarketplace(m, "mod")
+                        del st.session_state["mod"]
+                        st.rerun()
 
 with settings:
     st.header("Marketplace Settings")
