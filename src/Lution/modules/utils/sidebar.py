@@ -13,8 +13,8 @@ def InitSidebar():
     st.sidebar.image(lutiontext, width=200) # Adjust width as needed
 
     st.sidebar.markdown("<h2>Lution</h2>", unsafe_allow_html=True)
-    st.sidebar.markdown(":orange-badge[⚠️ BETA]")
-    st.sidebar.caption("Version 0.2.2")
+    st.sidebar.badge("Stable", icon=":material/check:", color="green")
+    st.sidebar.caption("Version 0.2.3")
 
     st.sidebar.page_link("main.py", label="Home", icon="🏠")
     st.sidebar.page_link("pages/marketplace.py", label=LANG["lution.tab.marketplace"], icon="🛒")
