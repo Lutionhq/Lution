@@ -133,34 +133,44 @@ with installed:
     st.write(LANG["lution.marketplace.title.decs"])
     theme = rmk("InstalledThemes")
     mod = rmk("InstalledMods")
-
+    st.write(f"### {LANG['lution.marketplace.title.decs']}")
     if theme:
-        st.write(f"### {LANG['lution.marketplace.title.decs']}")
-        for t in theme.split(","):
-            st.markdown(f"- {t}")
-            if st.button(f"Apply {t}"):
-                with st.spinner("Applying theme..."):
-                    log.info(f"Applying {t}")
-                    ApplyMarketplace(t, "theme")
-            if st.button(f"Delete", key=f"deletebutton_{t}"):
-                log.info(f"Deleted {t}")
-                RemoveMarketplace(t, "theme")
-                del st.session_state["theme"]
-                st.rerun()
+        themesexpander = st.expander("Themes", expanded=True)
+        with themesexpander:
+            for t in theme.split(","):
+                colleft1, colmid1,colright1 = st.columns(3)
+                with colleft1:
+                    st.markdown(f"- {t}")
+                with colmid1:
+                    if st.button(f"Apply {t}", use_container_width=True):
+                        with st.spinner("Applying theme..."):
+                            log.info(f"Applying {t}")
+                            ApplyMarketplace(t, "theme")
+                with colright1:
+                    if st.button(f"Delete", key=f"deletebutton_{t}",use_container_width=True):
+                        log.info(f"Deleted {t}")
+                        RemoveMarketplace(t, "theme")
+                        del st.session_state["theme"]
+                        st.rerun()
 
     if mod:
-        st.write("### Mods")
-        for m in mod.split(","):
-            st.markdown(f"- {m}")
-            if st.button(f"Apply {m}"):
-                with st.spinner("Applying mod..."):
-                    log.info(f"Applying {m}")
-                    ApplyMarketplace(m, "mod")
-            if st.button(f"Delete", key=f"deletebutton_{m}"):
-                log.info(f"Deleted {m}")
-                RemoveMarketplace(m, "mod")
-                del st.session_state["mod"]
-                st.rerun()
+        modsexpander = st.expander("Mods", expanded=True)
+        with modsexpander:
+            for m in mod.split(","):
+                colleft2, colmid2, colright2 = st.columns(3)
+                with colleft2:
+                    st.markdown(f"- {m}")
+                with colmid2:
+                    if st.button(f"Apply {m}", use_container_width=True):
+                        with st.spinner("Applying mod..."):
+                            log.info(f"Applying {m}")
+                            ApplyMarketplace(m, "mod")
+                with colright2:
+                    if st.button(f"Delete", key=f"deletebutton_{m}", use_container_width=True):
+                        log.info(f"Deleted {m}")
+                        RemoveMarketplace(m, "mod")
+                        del st.session_state["mod"]
+                        st.rerun()
 
 with settings:
     st.header("Marketplace Settings")
