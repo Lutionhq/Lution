@@ -1,3 +1,4 @@
+#!/bin/bash
 clear
 echo "RUN LUTION"
 cat << "EOF"
@@ -11,7 +12,7 @@ EOF
 python3 -m venv venv
 source venv/bin/activate
 
-cd "Lution"
+cd "Lution" || exit 1
 pip install -r requirements.txt
 
 clear
@@ -22,14 +23,11 @@ cat << "EOF"
  \ \_____\  \ \_____\    \ \_\  \ \_\  \ \_____\  \ \_\\"\_\
   \/_____/   \/_____/     \/_/   \/_/   \/_____/   \/_/ \/_/
 EOF
-echo "its should open a tab in ur browser"
-echo "also do u love my asci text :3"
-if streamlit run main.py; then
-    :
-else
-    python3 -m streamlit run main.py
-fi
+
+echo "It should open a tab in your browser"
+echo "Also do you love my ASCII text? :3"
+
+streamlit run main.py || python3 -m streamlit run main.py
 
 clear
-
-echo "i got destroyed :sob:"
+echo "i got destroyed 😭"
