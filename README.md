@@ -1,4 +1,4 @@
----
+<img src="https://raw.githubusercontent.com/Lutionhq/Lution/refs/heads/latest/md/bar.png" style="width: 100%;">
 
 <p align="center">
   <img src="https://raw.githubusercontent.com/Lutionhq/Lution/refs/heads/latest/src/Lution/files/lutiontext.svg" width="420">
@@ -11,7 +11,7 @@
 
 </div>
 
----
+<img src="https://raw.githubusercontent.com/Lutionhq/Lution/refs/heads/latest/md/bar.png" style="width: 100%;">
 
 # What is Lution?
 
@@ -21,7 +21,7 @@ Oh, and yes — **it works with Bloxstrap mods too!!111**
 
 <sub>If your mods aren't working, drop an issue on GitHub so we can take a look (might be our bad tbh)</sub>
 
----
+<img src="https://raw.githubusercontent.com/Lutionhq/Lution/refs/heads/latest/md/bar.png" style="width: 100%;">
 
 # Get Started
 
@@ -45,7 +45,7 @@ cd Lution/src
 ./run.sh
 ```
 
----
+<img src="https://raw.githubusercontent.com/Lutionhq/Lution/refs/heads/latest/md/bar.png" style="width: 100%;">
 
 # Contributing
 
@@ -90,7 +90,7 @@ streamlit run main.py
 
 **A:** Yep! Roblox and Sober use the same fflags structure, so it should just work.
 
----
+<img src="https://raw.githubusercontent.com/Lutionhq/Lution/refs/heads/latest/md/bar.png" style="width: 100%;">
 
 # Misc
 
@@ -102,4 +102,4 @@ Lution edits the contents in your **Assets Overlay** path to apply changes.
 
 Find it [here](https://github.com/triisdang/Lution-Marketplace)
 
----
+<img src="https://raw.githubusercontent.com/Lutionhq/Lution/refs/heads/latest/md/bar.png" style="width: 100%;">
