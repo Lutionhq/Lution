@@ -13,6 +13,10 @@ import json
 
 def ApplyChanges(fpslimit, lightingtech, oof1, rpc1, rendertech, bbchat, FFlags, fontsize, useoldrobloxsounds):
     """Apply changes based on user input."""
+    # FFlags Editor
+    Currfflags = ReadSoberConfig("fflags")
+    Combine = CombineJson(Currfflags, FFlags)
+    UpdateSoberConfig("fflags", Combine)
     # Lighting Tech
     if lightingtech == "Voxel Lighting (Phase 1)" : 
         UpdateFflags("DFFlagDebugRenderForceTechnologyVoxel",True)
@@ -41,10 +45,6 @@ def ApplyChanges(fpslimit, lightingtech, oof1, rpc1, rendertech, bbchat, FFlags,
         UpdateSoberConfig("use_opengl", False)
     # Bubble Chat
     UpdateSoberConfig("FFlagEnableBubbleChatFromChatService", bbchat)
-    # FFlags Editor
-    Currfflags = ReadSoberConfig("fflags")
-    Combine = CombineJson(Currfflags, FFlags)
-    UpdateSoberConfig("fflags", Combine)
     # Font Size
     UpdateFflags("FIntFontSizePadding", fontsize)
     # force Overwrite meshes
