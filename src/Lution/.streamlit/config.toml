@@ -7,4 +7,6 @@ secondaryBackgroundColor = "#262730"
 showSidebarNavigation = false
 toolbarMode = "minimal"
 [server]
-headless = true
+headless = false
+[browser]
+gatherUsageStats = false
