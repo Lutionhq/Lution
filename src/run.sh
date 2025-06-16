@@ -1,3 +1,4 @@
+clear
 echo "RUN LUTION"
 cat << "EOF"
  __         __  __     ______   __     ______     __   __
