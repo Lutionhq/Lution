@@ -9,3 +9,4 @@ aboutmd = open(os.path.join(os.path.dirname(os.path.dirname(__file__)), "markdow
 
 
 st.markdown(aboutmd,unsafe_allow_html=True)
+st.image("files/lutionhq.png")

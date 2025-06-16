@@ -64,3 +64,8 @@ if "useoldrobloxsounds" not in st.session_state:
 
 
 
+st.header("Wellcome to Lution!")
+st.image("files/cooked.png")
+st.write("Lution is a boostrapper for sober, try out one of the feature!")
+st.write("Thank you for using Lution!")
+st.write("-- Lution dev team")

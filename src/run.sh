@@ -24,7 +24,7 @@ cat << "EOF"
   \/_____/   \/_____/     \/_/   \/_/   \/_____/   \/_/ \/_/
 EOF
 
-echo "It should open a tab in your browser"
+echo "It should open a tab in your browser, if not click on the link"
 echo "Also do you love my ASCII text? :3"
 
 streamlit run main.py || python3 -m streamlit run main.py
