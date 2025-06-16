@@ -28,7 +28,7 @@ def ApplyChanges(fpslimit, lightingtech, oof1, rpc1, rendertech, bbchat, FFlags,
         UpdateFflags("FFlagDebugForceFutureIsBrightPhase3",True)
     # FPS limit
     UpdateFflags("DFIntTaskSchedulerTargetFps",fpslimit)
-    UpdateFflags("FFlagGameBasicSettingsFramerateCap5",False)
+    UpdateFflags("FFlagGameBasicSettingsFramerateCap5",True)
     UpdateFflags("FFlagTaskSchedulerLimitTargetFpsTo2402",False)
     #Bringbackoof - ts is a hashtag lol 🥀
     UpdateSoberConfig("bring_back_oof",oof1)
