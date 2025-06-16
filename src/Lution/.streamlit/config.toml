@@ -1,6 +1,6 @@
 [theme]
 base = "dark"
-primaryColor = "red"
+primaryColor = "#00AAFF"
 backgroundColor = "#0E1117"
 secondaryBackgroundColor = "#262730"
 [client]
