@@ -82,7 +82,7 @@ or
 streamlit run main.py
 ```
 
----
+<img src="https://raw.githubusercontent.com/Lutionhq/Lution/refs/heads/latest/md/bar.png" style="width: 100%;">
 
 # FAQ
 
