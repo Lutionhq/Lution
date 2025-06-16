@@ -31,6 +31,13 @@ Wanna run Lution or help improve it? Here's how:
 
 Make sure Python is installed on your system.
 
+### 2. Clone the Repo
+
+```bash
+git clone https://github.com/Lutionhq/Lution.git
+cd Lution
+```
+
 ### 2. Run Lution
 
 ```bash
