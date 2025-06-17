@@ -13,10 +13,6 @@ import json
 
 def ApplyChanges(fpslimit, lightingtech, oof1, rpc1, rendertech, bbchat, FFlags, fontsize, useoldrobloxsounds):
     """Apply changes based on user input."""
-    # FFlags Editor
-    Currfflags = ReadSoberConfig("fflags")
-    Combine = CombineJson(Currfflags, FFlags)
-    UpdateSoberConfig("fflags", Combine)
     # Lighting Tech
     if lightingtech == "Voxel Lighting (Phase 1)" : 
         UpdateFflags("DFFlagDebugRenderForceTechnologyVoxel",True)
@@ -47,6 +43,7 @@ def ApplyChanges(fpslimit, lightingtech, oof1, rpc1, rendertech, bbchat, FFlags,
     UpdateSoberConfig("FFlagEnableBubbleChatFromChatService", bbchat)
     # Font Size
     UpdateFflags("FIntFontSizePadding", fontsize)
+
     # force Overwrite meshes
     OverwriteFiles(
         os.path.expanduser("~/.var/app/org.vinegarhq.Sober/data/sober/asset_overlay/content/avatar/meshes/"),
@@ -71,7 +68,14 @@ def ApplyChanges(fpslimit, lightingtech, oof1, rpc1, rendertech, bbchat, FFlags,
             ]
         )
 
-
+def Applyfflags(fflags):
+    # FFlags Editor
+    Currfflags = ReadSoberConfig("fflags")
+    print(Currfflags)
+    Combine = CombineJson(Currfflags, fflags)
+    print(fflags)
+    print(Combine)
+    UpdateSoberConfig("fflags", Combine)
 
 def LoadLightTechConfig():
     """Load Lighting techs Sober configs into session state."""

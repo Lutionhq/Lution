@@ -4,6 +4,7 @@ from modules.utils.lang import LANG
 from modules.utils.logging import log
 from modules.utils.files import OverlaySetup
 from modules.configcheck.config import ReadSoberConfig
+from modules.configcheck.config import Applyfflags
 from modules.utils.sidebar import InitSidebar
 
 InitSidebar()
@@ -33,17 +34,30 @@ st.button(
 )
 
 # fflags editor
+if "fflags_text" not in st.session_state:
+    st.session_state.fflags_text = json.dumps(st.session_state.fflagseditor, indent=4)
+
 fflags_text = st.text_area(
     LANG["lution.fflags.texterea.fflagseditor"],
-    value=json.dumps(st.session_state.fflagseditor, indent=4),
+    value=st.session_state.fflags_text,
     height=300
 )
+
 try:
     parsed = json.loads(fflags_text)
     st.session_state.fflagseditor = parsed
+    print(st.session_state.fflagseditor)
 except Exception:
     log.warn("Invalid fflags config")
     st.warning(LANG["lution.message.warning.fflags.invalid"])
+
+lf, mid ,rgt = st.columns(3)
+with mid:
+    st.button(
+        "Apply FFlags",
+        on_click=lambda : Applyfflags(st.session_state.fflagseditor),
+        use_container_width=True
+    )
 
 st.write(LANG["lution.fflags.text.mics"])
 st.button(
