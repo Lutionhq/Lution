@@ -71,10 +71,7 @@ def ApplyChanges(fpslimit, lightingtech, oof1, rpc1, rendertech, bbchat, FFlags,
 def Applyfflags(fflags):
     # FFlags Editor
     Currfflags = ReadSoberConfig("fflags")
-    print(Currfflags)
     Combine = CombineJson(Currfflags, fflags)
-    print(fflags)
-    print(Combine)
     UpdateSoberConfig("fflags", Combine)
 
 def LoadLightTechConfig():
