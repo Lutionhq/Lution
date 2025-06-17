@@ -8,6 +8,16 @@ cat << "EOF"
  \ \_____\  \ \_____\    \ \_\  \ \_\  \ \_____\  \ \_\\"\_\
   \/_____/   \/_____/     \/_/   \/_/   \/_____/   \/_/ \/_/
 EOF
+if grep -qi 'ubuntu' /etc/os-release; then
+    if ! dpkg -s python3-venv >/dev/null 2>&1; then
+        echo "Installing python3-venv..."
+        sudo apt update && sudo apt install -y python3-venv
+    else
+        echo "python3-venv is already installed."
+    fi
+else
+    echo ""
+fi
 
 python3 -m venv venv
 source venv/bin/activate
