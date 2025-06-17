@@ -39,5 +39,5 @@ echo "Also do you love my ASCII text? :3"
 
 streamlit run main.py || python3 -m streamlit run main.py
 
-clear
+
 echo "i got destroyed 😭"
