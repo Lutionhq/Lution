@@ -96,7 +96,7 @@ streamlit run main.py
 
 **A:** Yep! Roblox and Sober use the same fflags structure, so it should just work.
 
-<img src="https://raw.githubusercontent.com/Lutionhq/Lution/refs/heads/latest/md/bar.png" style="width: 100%;">
+<img src="https://raw.githubusercontent.com/Lutionhq/Lution/refs/heads/latest/md/bar.png" style="width: 100%;">  
 
 # Misc
 
@@ -109,3 +109,10 @@ Lution edits the contents in your **Assets Overlay** path to apply changes.
 Find it [here](https://github.com/triisdang/Lution-Marketplace)
 
 <img src="https://raw.githubusercontent.com/Lutionhq/Lution/refs/heads/latest/md/bar.png" style="width: 100%;">
+                        
+## plead star
+[![starboard](https://starchart.cc/Lutionhq/Lution.svg?variant=adaptive)](https://starchart.cc/Lutionhq/Lution)
+
+<img src="https://raw.githubusercontent.com/Lutionhq/Lution/refs/heads/latest/md/bar.png" style="width: 100%;">
+
+                    
