@@ -1,6 +1,7 @@
 import streamlit as st
 from modules.utils.lang import LANG
 from modules.utils.logging import log
+from modules.configcheck.VERSION import GIT_COMMIT, COMMIT_DATE
 import os
 
 
@@ -24,4 +25,6 @@ def InitSidebar():
     st.sidebar.page_link("pages/apply.py", label=LANG["lution.tab.apply"], icon="✅")
     st.sidebar.page_link("pages/lutionsettings.py", label=LANG["lution.tab.lutionsettings"], icon="⚙️")
     st.sidebar.page_link("pages/about.py", label=LANG["lution.tab.about"], icon="ℹ️")
+    st.sidebar.container()
+    st.sidebar.capition(f"Running commit : {GIT_COMMIT}")
     log.info("Success init sidebar")
