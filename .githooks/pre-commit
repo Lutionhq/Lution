@@ -9,7 +9,7 @@ commit_date=$(git show -s --format=%ci HEAD)
 OUT="$ROOT/src/Lution/modules/configcheck/VERSION.py"
 
 cat > "$OUT" <<EOF
-# AUTO GENARATED, DO NOT TRY TO MODIFY
+# AUTO GENERATED, DO NOT MODIFY
 # sigmas
 GIT_COMMITT = "$commit_hash"
 COMMIT_DATE = "$commit_date"
@@ -18,11 +18,12 @@ from github import Github
 
 g = Github()
 repo = g.get_repo("lutionhq/lution")
-ltcommit = repo.get_commits()[1]
-if ltcommit.sha == GIT_COMMITT:
-    GIT_COMMIT = f"{GIT_COMMITT} (outdated)"
+ltcommit = repo.get_commits()[0]
+
+if ltcommit.sha.startswith(GIT_COMMITT):
+    GIT_COMMIT = f"{GIT_COMMITT}"
 else:
-    GIT_COMMIT = GIT_COMMITT
+    GIT_COMMIT = f"{GIT_COMMITT} (outdated)"
 
 EOF
 
