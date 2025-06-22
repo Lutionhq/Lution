@@ -31,4 +31,5 @@ env/
 *.spec
 *.orig
 *.ipynb_checkpoints
+.latest_commit_cache
 app.log
