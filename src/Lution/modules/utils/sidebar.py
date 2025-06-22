@@ -27,5 +27,5 @@ def InitSidebar():
     st.sidebar.page_link("pages/lutionsettings.py", label=LANG["lution.tab.lutionsettings"], icon="⚙️")
     st.sidebar.page_link("pages/about.py", label=LANG["lution.tab.about"], icon="ℹ️")
     st.sidebar.container()
-    st.sidebar.caption(f"Running commit : {GIT_COMMIT}")
+    st.sidebar.caption(f"Running commit : {GIT_COMMIT[:7]}")
     log.info("Success init sidebar")
