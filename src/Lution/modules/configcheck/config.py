@@ -11,7 +11,7 @@ import platform
 import streamlit as st
 import json
 
-def ApplyChanges(fpslimit, lightingtech, oof1, rpc1, rendertech, bbchat, fontsize, useoldrobloxsounds):
+def ApplyChanges(fpslimit, lightingtech, oof1, rpc1, rendertech, bbchat, fontsize, useoldrobloxsounds, disableprsh):
     """Apply changes based on user input."""
     # Lighting Tech
     if lightingtech == "Voxel Lighting (Phase 1)" : 
@@ -34,6 +34,13 @@ def ApplyChanges(fpslimit, lightingtech, oof1, rpc1, rendertech, bbchat, fontsiz
     UpdateSoberConfig("bring_back_oof",oof1)
     # Disnabel Discord RPC
     UpdateSoberConfig("discord_rpc_enabled",rpc1)
+    # Disable Player shadows
+    if disableprsh == True :
+        UpdateFflags("FIntRenderShadowIntensity", "0")
+        UpdateLutionConfig("disableplayersh", True)
+    else:
+        UpdateFflags("FIntRenderShadowIntensity", "75")
+        UpdateLutionConfig("disableplayersh", False)
     # Render Technology
     if rendertech == "OpenGL":
         UpdateSoberConfig("use_opengl", True)

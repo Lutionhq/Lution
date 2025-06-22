@@ -27,6 +27,12 @@ st.session_state.lightingtech = st.selectbox(
     ["Voxel Lighting (Phase 1)", "Shadowmap Lighting (Phase 2)", "Future Lighting (Phase 3)"],
     index=["Voxel Lighting (Phase 1)", "Shadowmap Lighting (Phase 2)", "Future Lighting (Phase 3)"].index(st.session_state.lightingtech)
 )
+# fflags presets
+st.write("fflags presets")
+st.toggle("Disable player shadows", value=st.session_state.disableplayersh)
+
+
+# advanded
 st.write(LANG["lution.fflags.text.advanded"])
 st.button(
     LANG["lution.fflags.button.reseteditor"],

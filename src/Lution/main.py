@@ -55,6 +55,13 @@ if "fflagseditor" not in st.session_state:
 if "fontsize" not in st.session_state:
     log.info("Reading FFlag Fon size")
     st.session_state.fontsize = ReadFflagsConfig("FIntFontSizePadding")
+if "disableplayersh" not in st.session_state:
+    log.info("Reading Disnable player shadows")
+    dis = ReadLutionConfig("disableplayersh")
+    if dis == None :
+        st.session_state.disableplayersh = False
+    else:
+        st.session_state.disableplayersh = dis
 if "useoldrobloxsounds" not in st.session_state:
     log.info("Reading Old roblox sounds")
     a = ReadLutionConfig("OldRlbxSd")
