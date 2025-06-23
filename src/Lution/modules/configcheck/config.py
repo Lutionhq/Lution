@@ -95,6 +95,22 @@ def LoadLightTechConfig():
     else:
         return "Voxel Lighting (Phase 1)"  # Default fallback
 
+def LoadTextureQuality():
+    flag = ReadFflagsConfig("DFIntTextureQualityOverride")
+    match flag :
+        case 0 :
+            return "Level 0 (potato)"
+        case 1 :
+            return "Level 1 (Low)"
+        case 2 :
+            return "Level 2 (Medium)"    
+        case 3 :
+            return "Level 3 (High)"
+        case 4 :
+            return "Level 4 (Ultra)"
+        case _:
+            return "Off"
+
 def UsingOpenGl():
     """Load Render Tech from Sober config."""
     Open_gl = ReadSoberConfig("use_opengl")

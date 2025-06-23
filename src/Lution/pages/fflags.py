@@ -30,7 +30,11 @@ st.session_state.lightingtech = st.selectbox(
 # fflags presets
 st.write("fflags presets")
 st.toggle("Disable player shadows", value=st.session_state.disableplayersh)
-
+st.session_state.texturequality = st.selectbox(
+    "Texture quality",
+    ["Off","Level 0 (potato)", "Level 1 (Low)","Level 2 (Medium)","Level 3 (High)","Level 4 (Ultra)"],
+    index=["Off","Level 0 (potato)", "Level 1 (Low)","Level 2 (Medium)","Level 3 (High)","Level 4 (Ultra)"].index(st.session_state.texturequality)
+)
 
 # advanded
 st.write(LANG["lution.fflags.text.advanded"])
@@ -58,6 +62,7 @@ except Exception:
     st.warning(LANG["lution.message.warning.fflags.invalid"])
 
 lf, mid ,rgt = st.columns(3)
+st.caption("The fflags editor slow to update with the config, recommend restart lution then try again")
 with mid:
     st.button(
         "Apply FFlags",

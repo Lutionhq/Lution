@@ -27,6 +27,10 @@ if "lightingtech" not in st.session_state:
     log.info("Reading Lighting technology")
     tech = LoadLightTechConfig()
     st.session_state.lightingtech = tech
+if "texturequality" not in st.session_state: 
+    log.info("Reading Texture Quality")
+    qua = LoadTextureQuality()
+    st.session_state.texturequality = qua
 if "oof" not in st.session_state:
     log.info("Reading Oof")
     oof = ReadSoberConfig("bring_back_oof")
