@@ -7,7 +7,6 @@ from modules.utils.sidebar import InitSidebar
 InitSidebar()
 
 def AppyAndUpdate():
-    print(st.session_state.texturequality)
     ApplyChanges(
         st.session_state.fpslimit,
         st.session_state.lightingtech,
