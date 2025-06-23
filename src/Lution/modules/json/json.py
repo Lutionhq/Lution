@@ -25,6 +25,25 @@ def ReadFflagsConfig(flag_name):
     except Exception as e:
         st.error(f"Failed to read fflag '{flag_name}': {e}")
         return None
+def DeleteFflag(flag_name):
+    """Delete a key from the fflags section of the Sober config."""
+    file_path = os.path.expanduser("~/.var/app/org.vinegarhq.Sober/config/sober/config.json")
+    try:
+        with open(file_path, "r") as f:
+            config = json.load(f)
+        fflags = config.get("fflags", {})
+        if flag_name in fflags:
+            del fflags[flag_name]
+            config["fflags"] = fflags
+            with open(file_path, "w") as f:
+                json.dump(config, f, indent=4)
+            return True
+        else:
+            st.warning(f"Flag '{flag_name}' not found in fflags.")
+            return False
+    except Exception as e:
+        st.error(f"Failed to delete fflag '{flag_name}': {e}")
+        return False
 
 def UpdateFflags(flag_name, flag_value):
     file_path = os.path.expanduser("~/.var/app/org.vinegarhq.Sober/config/sober/config.json")
