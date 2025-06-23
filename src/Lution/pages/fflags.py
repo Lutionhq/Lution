@@ -28,8 +28,8 @@ st.session_state.lightingtech = st.selectbox(
 # fflags presets
 st.write("fflags presets")
 st.session_state.disablechat = st.toggle(LANG["lution.fflags.toggle.bbchat"], value=st.session_state.disablechat)
-st.session_state.fontsize = st.text_input(LANG["lution.appearance.textbox.fontsize"], value=st.session_state.fontsize, max_chars=2)
 st.toggle("Disable player shadows", value=st.session_state.disableplayersh)
+st.session_state.fontsize = st.text_input(LANG["lution.appearance.textbox.fontsize"], value=st.session_state.fontsize, max_chars=2)
 st.session_state.texturequality = st.selectbox(
     "Texture quality",
     ["Off","Level 0 (potato)", "Level 1 (Low)","Level 2 (Medium)","Level 3 (High)","Level 4 (Ultra)"],
