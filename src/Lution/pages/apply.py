@@ -7,6 +7,7 @@ from modules.utils.sidebar import InitSidebar
 InitSidebar()
 
 def AppyAndUpdate():
+    print(st.session_state.texturequality)
     ApplyChanges(
         st.session_state.fpslimit,
         st.session_state.lightingtech,
@@ -16,7 +17,8 @@ def AppyAndUpdate():
         st.session_state.disablechat,
         st.session_state.fontsize,
         st.session_state.useoldrobloxsounds,
-        st.session_state.disableplayersh
+        st.session_state.disableplayersh,
+        st.session_state.texturequality
     )
     Currfflags = ReadSoberConfig("fflags")
     log.info("Applying changes...")

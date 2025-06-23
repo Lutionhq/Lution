@@ -1,5 +1,5 @@
 #src/sostrapter/modules/json/json.py
-from modules.json.json import UpdateFflags, UpdateSoberConfig,ReadFflagsConfig, ReadSoberConfig, CombineJson
+from modules.json.json import UpdateFflags, UpdateSoberConfig,ReadFflagsConfig, ReadSoberConfig, CombineJson, DeleteFflag
 from modules.configcheck.fontreplacer import *
 from modules.utils.files import OverwriteFiles
 from modules.utils.files import JsonSetup, JsonSetup2
@@ -11,7 +11,7 @@ import platform
 import streamlit as st
 import json
 
-def ApplyChanges(fpslimit, lightingtech, oof1, rpc1, rendertech, bbchat, fontsize, useoldrobloxsounds, disableprsh):
+def ApplyChanges(fpslimit, lightingtech, oof1, rpc1, rendertech, bbchat, fontsize, useoldrobloxsounds, disableprsh, texturequa):
     """Apply changes based on user input."""
     # Lighting Tech
     if lightingtech == "Voxel Lighting (Phase 1)" : 
@@ -26,6 +26,24 @@ def ApplyChanges(fpslimit, lightingtech, oof1, rpc1, rendertech, bbchat, fontsiz
         UpdateFflags("DFFlagDebugRenderForceTechnologyVoxel",False)
         UpdateFflags("FFlagDebugForceFutureIsBrightPhase2",False)
         UpdateFflags("FFlagDebugForceFutureIsBrightPhase3",True)
+    # Texture quality
+    def chektexture(texturequa1):
+        UpdateFflags("DFFlagTextureQualityOverrideEnabled", True)
+        match texturequa1:
+            case "Off" :
+                DeleteFflag("DFFlagTextureQualityOverrideEnabled")
+                DeleteFflag("DFIntTextureQualityOverride")
+            case "Level 0 (potato)":
+                UpdateFflags("DFIntTextureQualityOverride", 0)
+            case "Level 1 (Low)":
+                UpdateFflags("DFIntTextureQualityOverride", 1)
+            case "Level 2 (Medium)":
+                UpdateFflags("DFIntTextureQualityOverride", 2)
+            case "Level 3 (High)":
+                UpdateFflags("DFIntTextureQualityOverride", 3)
+            case "Level 4 (Ultra)":
+                UpdateFflags("DFIntTextureQualityOverride", 4)
+    chektexture(texturequa)
     # FPS limit
     UpdateFflags("DFIntTaskSchedulerTargetFps",fpslimit)
     UpdateFflags("FFlagGameBasicSettingsFramerateCap5",True)
