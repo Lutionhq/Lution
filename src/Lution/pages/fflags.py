@@ -14,9 +14,7 @@ log.info("Page : Fflags")
 st.header(LANG["lution.tab.fflags"])
 st.session_state.oof = st.toggle(LANG["lution.fflags.toggle.bringbackoof"], value=st.session_state.oof)
 st.session_state.rpc = st.toggle(LANG["lution.fflags.toggle.rpc"], value=st.session_state.rpc)
-st.session_state.disablechat = st.toggle(LANG["lution.fflags.toggle.bbchat"], value=st.session_state.disablechat)
 st.session_state.fpslimit = st.text_input(LANG["lution.fflags.textbox.fpslimit"], st.session_state.fpslimit, max_chars=3)
-st.session_state.fontsize = st.text_input(LANG["lution.appearance.textbox.fontsize"], value=st.session_state.fontsize, max_chars=2)
 st.session_state.render = st.selectbox(
     LANG["lution.fflags.mutichoices.render"],
     ["OpenGL", "Vulkan"],
@@ -29,6 +27,8 @@ st.session_state.lightingtech = st.selectbox(
 )
 # fflags presets
 st.write("fflags presets")
+st.session_state.disablechat = st.toggle(LANG["lution.fflags.toggle.bbchat"], value=st.session_state.disablechat)
+st.session_state.fontsize = st.text_input(LANG["lution.appearance.textbox.fontsize"], value=st.session_state.fontsize, max_chars=2)
 st.toggle("Disable player shadows", value=st.session_state.disableplayersh)
 st.session_state.texturequality = st.selectbox(
     "Texture quality",
