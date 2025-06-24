@@ -31,6 +31,10 @@ if "texturequality" not in st.session_state:
     log.info("Reading Texture Quality")
     qua = LoadTextureQuality()
     st.session_state.texturequality = qua
+if "mssa" not in st.session_state: 
+    log.info("Reading msaa")
+    msaa = LoadMSAA()
+    st.session_state.msaa = msaa
 if "oof" not in st.session_state:
     log.info("Reading Oof")
     oof = ReadSoberConfig("bring_back_oof")

@@ -30,6 +30,12 @@ st.write("fflags presets")
 st.session_state.disablechat = st.toggle(LANG["lution.fflags.toggle.bbchat"], value=st.session_state.disablechat)
 st.toggle("Disable player shadows", value=st.session_state.disableplayersh)
 st.session_state.fontsize = st.text_input(LANG["lution.appearance.textbox.fontsize"], value=st.session_state.fontsize, max_chars=2)
+st.session_state.msaa = st.selectbox(
+    "MSSA (Multisample Anti-Aliasing)",
+    ["Off","Auto","x1","x2","x4"],
+    index=["Off","Auto","x1","x2","x4"].index(st.session_state.msaa)
+)
+st.caption("NOTE : Not all devices respect MSAA, and some GPUs may still auto-adjust. The flag works best on Windows with Direct3D.")
 st.session_state.texturequality = st.selectbox(
     "Texture quality",
     ["Off","Level 0 (potato)", "Level 1 (Low)","Level 2 (Medium)","Level 3 (High)","Level 4 (Ultra)"],

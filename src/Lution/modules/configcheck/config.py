@@ -11,7 +11,7 @@ import platform
 import streamlit as st
 import json
 
-def ApplyChanges(fpslimit, lightingtech, oof1, rpc1, rendertech, bbchat, fontsize, useoldrobloxsounds, disableprsh, texturequa):
+def ApplyChanges(fpslimit, lightingtech, oof1, rpc1, rendertech, bbchat, fontsize, useoldrobloxsounds, disableprsh, texturequa, msaa):
     """Apply changes based on user input."""
     # Lighting Tech
     if lightingtech == "Voxel Lighting (Phase 1)" : 
@@ -44,6 +44,23 @@ def ApplyChanges(fpslimit, lightingtech, oof1, rpc1, rendertech, bbchat, fontsiz
             case "Level 4 (Ultra)":
                 UpdateFflags("DFIntTextureQualityOverride", 4)
     chektexture(texturequa)
+        # Texture quality
+    def msaaapply(msaa1):
+        UpdateFflags("FFlagDebugDisableMSAA", False)
+        match msaa1:
+            case "Off" :
+                UpdateFflags("DFFlagTextureQualityOverrideEnabled", True)
+                DeleteFflag("FIntMSAASampleCount")
+            case "x1":
+                UpdateFflags("FIntMSAASampleCount", 1)
+            case "x2":
+                UpdateFflags("FIntMSAASampleCount", 2)
+            case "x4":
+                UpdateFflags("FIntMSAASampleCount", 4)
+            case "Auto":
+                DeleteFflag("DFIntTextureQualityOverride")
+
+    msaaapply(msaa)
     # FPS limit
     UpdateFflags("DFIntTaskSchedulerTargetFps",fpslimit)
     UpdateFflags("FFlagGameBasicSettingsFramerateCap5",True)
@@ -113,6 +130,22 @@ def LoadLightTechConfig():
     else:
         return "Voxel Lighting (Phase 1)"  # Default fallback
 
+def LoadMSAA():
+    flag = ReadFflagsConfig("FFlagDebugDisableMSAA")
+    flag2 = ReadFflagsConfig("FIntMSAASampleCount")
+    if flag == False:
+        return "Off"
+    else:
+        match flag2 :
+            case 1 :
+                return "x1"
+            case 2 : 
+                return "x2"
+            case 4 :
+                return "x4"
+            case _:
+                return "Auto"
+            
 def LoadTextureQuality():
     flag = ReadFflagsConfig("DFIntTextureQualityOverride")
     match flag :
