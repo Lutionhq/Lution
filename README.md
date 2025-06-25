@@ -24,78 +24,7 @@ Oh, and yes — **it works with Bloxstrap mods too!!111**
 <img src="https://raw.githubusercontent.com/Lutionhq/Lution/refs/heads/latest/md/bar.png" style="width: 100%;">
 
 # Get Started
-
-Wanna run Lution or help improve it? Here's how:
-
-### 1. Install Python
-
-Make sure Python is installed on your system.
-
-### 2. Clone the Repo
-> [!NOTE]  
-> If you just want to update Lution, please run `git pull`
-```bash
-git clone https://github.com/Lutionhq/Lution.git
-cd Lution
-```
-
-### 2. Run Lution
-
-```bash
-cd Lution/src
-./run.sh
-```
-
-<img src="https://raw.githubusercontent.com/Lutionhq/Lution/refs/heads/latest/md/bar.png" style="width: 100%;">
-
-# Contributing
-
-### 1. Clone the Repo
-
-```bash
-git clone https://github.com/Lutionhq/Lution.git
-cd Lution
-```
-
-### 2. Set Up a Virtual Environment
-
-```bash
-python3 -m venv ".venv"
-source .venv/bin/activate
-```
-
-### 3. Install Dependencies
-
-```bash
-cd src/Lution
-pip install -r requirements.txt
-```
-#### 3.1. Optional step
-If you are using Debian based distro, please also run
-
-```bash
-sudo apt install python3.12-venv
-```
-
-### 4. Run It
-
-```bash
-python3 -m streamlit run main.py
-```
-
-or
-
-```bash
-streamlit run main.py
-```
-
-<img src="https://raw.githubusercontent.com/Lutionhq/Lution/refs/heads/latest/md/bar.png" style="width: 100%;">
-
-# FAQ
-
-**Q:** Does Bloxstrap’s fflags work with Lution?
-
-**A:** Yep! Roblox and Sober use the same fflags structure, so it should just work.
+moved : https://lutionhq.github.io/pages/docs/installlution.html
 
 <img src="https://raw.githubusercontent.com/Lutionhq/Lution/refs/heads/latest/md/bar.png" style="width: 100%;">  
 
