@@ -24,7 +24,7 @@ Oh, and yes — **it works with Bloxstrap mods too!!111**
 <img src="https://raw.githubusercontent.com/Lutionhq/Lution/refs/heads/latest/md/bar.png" style="width: 100%;">
 
 # Get Started
-moved : https://lutionhq.github.io/pages/docs/installlution.html
+moved : https://wookhq.github.io/lution/pages/docs/installlution.html
 
 <img src="https://raw.githubusercontent.com/Lutionhq/Lution/refs/heads/latest/md/bar.png" style="width: 100%;">  
 
