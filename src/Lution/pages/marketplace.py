@@ -106,7 +106,7 @@ def create_columns(contents, content_type, cols_per_row=3):
 with marketplace:
     st.header(LANG["lution.marketplace.marketplace.title"])
     st.write(LANG["lution.marketplace.marketplace.decs"])
-    st.markdown("[README.md](https://github.com/Lutionhq/Lution-Marketplace/blob/main/how-to/README.md)")
+    st.markdown("[DOCS](https://wookhq.github.io/lution/pages/docs.html)")
 
     #st.write(f"### {LANG['lution.marketplace.tab.themes']}")
     if avdthemes and st.session_state.get("theme"):
