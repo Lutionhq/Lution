@@ -17,7 +17,8 @@ def AppyAndUpdate():
         st.session_state.fontsize,
         st.session_state.useoldrobloxsounds,
         st.session_state.disableplayersh,
-        st.session_state.texturequality
+        st.session_state.texturequality,
+        st.session_state.msaa
     )
     Currfflags = ReadSoberConfig("fflags")
     log.info("Applying changes...")
