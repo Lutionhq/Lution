@@ -40,8 +40,8 @@ Find it [here](https://github.com/triisdang/Lution-Marketplace)
 
 <img src="https://raw.githubusercontent.com/Lutionhq/Lution/refs/heads/latest/md/bar.png" style="width: 100%;">
                         
-## plead star
-[![starboard](https://starchart.cc/Lutionhq/Lution.svg?variant=adaptive)](https://starchart.cc/Lutionhq/Lution)
+## big numbers = chip happy
+[![starboard](https://starchart.cc/Wookhq/Lution.svg?variant=adaptive)](https://starchart.cc/Wookhq/Lution)
 
 <img src="https://raw.githubusercontent.com/Lutionhq/Lution/refs/heads/latest/md/bar.png" style="width: 100%;">
 
