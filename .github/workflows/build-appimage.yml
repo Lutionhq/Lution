@@ -2,7 +2,7 @@ name: Build Lution AppImage
 
 on:
   push:
-    branches: [main]
+    branches: [latest]
   workflow_dispatch:
 
 jobs:
