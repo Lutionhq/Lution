@@ -1,4 +1,4 @@
-name: Build Lution AppImage
+name: fuck it, let zip everything up like github and call it a day
 
 on:
   push:
@@ -10,71 +10,21 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout repository
+      - name: Checkout repo
         uses: actions/checkout@v3
 
-      - name: Set up Python
-        uses: actions/setup-python@v4
-        with:
-          python-version: '3.12'
-
-      - name: Install dependencies
+      - name: Create portable zip folder
         run: |
-          python -m pip install --upgrade pip
-          pip install -r src/Lution/requirements.txt
-          pip install pyinstaller
+          mkdir LutionPortable
+          cp run.sh requirements.txt LutionPortable/
+          cp -r src LutionPortable/
 
-      - name: PyInstaller build
+      - name: Create ZIP archive
         run: |
-          cd src/Lution
-          pyinstaller launch.py --name lution_app --onedir --noconfirm \
-            --hidden-import=streamlit.web.cli \
-            --exclude-module test \
-            --exclude-module tkinter \
-            --exclude-module email \
-            --exclude-module http \
-            --exclude-module xml \
-            --exclude-module venv
+          zip -r LutionPortable.zip LutionPortable
 
-      - name: Prepare AppDir
-        run: |
-          mkdir -p AppDir/usr/bin
-          cp -r src/Lution/dist/lution_app/* AppDir/usr/bin/
-          cp src/Lution/files/lution1.png AppDir/icon.png || echo "No icon found"
-
-      - name: Create AppRun
-        run: |
-          echo '#!/bin/bash' > AppDir/AppRun
-          echo 'HERE="$(dirname "$(readlink -f "$0")")"' >> AppDir/AppRun
-          echo 'exec "$HERE/usr/bin/lution_app"' >> AppDir/AppRun
-          chmod +x AppDir/AppRun
-
-      - name: Create desktop file
-        run: |
-          echo '[Desktop Entry]' > AppDir/lution.desktop
-          echo 'Type=Application' >> AppDir/lution.desktop
-          echo 'Name=Lution' >> AppDir/lution.desktop
-          echo 'Exec=AppRun' >> AppDir/lution.desktop
-          echo 'Icon=icon' >> AppDir/lution.desktop
-          echo 'Categories=Utility;' >> AppDir/lution.desktop
-          echo 'Terminal=false' >> AppDir/lution.desktop
-
-      - name: Download appimagetool
-        run: |
-          wget https://github.com/AppImage/AppImageKit/releases/latest/download/appimagetool-x86_64.AppImage
-          chmod +x appimagetool-x86_64.AppImage
-
-      - name: Install libfuse2
-        run: |
-          sudo apt update
-          sudo apt install -y libfuse2
-
-      - name: Build AppImage
-        run: |
-          ./appimagetool-x86_64.AppImage AppDir
-
-      - name: Upload
+      - name: Upload artifact
         uses: actions/upload-artifact@v4
         with:
-          name: LutionApp
-          path: Lution-x86_64.AppImage
+          name: LutionPortable
+          path: LutionPortable.zip
