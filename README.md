@@ -15,7 +15,7 @@
 
 # What is Lution?
 
-Lution is a third-party app that upgrades your Sober experience with quality-of-life tweaks and extra features. It’s kind of like [Lucem](https://github.com/xTrayambak/lucem) or [Bloxstrap](https://github.com/bloxstraplabs/bloxstrap), but built entirely in **Python** .
+Lution is a third-party app that upgrades your Sober experience with quality-of-life tweaks and extra features. It’s kind of like [Lucem](https://github.com/xTrayambak/lucem) or [Bloxstrap](https://github.com/bloxstraplabs/bloxstrap), but built entirely in **Python** . Check out the [showcase video.](https://youtu.be/HE0LXcOJYLY)
 
 Oh, and yes — **it works with Bloxstrap mods too!!111**
 
