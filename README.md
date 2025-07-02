@@ -37,6 +37,16 @@ Lution edits the contents in your **Assets Overlay** path to apply changes.
 ### Lution Marketplace
 
 Find it [here](https://github.com/triisdang/Lution-Marketplace)
+<img src="https://raw.githubusercontent.com/Lutionhq/Lution/refs/heads/latest/md/bar.png" style="width: 100%;">
+
+# Also check out :
+
+- [Lucem](https://github.com/xTrayambak/lucem)
+- [Bloxstrap](https://github.com/bloxstraplabs/bloxstrap)
+- [Sober](https://sober.vinegarhq.org/)
+
+
+- [Your mother](https://store.steampowered.com/app/3399950/Your_Mother/)
 
 <img src="https://raw.githubusercontent.com/Lutionhq/Lution/refs/heads/latest/md/bar.png" style="width: 100%;">
                         
