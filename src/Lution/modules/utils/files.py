@@ -146,12 +146,7 @@ def ResetMods():
             st.warning(f"Source directory does not exist: {src_dir}")
             return
         if os.path.isdir(dest_dirr):
-            for item in os.listdir(dest_dirr):
-                item_path = os.path.join(dest_dirr, item)
-                if os.path.isdir(item_path):
-                    shutil.rmtree(item_path)
-                else:
-                    os.remove(item_path)
+            shutil.rmtree(dest_dirr)
         os.makedirs(dest_dirr, exist_ok=True)
         for item in os.listdir(src_dir):
             s = os.path.join(src_dir, item)
@@ -165,25 +160,20 @@ def ResetMods():
 
 
 def ResetMods2():
-        dest_dirr = os.path.expanduser("~/.var/app/org.vinegarhq.Sober/data/sober/asset_overlay/content/")
-        src_dir = os.path.expanduser("~/.var/app/org.vinegarhq.Sober/data/sober/assets/content/")
-        if not os.path.isdir(src_dir):
-            return
-        if os.path.isdir(dest_dirr):
-            for item in os.listdir(dest_dirr):
-                item_path = os.path.join(dest_dirr, item)
-                if os.path.isdir(item_path):
-                    shutil.rmtree(item_path)
-                else:
-                    os.remove(item_path)
-        os.makedirs(dest_dirr, exist_ok=True)
-        for item in os.listdir(src_dir):
-            s = os.path.join(src_dir, item)
-            d = os.path.join(dest_dirr, item)
-            if os.path.isdir(s):
-                shutil.copytree(s, d)
-            else:
-                shutil.copy2(s, d)
+    dest_dirr = os.path.expanduser("~/.var/app/org.vinegarhq.Sober/data/sober/asset_overlay/content/")
+    src_dir = os.path.expanduser("~/.var/app/org.vinegarhq.Sober/data/sober/assets/content/")
+    if not os.path.isdir(src_dir):
+        return
+    if os.path.isdir(dest_dirr):
+        shutil.rmtree(dest_dirr)
+    os.makedirs(dest_dirr, exist_ok=True)
+    for item in os.listdir(src_dir):
+        s = os.path.join(src_dir, item)
+        d = os.path.join(dest_dirr, item)
+        if os.path.isdir(s):
+            shutil.copytree(s, d)
+        else:
+            shutil.copy2(s, d)
 
 
 
