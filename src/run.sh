@@ -35,6 +35,7 @@ cat << "EOF"
 EOF
 
 echo "It should open a window right now, if not click on the link"
+echo "If you get a error or something like that, try pressing R to fix it"
 echo "Also do you love my ASCII text? :3"
 
 python3 launch.py
