@@ -37,6 +37,6 @@ EOF
 echo "It should open a tab in your browser, if not click on the link"
 echo "Also do you love my ASCII text? :3"
 
-streamlit run main.py
+python3 launch.py
 
 echo "i got destroyed 😭"
