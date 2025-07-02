@@ -15,7 +15,7 @@ def InitSidebar():
     st.logo(image="files/lution1.svg",icon_image="files/lution1.svg")
     st.sidebar.markdown("<h2>Lution</h2>", unsafe_allow_html=True)
     st.sidebar.badge("Stable", icon=":material/check:", color="green")
-    st.sidebar.caption("Version 0.2.5")
+    st.sidebar.caption("Version 0.2.6")
 
     st.sidebar.page_link("main.py", label="Home", icon="🏠")
     st.sidebar.page_link("pages/marketplace.py", label=LANG["lution.tab.marketplace"], icon="🛒")
