@@ -16,33 +16,38 @@ jobs:
       - name: Set up Python
         uses: actions/setup-python@v4
         with:
-          python-version: '3.12.3'
+          python-version: '3.12'
 
-      - name: Install dependencies to AppDir
+      - name: Install dependencies
         run: |
-          mkdir -p AppDir/usr/site-packages
-          pip install --target=AppDir/usr/site-packages -r src/Lution/requirements.txt
+          pip install -r src/Lution/requirements.txt
+          pip install pyinstaller
 
-      - name: Prepare AppDir
+      - name: Build executable with PyInstaller
+        run: |
+          cd src/Lution
+          pyinstaller --name lution_app --noconfirm --onefile launch.py
+          cd ../..
+
+      - name: Prepare AppDir structure
         run: |
           mkdir -p AppDir/usr/bin
-          cp -r src/Lution AppDir/usr/bin/Lution
+          cp src/Lution/dist/lution_app AppDir/usr/bin/Lution
 
       - name: Create AppRun
         run: |
           echo '#!/bin/bash' > AppDir/AppRun
           echo 'HERE="$(dirname "$(readlink -f "$0")")"' >> AppDir/AppRun
-          echo 'export PYTHONPATH="$HERE/usr/site-packages"' >> AppDir/AppRun
-          echo 'python3 -m streamlit run "$HERE/usr/bin/Lution/main.py" --server.headless true' >> AppDir/AppRun
+          echo '"$HERE/usr/bin/Lution"' >> AppDir/AppRun
           chmod +x AppDir/AppRun
 
-      - name: Create desktop file
+      - name: Create .desktop file
         run: |
           echo '[Desktop Entry]' > AppDir/lution.desktop
-          echo 'Type=Application' >> AppDir/lution.desktop
           echo 'Name=Lution' >> AppDir/lution.desktop
           echo 'Exec=AppRun' >> AppDir/lution.desktop
           echo 'Icon=icon' >> AppDir/lution.desktop
+          echo 'Type=Application' >> AppDir/lution.desktop
           echo 'Categories=Utility;' >> AppDir/lution.desktop
           echo 'Terminal=false' >> AppDir/lution.desktop
 
@@ -62,7 +67,7 @@ jobs:
 
       - name: Build AppImage
         run: |
-          ./appimagetool-x86_64.AppImage AppDir
+          ./appimagetool-x86_64.AppImage AppDir Lution-x86_64.AppImage
 
       - name: Upload AppImage artifact
         uses: actions/upload-artifact@v4
