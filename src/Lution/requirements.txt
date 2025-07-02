@@ -1,3 +1,4 @@
 streamlit
 PyGithub
 rich
+PySide6
