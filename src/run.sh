@@ -34,7 +34,7 @@ cat << "EOF"
   \/_____/   \/_____/     \/_/   \/_/   \/_____/   \/_/ \/_/
 EOF
 
-echo "It should open a tab in your browser, if not click on the link"
+echo "It should open a window right now, if not click on the link"
 echo "Also do you love my ASCII text? :3"
 
 python3 launch.py
