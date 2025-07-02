@@ -82,7 +82,7 @@ def ApplyChanges(fpslimit, lightingtech, oof1, rpc1, rendertech, bbchat, fontsiz
     elif rendertech == "Vulkan":
         UpdateSoberConfig("use_opengl", False)
     # Bubble Chat
-    UpdateSoberConfig("FFlagEnableBubbleChatFromChatService", bbchat)
+    UpdateFflags("FFlagEnableBubbleChatFromChatService", bbchat)
     # Font Size
     UpdateFflags("FIntFontSizePadding", fontsize)
 
