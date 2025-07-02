@@ -1,4 +1,4 @@
-name: Build Slim Lution AppImage
+name: Build Lution AppImage
 
 on:
   push:
