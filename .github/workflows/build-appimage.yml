@@ -17,12 +17,13 @@ jobs:
         run: |
           mkdir LutionPortable
           cp src/run.sh LutionPortable/run.sh
+          rm src/run.sh
           cp src/Lution/requirements.txt LutionPortable/requirements.txt
           cp -r src LutionPortable/
 
       - name: Create ZIP archive
         run: |
-          zip -r LutionPortable.zip LutionPortable
+          zip -r Lution.zip LutionPortable
 
       - name: Upload artifact
         uses: actions/upload-artifact@v4
