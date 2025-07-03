@@ -9,13 +9,13 @@ class InstanceAlreadyExist(Exception):
 class SoberManager:
     def __init__(self):
         self.name = None
-        self.flatpakpath = Path("~/var/lib/flatpak/app")
+        self.flatpakpath = Path("/home/chip/.var/app/")
         self.appID = "org.vinegarhq.Sober"
 
     @classmethod
     def add_instance(cls, name):
         appID = "org.vinegarhq.Sober"
-        flatpakpath = Path("~/var/lib/flatpak/app")
+        flatpakpath = Path("/home/chip/.var/app/")
 
         orig = flatpakpath / appID
         new_dir = flatpakpath / name
