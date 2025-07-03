@@ -1,23 +1,21 @@
 import shutil
 import subprocess
 from pathlib import Path
-from modules.utils.logging import *
+from modules.utils.logging import log
 
-# Original from DiM, forked by chip
 class InstanceAlreadyExist(Exception):
     pass
 
-class SoberManager():
+class SoberManager:
     def __init__(self):
         self.name = None
-        self.flatpakpath = Path("/var/lib/flatpak/app")
+        self.flatpakpath = Path("~/var/lib/flatpak/app")
         self.appID = "org.vinegarhq.Sober"
-    
+
     @classmethod
     def add_instance(cls, name):
-        """Add an Instance."""
         appID = "org.vinegarhq.Sober"
-        flatpakpath = Path("/var/lib/flatpak/app")
+        flatpakpath = Path("~/var/lib/flatpak/app")
 
         orig = flatpakpath / appID
         new_dir = flatpakpath / name
@@ -25,33 +23,28 @@ class SoberManager():
         if new_dir.exists():
             raise InstanceAlreadyExist()
 
-        if not orig.exists():
-            warn("Sober not installed, installing..", "MUTI INSTANCE")
-            subprocess.run(["flatpak", "install", "--user", appID, "-y"], check=True)
 
         shutil.copytree(orig, new_dir)
-
-        # Mark this folder as our created instance
         (new_dir / ".sober_instance").touch()
-        
+
         instance = cls()
         instance.UpdateMetaData(name)
-        print(f"Account '{name}' created")
-    
+        log.info(f"Account '{name}' created", "MUTI INSTANCE")
+
     def UpdateMetaData(self, name):
         stable_dir = self.flatpakpath / name / "x86_64" / "stable"
         if not stable_dir.exists():
-            warn(f"Stable directory {stable_dir} does not exist yet, skipping metadata patch", "MUTI INSTANCE")
+            log.warn(f"Stable directory {stable_dir} does not exist yet, skipping metadata patch", "MUTI INSTANCE")
             return
 
         for entry in stable_dir.iterdir():
             if entry.is_dir() and entry.name != "active":
-                possible_metadata = entry / "metadata"
-                if possible_metadata.exists():
-                    info(f"Patching metadata: {possible_metadata}", "MUTI INSTANCE")
-                    text = possible_metadata.read_text()
+                metadata_path = entry / "metadata"
+                if metadata_path.exists():
+                    log.info(f"Patching metadata: {metadata_path}", "MUTI INSTANCE")
+                    text = metadata_path.read_text()
                     text = text.replace("name=org.vinegarhq.Sober", f"name={name}")
-                    possible_metadata.write_text(text)
+                    metadata_path.write_text(text)
                     return
 
-        error("Metadata file not found for patching", "MUTI INSTANCE")
+        log.error("Metadata file not found for patching", "MUTI INSTANCE")
