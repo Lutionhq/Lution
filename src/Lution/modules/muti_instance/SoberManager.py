@@ -18,7 +18,8 @@ class SoberManager:
         flatpakpath = Path("/home/chip/.var/app/")
 
         orig = flatpakpath / appID
-        new_dir = flatpakpath / name
+        instancend = f"org.vinegarhq.lution.Sober.{name}"
+        new_dir = flatpakpath / instancend
 
         if new_dir.exists():
             raise InstanceAlreadyExist()
@@ -30,6 +31,25 @@ class SoberManager:
         instance = cls()
         instance.UpdateMetaData(name)
         log.info(f"Account '{name}' created", "MUTI INSTANCE")
+    
+    @staticmethod
+    def list_instance():
+        flatpakpath = Path("/home/chip/.var/app/")
+        appID = "org.vinegarhq.Sober"
+        accounts = []
+
+        if (flatpakpath / appID).exists():
+            accounts.append(appID)
+
+        for entry in flatpakpath.iterdir():
+            if (
+                entry.is_dir()
+                and entry.name != appID
+                and (entry / ".sober_instance").exists()
+            ):
+                accounts.append(entry.name)
+
+        return accounts
 
     def UpdateMetaData(self, name):
         stable_dir = self.flatpakpath / name / "x86_64" / "stable"
