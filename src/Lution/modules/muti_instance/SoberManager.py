@@ -9,14 +9,17 @@ from modules.utils.logging import *
 class SoberManager():
     def __init__(self):
         self.name = None
-        self.path = Path("/var/lib/flatpak/app")
+        self.flatpakpath = Path("/var/lib/flatpak/app")
         self.appID = "org.vinegarhq.Sober"
     
     @classmethod
-    def AddInstance(cls, name):
+    def add_instance(cls, name):
         """Add an Instance."""
-        orig = cls.path / cls.appID
-        new_dir = cls.path / cls.name
+        appID = "org.vinegarhq.Sober"
+        flatpakpath = Path("/var/lib/flatpak/app")
+        
+        orig = flatpakpath / appID
+        new_dir = flatpakpath / name
 
         if new_dir.exists() :
             raise InstanceAlreadyExist
