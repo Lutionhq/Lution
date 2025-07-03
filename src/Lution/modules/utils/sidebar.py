@@ -24,6 +24,7 @@ def InitSidebar():
     st.sidebar.page_link("pages/fflags.py", label=LANG["lution.tab.fflags"], icon="⚡")
     st.sidebar.page_link("pages/apply.py", label=LANG["lution.tab.apply"], icon="✅")
     st.sidebar.page_link("pages/lutionsettings.py", label=LANG["lution.tab.lutionsettings"], icon="⚙️")
+    st.sidebar.page_link("pages/muti_instance.py", label="Muti Instance", icon="⚙️")
     st.sidebar.page_link("pages/about.py", label=LANG["lution.tab.about"], icon="ℹ️")
     st.sidebar.container()
     st.sidebar.caption(f"Running commit : {GIT_COMMIT[:7]}")
