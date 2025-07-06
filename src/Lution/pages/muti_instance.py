@@ -32,4 +32,5 @@ with expander :
         with colmid:
             st.button("Delete",key=f"del{i}", use_container_width=True)
         with colright:
-            st.button("Run",key=i, use_container_width=True)
+            if st.button("Run",key=i, use_container_width=True): 
+                SoberManager.run_instance(i)

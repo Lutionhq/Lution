@@ -9,32 +9,26 @@ class InstanceAlreadyExist(Exception):
 class SoberManager:
     def __init__(self):
         self.name = None
-        self.flatpakpath = Path("/home/chip/.var/app/")
+        self.flatpakpath = Path("/var/lib/flatpak/app")
         self.appID = "org.vinegarhq.Sober"
 
     @classmethod
     def add_instance(cls, name):
-        appID = "org.vinegarhq.Sober"
-        flatpakpath = Path("/home/chip/.var/app/")
-
-        orig = flatpakpath / appID
-        instancend = f"org.vinegarhq.lution.Sober.{name}"
-        new_dir = flatpakpath / instancend
-
-        if new_dir.exists():
-            raise InstanceAlreadyExist()
-
-
-        shutil.copytree(orig, new_dir)
-        (new_dir / ".sober_instance").touch()
-
-        instance = cls()
-        instance.UpdateMetaData(name)
-        log.info(f"Account '{name}' created", "MUTI INSTANCE")
+        path = Path(f"~/Documents/Lution/Instances/{name}").expanduser()
+        
+        if path.exists():
+            raise InstanceAlreadyExist(f"Instance '{name}' already exists.")
     
+
+        log.info(f"Creating {name}", logger="MUTI INSTANCE")
+
+        path.mkdir(parents=True, exist_ok=False)
+        
+        log.info(f"Created {name}", logger="MUTI INSTANCE")
+
     @staticmethod
     def list_instance():
-        flatpakpath = Path("/home/chip/.var/app/")
+        flatpakpath = Path("/var/lib/flatpak/app")
         appID = "org.vinegarhq.Sober"
         accounts = []
 
@@ -50,21 +44,12 @@ class SoberManager:
                 accounts.append(entry.name)
 
         return accounts
+    @staticmethod
+    def run_instance(name):
+        log.info(f"Launching {name}","MUTI INSTANCE")
+        envpath = Path(f"~/Documents/Lution/Instances/{name}").expanduser()
 
-    def UpdateMetaData(self, name):
-        stable_dir = self.flatpakpath / name / "x86_64" / "stable"
-        if not stable_dir.exists():
-            log.warn(f"Stable directory {stable_dir} does not exist yet, skipping metadata patch", "MUTI INSTANCE")
-            return
-
-        for entry in stable_dir.iterdir():
-            if entry.is_dir() and entry.name != "active":
-                metadata_path = entry / "metadata"
-                if metadata_path.exists():
-                    log.info(f"Patching metadata: {metadata_path}", "MUTI INSTANCE")
-                    text = metadata_path.read_text()
-                    text = text.replace("name=org.vinegarhq.Sober", f"name={name}")
-                    metadata_path.write_text(text)
-                    return
-
-        log.error("Metadata file not found for patching", "MUTI INSTANCE")
+        if not envpath.exists :
+            envpath.mkdir(parents=True)
+        
+        subprocess.Popen(["env", f"HOME={envpath}", "flatpak", "run", "org.vinegarhq.Sober"])
