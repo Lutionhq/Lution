@@ -1,6 +1,7 @@
 import shutil
 import subprocess
 from pathlib import Path
+import ast
 from modules.utils.logging import log
 
 class InstanceAlreadyExist(Exception):
@@ -53,3 +54,20 @@ class SoberManager:
             envpath.mkdir(parents=True)
         
         subprocess.Popen(["env", f"HOME={envpath}", "flatpak", "run", "org.vinegarhq.Sober"])
+    def update_instance(name):
+        """Update a list of instances stored in a file"""
+        
+        file_path = Path("~/Documents/Lution/Instances.list").expanduser()
+        file_path.parent.mkdir(parents=True, exist_ok=True)
+
+        if file_path.exists():
+            with open(file_path, 'r') as file:
+                content = file.read().strip()
+                instances = ast.literal_eval(content) if content else []
+        else:
+            instances = []
+
+        instances.append(name)
+
+        with open(file_path, 'w') as file:
+            file.write(str(instances))
