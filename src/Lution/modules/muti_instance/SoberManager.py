@@ -39,6 +39,8 @@ class SoberManager:
         else:
             instances = []
 
+        return instances
+
     def run_instance(name):
         log.info(f"Launching {name}","MUTI INSTANCE")
         envpath = Path(f"~/Documents/Lution/Instances/{name}").expanduser()
