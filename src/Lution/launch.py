@@ -3,7 +3,8 @@ import subprocess
 import threading
 import time
 from PySide6.QtWidgets import QApplication
-from PySide6.QtWebEngineWidgets import QWebEngineView, QWebEngineProfile, QWebEnginePage
+from PySide6.QtWebEngineWidgets import QWebEngineView
+from PySide6.QtWebEngineCore import QWebEngineProfile, QWebEnginePage
 from PySide6.QtCore import QUrl
 
 def startweebserver():
@@ -19,11 +20,10 @@ def main():
     browser.setWindowTitle("Lution - Window")
 
     profile = browser.page().profile()
-    profile.clearHttpCache()  
+    profile.clearHttpCache()
 
     browser.load(QUrl("http://localhost:8501"))
-    browser.page().triggerAction(QWebEnginePage.ReloadAndBypassCache)
-
+    browser.page().triggerAction(QWebEnginePage.ReloadAndBypassCache)  
     browser.show()
     sys.exit(app.exec())
 
