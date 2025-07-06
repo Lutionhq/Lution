@@ -77,10 +77,15 @@ if "useoldrobloxsounds" not in st.session_state:
         a = False  
     st.session_state.useoldrobloxsounds = a
 
+@st.dialog("What's new?")
+def whatsnew():
+    st.markdown("/markdown/whatsnew.md")
 
 
 st.header("Wellcome to Lution!")
 st.image("files/cooked.png")
+if st.button("What's new?"): 
+    whatsnew()
 st.write("Lution is a boostrapper for sober, try out one of the feature!")
 st.write("Thank you for using Lution!")
 st.write("-- Lution dev team")
