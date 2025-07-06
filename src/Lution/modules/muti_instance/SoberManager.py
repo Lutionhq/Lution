@@ -1,5 +1,6 @@
 import shutil
 import subprocess
+import shutil
 from pathlib import Path
 import ast
 from modules.utils.logging import log
@@ -32,6 +33,7 @@ class SoberManager:
 
     @staticmethod
     def list_instance():
+        log.info("Getting Instance list..",logger="MUTI INSTANCE")
         file_path = Path("~/Documents/Lution/Instances/Instances.list").expanduser()
         file_path.parent.mkdir(parents=True, exist_ok=True)
 
@@ -43,6 +45,31 @@ class SoberManager:
             instances = []
 
         return instances
+
+    @staticmethod
+    def delete_instance(name):
+        """Delete a instance"""
+        log.info(f"Deleting {name}",logger="MUTI INSTANCE")
+
+        instancefolder = Path(f"~/Documents/Lution/Instances/{name}").expanduser()
+        file_path = Path("~/Documents/Lution/Instances/Instances.list").expanduser()
+        file_path.parent.mkdir(parents=True, exist_ok=True)
+
+        if file_path.exists():
+            with open(file_path, 'r') as file:
+                content = file.read().strip()
+                instances = ast.literal_eval(content) if content else []
+        else:
+            instances = []
+
+        shutil.rmtree(instancefolder)
+        instances.remove(name)
+
+        with open(file_path, 'w') as file:
+            file.write(str(instances))
+
+        log.info(f"Done",logger="MUTI INSTANCE")
+
 
     def run_instance(name):
         log.info(f"Launching {name}","MUTI INSTANCE")

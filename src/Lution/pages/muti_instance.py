@@ -12,10 +12,8 @@ def ask():
     if st.button("Add"):
         with st.spinner("Please wait..."):
             SoberManager.add_instance(InstanceName)
-        st.success("Success! Don't spam it or its will trash your app folder....")
-       
+        st.rerun()
         
-st.write("Run sudo chmod -R 777 /var/lib/flatpak/app/ before create an instance")
 if st.button("Add new Instance") :
     ask()
 
@@ -30,7 +28,9 @@ with expander :
         with colleft:
             st.write(f"Instance {i}")
         with colmid:
-            st.button("Delete",key=f"del{i}", use_container_width=True)
+            if st.button("Delete",key=f"del{i}", use_container_width=True):
+                SoberManager.delete_instance(i)
+                st.rerun()
         with colright:
             if st.button("Run",key=i, use_container_width=True): 
                 SoberManager.run_instance(i)
