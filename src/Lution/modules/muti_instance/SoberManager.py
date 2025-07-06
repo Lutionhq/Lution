@@ -24,12 +24,15 @@ class SoberManager:
         log.info(f"Creating {name}", logger="MUTI INSTANCE")
 
         path.mkdir(parents=True, exist_ok=False)
-        
+        log.info(f"Adding {name} to the list", logger="MUTI INSTANCE")
+
+        cls.update_instance(name)
+
         log.info(f"Created {name}", logger="MUTI INSTANCE")
 
     @staticmethod
     def list_instance():
-        file_path = Path("~/Documents/Lution/Instances.list").expanduser()
+        file_path = Path("~/Documents/Lution/Instances/Instances.list").expanduser()
         file_path.parent.mkdir(parents=True, exist_ok=True)
 
         if file_path.exists():
@@ -47,13 +50,16 @@ class SoberManager:
 
         if not envpath.exists :
             envpath.mkdir(parents=True)
-        
-        subprocess.Popen(["env", f"HOME={envpath}", "flatpak", "run", "org.vinegarhq.Sober"])
-    
+        # 
+        subprocess.Popen(["env", f"HOME={envpath}", "flatpak", "run", "org.vinegarhq.Sober"]).wait()
+        subprocess.Popen(f"env HOME={envpath} flatpak override --user --filesystem=xdg-run/app/com.discordapp.Discord:create --filesystem=xdg-run/discord-ipc-0 org.vinegarhq.Sober", shell=True)
+
     def update_instance(name):
         """Update a list of instances stored in a file"""
 
-        file_path = Path("~/Documents/Lution/Instances.list").expanduser()
+        log.info(f"Updating to {name}")
+
+        file_path = Path("~/Documents/Lution/Instances/Instances.list").expanduser()
         file_path.parent.mkdir(parents=True, exist_ok=True)
 
         if file_path.exists():
