@@ -29,23 +29,16 @@ class SoberManager:
 
     @staticmethod
     def list_instance():
-        flatpakpath = Path("/var/lib/flatpak/app")
-        appID = "org.vinegarhq.Sober"
-        accounts = []
+        file_path = Path("~/Documents/Lution/Instances.list").expanduser()
+        file_path.parent.mkdir(parents=True, exist_ok=True)
 
-        if (flatpakpath / appID).exists():
-            accounts.append(appID)
+        if file_path.exists():
+            with open(file_path, 'r') as file:
+                content = file.read().strip()
+                instances = ast.literal_eval(content) if content else []
+        else:
+            instances = []
 
-        for entry in flatpakpath.iterdir():
-            if (
-                entry.is_dir()
-                and entry.name != appID
-                and (entry / ".sober_instance").exists()
-            ):
-                accounts.append(entry.name)
-
-        return accounts
-    @staticmethod
     def run_instance(name):
         log.info(f"Launching {name}","MUTI INSTANCE")
         envpath = Path(f"~/Documents/Lution/Instances/{name}").expanduser()
@@ -54,9 +47,10 @@ class SoberManager:
             envpath.mkdir(parents=True)
         
         subprocess.Popen(["env", f"HOME={envpath}", "flatpak", "run", "org.vinegarhq.Sober"])
+    
     def update_instance(name):
         """Update a list of instances stored in a file"""
-        
+
         file_path = Path("~/Documents/Lution/Instances.list").expanduser()
         file_path.parent.mkdir(parents=True, exist_ok=True)
 
