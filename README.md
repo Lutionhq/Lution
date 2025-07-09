@@ -42,8 +42,11 @@ Find it [here](https://github.com/triisdang/Lution-Marketplace)
 # Also check out :
 
 - [Lucem](https://github.com/xTrayambak/lucem)
-- [Bloxstrap](https://github.com/bloxstraplabs/bloxstrap)
 - [Sober](https://sober.vinegarhq.org/)
+- [AppleBlox](https://github.com/AppleBlox/appleblox)
+- [Fishstrap](https://github.com/fishstrap/fishstrap)
+- [Bloxstrap](https://github.com/bloxstraplabs/bloxstrap)
+
 
 
 - [Your mother](https://store.steampowered.com/app/3399950/Your_Mother/)
