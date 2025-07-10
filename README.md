@@ -42,6 +42,7 @@ Find it [here](https://github.com/triisdang/Lution-Marketplace)
 # Also check out :
 
 - [Lucem](https://github.com/xTrayambak/lucem)
+- [Equinox](https://github.com/equinoxhq/equinox)
 - [Sober](https://sober.vinegarhq.org/)
 - [AppleBlox](https://github.com/AppleBlox/appleblox)
 - [Fishstrap](https://github.com/fishstrap/fishstrap)
