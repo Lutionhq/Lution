@@ -107,10 +107,28 @@ def ApplyChanges(
 
 
 def Applyfflags(fflags):
-    # FFlags Editor
-    Currfflags = ReadSoberConfig("fflags")
-    Combine = CombineJson(Currfflags, fflags)
-    UpdateSoberConfig("fflags", Combine)
+    if isinstance(fflags, str):
+        try:
+            fflags = json.loads(fflags)
+        except json.JSONDecodeError:
+            log.error("Invalid JSON passed to Applyfflags")
+            return
+
+    current_raw = ReadSoberConfig("fflags")
+    try:
+        current = json.loads(current_raw) if isinstance(current_raw, str) else current_raw
+    except json.JSONDecodeError:
+        current = {}
+
+    if not isinstance(current, dict):
+        current = {}
+
+    if not isinstance(fflags, dict):
+        log.error("Parsed fflags is not a dict")
+        return
+
+    combined = {**current, **fflags}
+    UpdateSoberConfig("fflags", combined)
 
 
 def ReadLutionConfig(key, filename="LutionConfig.json", default=None):
