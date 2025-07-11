@@ -1,23 +1,23 @@
+# File: /run/media/chip/fd781af7-611c-4356-ad15-3f6bf2cbcfca/the gibhub/Lution/src/meson.build
 project('Lution',
           version: '1.2.3',
     meson_version: '>= 1.0.0',
   default_options: [ 'warning_level=2', 'werror=false', ],
 )
 
-# In src/meson.build, outside of subdir('Lution')
-app_id = 'org.wookhq.Lution' # Define your application ID
+app_id = 'org.wookhq.Lution'
 
-# Install the desktop file
 install_data(
-    'data/' + app_id + '.desktop', # Path to your .desktop file
+    'data/' + app_id + '.desktop',
     install_dir: get_option('datadir') / 'applications'
 )
 
-# Optional: If you have an icon (e.g., in src/data/icons/hicolor/scalable/apps/org.wookhq.Lution.svg)
 install_data(
     'data/svg/' + app_id + '.svg',
     install_dir: get_option('datadir') / 'icons/hicolor/scalable/apps'
- )
+)
+
+
+python = import('python').find_installation()
 
 subdir('Lution')
-
