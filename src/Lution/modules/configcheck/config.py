@@ -51,16 +51,16 @@ def ApplyChanges(
     if msaa:
         UpdateFflags("FFlagDebugDisableMSAA", False)
         match msaa:
-            case "Off":
+            case "Off (MSAA)":
                 UpdateFflags("DFFlagTextureQualityOverrideEnabled", True)
                 DeleteFflag("FIntMSAASampleCount")
-            case "x1":
+            case "x1 (MSAA)":
                 UpdateFflags("FIntMSAASampleCount", 1)
-            case "x2":
+            case "x2 (MSAA)":
                 UpdateFflags("FIntMSAASampleCount", 2)
-            case "x4":
+            case "x4 (MSAA)":
                 UpdateFflags("FIntMSAASampleCount", 4)
-            case "Auto":
+            case "Auto (MSAA)":
                 DeleteFflag("DFIntTextureQualityOverride")
 
     if fpslimit is not None:

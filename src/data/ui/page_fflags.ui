@@ -133,7 +133,7 @@
                               <item translatable="yes">Auto (MSAA)</item>
                               <item translatable="yes">x1 (MSAA)</item>
                               <item translatable="yes">x2 (MSAA)</item>
-                              <item translatable="yes">x4 </item>
+                              <item translatable="yes">x4 (MSAA)</item>
                             </items>
                           </object>
                         </property>
