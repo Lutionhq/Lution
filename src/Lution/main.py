@@ -44,7 +44,7 @@ class LutionApplication(Adw.Application):
         about = Adw.AboutDialog(application_name='Lution',
                                 application_icon='org.wookhq.Lution',
                                 developer_name='The Wookq Shit',
-                                version='0.1.0',
+                                version='1.2.3',
                                 developers=['Chip'],
                                 copyright='© 2025 Lution')
         about.set_translator_credits("") 
