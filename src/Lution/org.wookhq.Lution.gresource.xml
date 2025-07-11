@@ -1,6 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
 <gresources>
   <gresource prefix="/org/wookhq/Lution/ui">
-    <file>window.ui</file>
-    <file>page_fflags.ui</file>
+    <file compressed="true">window.ui</file>
+    <file compressed="true">page_fflags.ui</file>
+  </gresource>
+
+  <gresource prefix="/org/wookhq/Lution/boostraper">
+    <file compressed="true">../boostraper/RobloxEmoji.ttf</file>
+    <file compressed="true">../boostraper/cooked.png</file>
+    <file compressed="true">../boostraper/lution1.png</file>
+    <file compressed="true">../boostraper/lutionhq.png</file>
+    <file compressed="true">../boostraper/lutiontext.svg</file>
+
+    <file compressed="true">../boostraper/languages/en.json</file>
+    <file compressed="true">../boostraper/languages/ger.json</file>
+    <file compressed="true">../boostraper/languages/lolcat.json</file>
+    <file compressed="true">../boostraper/languages/premiumenglish.json</file>
+    <file compressed="true">../boostraper/languages/tram.json</file>
+    <file compressed="true">../boostraper/languages/vn.json</file>
+
+    <file compressed="true">../boostraper/customcursor/new/ArrowCursor.png</file>
+    <file compressed="true">../boostraper/customcursor/new/ArrowFarCursor.png</file>
+    <file compressed="true">../boostraper/customcursor/new/IBeamCursor.png</file>
+
+    <file compressed="true">../boostraper/customcursor/old2006/ArrowCursor.png</file>
+    <file compressed="true">../boostraper/customcursor/old2006/ArrowFarCursor.png</file>
+    <file compressed="true">../boostraper/customcursor/old2006/IBeamCursor.png</file>
+
+    <file compressed="true">../boostraper/customcursor/old2013/ArrowCursor.png</file>
+    <file compressed="true">../boostraper/customcursor/old2013/ArrowFarCursor.png</file>
+    <file compressed="true">../boostraper/customcursor/old2013/IBeamCursor.png</file>
+
+    <file compressed="true">../boostraper/lol/ballin-cat.png</file>
+
+    <file compressed="true">../boostraper/mesh/leftarm.mesh</file>
+    <file compressed="true">../boostraper/mesh/rightarm.mesh</file>
+    <file compressed="true">../boostraper/mesh/rightleg.mesh</file>
+    <file compressed="true">../boostraper/mesh/leftleg.mesh</file>
+    <file compressed="true">../boostraper/mesh/torso.mesh</file>
+
+    <file compressed="true">../boostraper/sounds/action_footsteps_plastic.mp3</file>
+    <file compressed="true">../boostraper/sounds/action_get_up.mp3</file>
+    <file compressed="true">../boostraper/sounds/action_jump.mp3</file>
+    <file compressed="true">../boostraper/sounds/ouch.ogg</file>
+
   </gresource>
 </gresources>

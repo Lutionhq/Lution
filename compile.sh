@@ -16,4 +16,8 @@ meson compile -C builddir || exit 1
 echo "===> Installing..."
 sudo meson install -C builddir || exit 1
 
+echo "===> Updating desktop entry"
+
+sudo update-desktop-database
+
 echo "===> Done."
