@@ -129,11 +129,11 @@
                         <property name="model">
                           <object class="GtkStringList">
                             <items>
-                              <item translatable="yes">Off</item>
-                              <item translatable="yes">Auto</item>
-                              <item translatable="yes">x1</item>
-                              <item translatable="yes">x2</item>
-                              <item translatable="yes">x4</item>
+                              <item translatable="yes">Off (MSAA)</item>
+                              <item translatable="yes">Auto (MSAA)</item>
+                              <item translatable="yes">x1 (MSAA)</item>
+                              <item translatable="yes">x2 (MSAA)</item>
+                              <item translatable="yes">x4 </item>
                             </items>
                           </object>
                         </property>
