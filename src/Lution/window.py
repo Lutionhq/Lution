@@ -105,11 +105,22 @@ class LutionWindow(Adw.ApplicationWindow):
         self._texture_quality_dropdown = builder.get_object("texturequality_dropdown") 
         if self._texture_quality_dropdown:
             value = ReadFflagsConfig("DFIntTextureQualityOverride")
-            shifted = int(value) + 1
+            shifted = int(value) + 1 if value is not None else 0
             self._texture_quality_dropdown.set_selected(shifted)
             self._texture_quality_dropdown.connect("notify::selected", self._on_texture_quality_changed)
 
         # END
+
+        # FFLAG EDITOR
+        self._fflag_editor_ = builder.get_object("fflags_textarea")
+        if self._fflag_editor_:
+            buffer = self._fflag_editor_.get_buffer()
+            fflags = ReadSoberConfig("fflags")
+            pretty = json.dumps(fflags, indent=4)
+            buffer.set_text(pretty, -1)
+        self._fflag_apply_button = builder.get_object("applyfflags_button")
+        if self._fflag_apply_button:
+            self._fflag_apply_button.connect("clicked", self._on_fflags_apply_button_)
 
 
     # CORE FFLAG
@@ -168,5 +179,33 @@ class LutionWindow(Adw.ApplicationWindow):
         log.info(f"Texture quality changed : {value}")
         ApplyChanges(texturequa=value)
 
-
+    
     # END
+
+
+    def ErrorDialog(parent, header, message):
+            dialog = Adw.MessageDialog.new(
+                parent,
+                heading=header,
+                body=message
+            )
+            dialog.add_response("close", "Close")
+            dialog.set_default_response("close")
+            dialog.connect("response", lambda d, r: d.destroy())
+            dialog.present()
+    
+    # FFLAG EDITOR
+    def _on_fflags_apply_button_(self, button):
+        buffer = self._fflag_editor_.get_buffer()
+        start_iter = buffer.get_start_iter()
+        end_iter = buffer.get_end_iter()
+        text = buffer.get_text(start_iter, end_iter, True)
+        try:
+            json.loads(text)
+            Applyfflags(text)
+        except json.JSONDecodeError as e:
+            self.ErrorDialog("Invaild Json",str(e))
+
+
+
+    # end
