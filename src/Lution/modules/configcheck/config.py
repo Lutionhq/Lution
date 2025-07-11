@@ -8,28 +8,33 @@ import shutil
 import os
 import subprocess
 import platform
+from gi.repository import Gio
 import json
 
-def ApplyChanges(fpslimit, lightingtech, oof1, rpc1, rendertech, bbchat, fontsize, useoldrobloxsounds, disableprsh, texturequa, msaa):
-    """Apply changes based on user input."""
-    # Lighting Tech
-    if lightingtech == "Voxel Lighting (Phase 1)" : 
-        UpdateFflags("DFFlagDebugRenderForceTechnologyVoxel",True)
-        UpdateFflags("FFlagDebugForceFutureIsBrightPhase2",False)
-        UpdateFflags("FFlagDebugForceFutureIsBrightPhase3",False)
-    if lightingtech == "Shadowmap Lighting (Phase 2)" :
-        UpdateFflags("DFFlagDebugRenderForceTechnologyVoxel",False)
-        UpdateFflags("FFlagDebugForceFutureIsBrightPhase2",True)
-        UpdateFflags("FFlagDebugForceFutureIsBrightPhase3",False)
-    if lightingtech == "Future Lighting (Phase 3)" :
-        UpdateFflags("DFFlagDebugRenderForceTechnologyVoxel",False)
-        UpdateFflags("FFlagDebugForceFutureIsBrightPhase2",False)
-        UpdateFflags("FFlagDebugForceFutureIsBrightPhase3",True)
-    # Texture quality
-    def chektexture(texturequa1):
+def ApplyChanges(
+    fpslimit=None, lightingtech=None, oof1=None, rpc1=None, 
+    rendertech=None, bbchat=None, fontsize=None, 
+    useoldrobloxsounds=None, disableprsh=None, 
+    texturequa=None, msaa=None
+):
+    if lightingtech:
+        if lightingtech == "Voxel Lighting (Phase 1)":
+            UpdateFflags("DFFlagDebugRenderForceTechnologyVoxel", True)
+            UpdateFflags("FFlagDebugForceFutureIsBrightPhase2", False)
+            UpdateFflags("FFlagDebugForceFutureIsBrightPhase3", False)
+        elif lightingtech == "Shadowmap Lighting (Phase 2)":
+            UpdateFflags("DFFlagDebugRenderForceTechnologyVoxel", False)
+            UpdateFflags("FFlagDebugForceFutureIsBrightPhase2", True)
+            UpdateFflags("FFlagDebugForceFutureIsBrightPhase3", False)
+        elif lightingtech == "Future Lighting (Phase 3)":
+            UpdateFflags("DFFlagDebugRenderForceTechnologyVoxel", False)
+            UpdateFflags("FFlagDebugForceFutureIsBrightPhase2", False)
+            UpdateFflags("FFlagDebugForceFutureIsBrightPhase3", True)
+
+    if texturequa:
         UpdateFflags("DFFlagTextureQualityOverrideEnabled", True)
-        match texturequa1:
-            case "Off" :
+        match texturequa:
+            case "Off":
                 DeleteFflag("DFFlagTextureQualityOverrideEnabled")
                 DeleteFflag("DFIntTextureQualityOverride")
             case "Level 0 (potato)":
@@ -42,12 +47,11 @@ def ApplyChanges(fpslimit, lightingtech, oof1, rpc1, rendertech, bbchat, fontsiz
                 UpdateFflags("DFIntTextureQualityOverride", 3)
             case "Level 4 (Ultra)":
                 UpdateFflags("DFIntTextureQualityOverride", 4)
-    chektexture(texturequa)
-        # Texture quality
-    def msaaapply(msaa1):
+
+    if msaa:
         UpdateFflags("FFlagDebugDisableMSAA", False)
-        match msaa1:
-            case "Off" :
+        match msaa:
+            case "Off":
                 UpdateFflags("DFFlagTextureQualityOverrideEnabled", True)
                 DeleteFflag("FIntMSAASampleCount")
             case "x1":
@@ -59,117 +63,56 @@ def ApplyChanges(fpslimit, lightingtech, oof1, rpc1, rendertech, bbchat, fontsiz
             case "Auto":
                 DeleteFflag("DFIntTextureQualityOverride")
 
-    msaaapply(msaa)
-    # FPS limit
-    UpdateFflags("DFIntTaskSchedulerTargetFps",fpslimit)
-    UpdateFflags("FFlagGameBasicSettingsFramerateCap5",True)
-    UpdateFflags("FFlagTaskSchedulerLimitTargetFpsTo2402",False)
-    #Bringbackoof - ts is a hashtag lol 🥀
-    UpdateSoberConfig("bring_back_oof",oof1)
-    # Disnabel Discord RPC
-    UpdateSoberConfig("discord_rpc_enabled",rpc1)
-    # Disable Player shadows
-    if disableprsh == True :
-        UpdateFflags("FIntRenderShadowIntensity", "0")
-        UpdateLutionConfig("disableplayersh", True)
-    else:
-        UpdateFflags("FIntRenderShadowIntensity", "75")
-        UpdateLutionConfig("disableplayersh", False)
-    # Render Technology
-    if rendertech == "OpenGL":
-        UpdateSoberConfig("use_opengl", True)
-    elif rendertech == "Vulkan":
-        UpdateSoberConfig("use_opengl", False)
-    # Bubble Chat
-    UpdateSoberConfig("FFlagEnableBubbleChatFromChatService", bbchat)
-    # Font Size
-    UpdateFflags("FIntFontSizePadding", fontsize)
+    if fpslimit is not None:
+        UpdateFflags("DFIntTaskSchedulerTargetFps", fpslimit)
+        UpdateFflags("FFlagGameBasicSettingsFramerateCap5", True)
+        UpdateFflags("FFlagTaskSchedulerLimitTargetFpsTo2402", False)
 
-    # force Overwrite meshes
-    OverwriteFiles(
-        os.path.expanduser("~/.var/app/org.vinegarhq.Sober/data/sober/asset_overlay/content/avatar/meshes/"),
-        [
-            os.path.abspath(os.path.join(os.path.dirname(__file__), "../../files/mesh/leftarm.mesh")),
-            os.path.abspath(os.path.join(os.path.dirname(__file__), "../../files/mesh/rightarm.mesh")),
-            os.path.abspath(os.path.join(os.path.dirname(__file__), "../../files/mesh/leftleg.mesh")),
-            os.path.abspath(os.path.join(os.path.dirname(__file__), "../../files/mesh/rightleg.mesh")),
-            os.path.abspath(os.path.join(os.path.dirname(__file__), "../../files/mesh/torso.mesh")),
-        ]
-    )
-    # use old roblox sounds
-    UpdateLutionConfig("OldRlbxSd",useoldrobloxsounds)
-    if useoldrobloxsounds:
-        OverwriteFiles(
-            os.path.expanduser("~/.var/app/org.vinegarhq.Sober/data/sober/asset_overlay/content/sounds/"),
-            [
-                os.path.abspath(os.path.join(os.path.dirname(__file__), "../../files/sounds/action_footsteps_plastic.mp3")),
-                os.path.abspath(os.path.join(os.path.dirname(__file__), "../../files/sounds/action_get_up.mp3")),
-                os.path.abspath(os.path.join(os.path.dirname(__file__), "../../files/sounds/action_jump.mp3")),
-                os.path.abspath(os.path.join(os.path.dirname(__file__), "../../files/sounds/ouch.ogg")),
-            ]
-        )
+    if oof1 is not None:
+        UpdateSoberConfig("bring_back_oof", oof1)
+
+    if rpc1 is not None:
+        UpdateSoberConfig("discord_rpc_enabled", rpc1)
+
+    if disableprsh is not None:
+        if disableprsh:
+            UpdateFflags("FIntRenderShadowIntensity", "0")
+            UpdateLutionConfig("disableplayersh", True)
+        else:
+            UpdateFflags("FIntRenderShadowIntensity", "75")
+            UpdateLutionConfig("disableplayersh", False)
+
+    if rendertech:
+        if rendertech == "OpenGL":
+            UpdateSoberConfig("use_opengl", True)
+        elif rendertech == "Vulkan":
+            UpdateSoberConfig("use_opengl", False)
+
+    if bbchat is not None:
+        UpdateSoberConfig("FFlagEnableBubbleChatFromChatService", bbchat)
+
+    if fontsize is not None:
+        UpdateFflags("FIntFontSizePadding", fontsize)
+
+
+    if useoldrobloxsounds is not None:
+        UpdateLutionConfig("OldRlbxSd", useoldrobloxsounds)
+
+        if useoldrobloxsounds:
+            sound_path = os.path.expanduser("~/.var/app/org.vinegarhq.Sober/data/sober/asset_overlay/content/sounds/")
+            os.makedirs(sound_path, exist_ok=True)
+
+            for name in Gio.resources_enumerate_children("/org/wookhq/Lution/boostraper/sounds", Gio.ResourceLookupFlags.NONE) or []:
+                data = Gio.resources_lookup_data(f"/org/wookhq/Lution/boostraper/sounds/{name}", Gio.ResourceLookupFlags.NONE)
+                with open(os.path.join(sound_path, name), "wb") as f:
+                    f.write(data.get_data())
+
 
 def Applyfflags(fflags):
     # FFlags Editor
     Currfflags = ReadSoberConfig("fflags")
     Combine = CombineJson(Currfflags, fflags)
     UpdateSoberConfig("fflags", Combine)
-
-def LoadLightTechConfig():
-    """Load Lighting techs Sober configs into session state."""
-    Voxel = ReadFflagsConfig("DFFlagDebugRenderForceTechnologyVoxel")
-    Phase2 = ReadFflagsConfig("FFlagDebugForceFutureIsBrightPhase2")
-    Phase3 = ReadFflagsConfig("FFlagDebugForceFutureIsBrightPhase3")
-    if Voxel:
-        return "Voxel Lighting (Phase 1)"
-    elif Phase2:
-        return "Shadowmap Lighting (Phase 2)"
-    elif Phase3:
-        return "Future Lighting (Phase 3)"
-    else:
-        return "Voxel Lighting (Phase 1)"  # Default fallback
-
-def LoadMSAA():
-    flag = ReadFflagsConfig("FFlagDebugDisableMSAA")
-    flag2 = ReadFflagsConfig("FIntMSAASampleCount")
-    if flag == False:
-        return "Off"
-    else:
-        match flag2 :
-            case 1 :
-                return "x1"
-            case 2 : 
-                return "x2"
-            case 4 :
-                return "x4"
-            case _:
-                return "Auto"
-            
-def LoadTextureQuality():
-    flag = ReadFflagsConfig("DFIntTextureQualityOverride")
-    match flag :
-        case 0 :
-            return "Level 0 (potato)"
-        case 1 :
-            return "Level 1 (Low)"
-        case 2 :
-            return "Level 2 (Medium)"    
-        case 3 :
-            return "Level 3 (High)"
-        case 4 :
-            return "Level 4 (Ultra)"
-        case _:
-            return "Off"
-
-def UsingOpenGl():
-    """Load Render Tech from Sober config."""
-    Open_gl = ReadSoberConfig("use_opengl")
-    if Open_gl:
-        return True
-    else:
-        return False
-
-
 
 
 def ReadLutionConfig(key, filename="LutionConfig.json", default=None):
@@ -194,42 +137,30 @@ def UpdateLutionConfig(key, value, filename="LutionConfig.json"):
         json.dump(data, f, indent=4)
 
 def UpdateCursor(cursortype):
-    base_dir = os.path.abspath(os.path.join(os.path.dirname(__file__), "../../files"))
-    CursorFolder = os.path.expanduser("~/.var/app/org.vinegarhq.Sober/data/sober/asset_overlay/content/textures/Cursors/KeyboardMouse")
+    gresource_prefix = "/org/wookhq/Lution/boostraper/customcursor"
+    dest = os.path.expanduser("~/.var/app/org.vinegarhq.Sober/data/sober/asset_overlay/content/textures/Cursors/KeyboardMouse")
 
-    def cursor_file(*parts):
-        return os.path.join(base_dir, *parts)
+    def write_cursor_file(folder, name):
+        gresource_path = f"{gresource_prefix}/{folder}/{name}"
+        data = Gio.resources_lookup_data(gresource_path, Gio.ResourceLookupFlags.NONE).get_data()
+        with open(os.path.join(dest, name), "wb") as f:
+            f.write(data)
 
     if cursortype == "Default":
-        OverwriteFiles(
-            CursorFolder,
-            [
-                cursor_file("customcursor", "new", "ArrowCursor.png"),
-                cursor_file("customcursor", "new", "ArrowFarCursor.png"),
-                cursor_file("customcursor", "new", "IBeamCursor.png"),
-            ]
-        )
+        for fname in ["ArrowCursor.png", "ArrowFarCursor.png", "IBeamCursor.png"]:
+            write_cursor_file("new", fname)
         UpdateLutionConfig("CursorType", "Default")
+
     elif cursortype == "Old 2007 Cursor":
-        OverwriteFiles(
-            CursorFolder,
-            [
-                cursor_file("customcursor", "old2006", "ArrowCursor.png"),
-                cursor_file("customcursor", "old2006", "ArrowFarCursor.png"),
-                cursor_file("customcursor", "old2006", "IBeamCursor.png"),
-            ]
-        )
+        for fname in ["ArrowCursor.png", "ArrowFarCursor.png", "IBeamCursor.png"]:
+            write_cursor_file("old2006", fname)
         UpdateLutionConfig("CursorType", "Old 2007 Cursor")
+
     elif cursortype == "Old 2013 Cursor":
-        OverwriteFiles(
-            CursorFolder,
-            [
-                cursor_file("customcursor", "old2013", "ArrowCursor.png"),
-                cursor_file("customcursor", "old2013", "ArrowFarCursor.png"),
-                cursor_file("customcursor", "old2013", "IBeamCursor.png"),
-            ]
-        )
+        for fname in ["ArrowCursor.png", "ArrowFarCursor.png", "IBeamCursor.png"]:
+            write_cursor_file("old2013", fname)
         UpdateLutionConfig("CursorType", "Old 2013 Cursor")
+
     else:
         print("Invalid cursor type selected.")
 
