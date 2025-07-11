@@ -13,7 +13,7 @@ install_data(
 )
 
 install_data(
-    'data/svg/' + app_id + '.svg',
+    'data/svg/' + app_id + '.png',
     install_dir: get_option('datadir') / 'icons/hicolor/scalable/apps'
 )
 

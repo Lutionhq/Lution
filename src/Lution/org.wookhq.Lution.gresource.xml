@@ -8,7 +8,6 @@
   <gresource prefix="/org/wookhq/Lution/boostraper">
     <file compressed="true">../boostraper/RobloxEmoji.ttf</file>
     <file compressed="true">../boostraper/cooked.png</file>
-    <file compressed="true">../boostraper/lution1.png</file>
     <file compressed="true">../boostraper/lutionhq.png</file>
     <file compressed="true">../boostraper/lutiontext.svg</file>
 
