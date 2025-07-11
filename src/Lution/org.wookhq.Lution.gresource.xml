@@ -1,0 +1,6 @@
+<gresources>
+  <gresource prefix="/org/wookhq/Lution/ui">
+    <file>window.ui</file>
+    <file>page_fflags.ui</file>
+  </gresource>
+</gresources>

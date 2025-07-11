@@ -1,86 +1,71 @@
-# src/Lution/app.py
-import streamlit as st 
-import os 
-import json
-from modules.utils.logging import log
-from modules.json.json import *
-from modules.utils.messages import *
-from modules.utils.files import *
-from modules.configcheck.config import *
-from modules.utils.lang import LANG , LANG_CODES, LANG_NAMES
-from modules.utils.sidebar import InitSidebar
+import sys
+import gi
 
-InitSidebar()
+gi.require_version('Gtk', '4.0')
+gi.require_version('Adw', '1')
 
-file_path = os.path.expanduser("~/.var/app/org.vinegarhq.Sober/config/sober/config.json")
+from gi.repository import Gtk, Gio, Adw
 
-log.info("Page : Home")
+print("DEBUG: Lution main.py started.") # NEW: Start of script
+resource_path = "/usr/local/share/org.wookhq.Lution/org.wookhq.Lution.gresource"
+print(f"DEBUG: Attempting to load GResource from: {resource_path}") # NEW: Path check
 
+try:
+    loaded_resource = Gio.Resource.load(resource_path)
+    Gio.resources_register(loaded_resource)
+    print("DEBUG: GResource loaded and registered successfully.")
+except Exception as e:
+    print(f"ERROR: Failed to load or register GResource: {e}", file=sys.stderr)
+    import traceback # NEW: To print full traceback
+    traceback.print_exc(file=sys.stderr) # NEW: Print traceback
+    sys.exit(1)
 
+# Ensure window import is *after* resource registration
+from window import LutionWindow
 
-# Set default values so they're always defined
-if "fpslimit" not in st.session_state:
-    log.info("Reading fpslimit")
-    fpslimit = ReadFflagsConfig("DFIntTaskSchedulerTargetFps")
-    st.session_state.fpslimit = fpslimit
-if "lightingtech" not in st.session_state: 
-    log.info("Reading Lighting technology")
-    tech = LoadLightTechConfig()
-    st.session_state.lightingtech = tech
-if "texturequality" not in st.session_state: 
-    log.info("Reading Texture Quality")
-    qua = LoadTextureQuality()
-    st.session_state.texturequality = qua
-if "mssa" not in st.session_state: 
-    log.info("Reading msaa")
-    msaa = LoadMSAA()
-    st.session_state.msaa = msaa
-if "oof" not in st.session_state:
-    log.info("Reading Oof")
-    oof = ReadSoberConfig("bring_back_oof")
-    st.session_state.oof = oof
-if "rpc" not in st.session_state:
-    log.info("Reading Discord RPC")
-    drpc = ReadSoberConfig("discord_rpc_enabled")
-    st.session_state.rpc = drpc
-if "render" not in st.session_state:
-    log.info("Reading Render technology")
-    st.session_state.render = UsingOpenGl()
-if "disablechat" not in st.session_state:
-    log.info("Reading FFlag Disnable chat service")
-    disablechat = ReadFflagsConfig("FFlagEnableBubbleChatFromChatService")
-    st.session_state.disablechat = disablechat
-if "customfont" not in st.session_state:
-    log.info("Reading custom font")
-    st.session_state.customfont = None
-if "language" not in st.session_state:
-    log.info("Reading language")
-    st.session_state.language = "en"
-if "fflagseditor" not in st.session_state:
-    log.info("Reading FFlags editor")
-    Currfflags = ReadSoberConfig("fflags")
-    st.session_state.fflagseditor = Currfflags
-if "fontsize" not in st.session_state:
-    log.info("Reading FFlag Fon size")
-    st.session_state.fontsize = ReadFflagsConfig("FIntFontSizePadding")
-if "disableplayersh" not in st.session_state:
-    log.info("Reading Disnable player shadows")
-    dis = ReadLutionConfig("disableplayersh")
-    if dis == None :
-        st.session_state.disableplayersh = False
-    else:
-        st.session_state.disableplayersh = dis
-if "useoldrobloxsounds" not in st.session_state:
-    log.info("Reading Old roblox sounds")
-    a = ReadLutionConfig("OldRlbxSd")
-    if a is None:
-        a = False  
-    st.session_state.useoldrobloxsounds = a
+class LutionApplication(Adw.Application):
+    def __init__(self):
+        print("DEBUG: LutionApplication __init__ called.")
+        # Ensure application_id matches your .desktop file and resource prefix
+        super().__init__(application_id='org.wookhq.Lution',
+                         flags=Gio.ApplicationFlags.DEFAULT_FLAGS,
+                         resource_base_path='/org/wookhq/Lution') # This base path is critical for templates
+        self.create_action('quit', lambda *_: self.quit(), ['<primary>q'])
+        self.create_action('about', self.on_about_action)
+        print("DEBUG: LutionApplication __init__ finished.")
 
+    def do_activate(self):
+        win = self.props.active_window
+        if not win:
+            win = LutionWindow(application=self)
+        win.present()
 
+    def on_about_action(self, *args):
+        about = Adw.AboutDialog(application_name='Lution',
+                                application_icon='org.wookhq.Lution',
+                                developer_name='The Wookq Shit',
+                                version='0.1.0',
+                                developers=['Chip'],
+                                copyright='© 2025 Lution')
+        about.set_translator_credits("") 
+        about.present(self.props.active_window)
 
-st.header("Wellcome to Lution!")
-st.image("files/cooked.png")
-st.write("Lution is a boostrapper for sober, try out one of the feature!")
-st.write("Thank you for using Lution!")
-st.write("-- Lution dev team")
+    def on_preferences_action(self, widget, _):
+        print('DEBUG: app.preferences action activated')
+
+    def create_action(self, name, callback, shortcuts=None):
+        action = Gio.SimpleAction.new(name, None)
+        action.connect("activate", callback)
+        self.add_action(action)
+        if shortcuts:
+            self.set_accels_for_action(f"app.{name}", shortcuts)
+
+def main(version):
+    print("DEBUG: main function called.")
+    app = LutionApplication()
+    print("DEBUG: LutionApplication instance created.")
+    return app.run(sys.argv)
+
+if __name__ == '__main__':
+    print("DEBUG: Script started from __main__.")
+    sys.exit(main("0.1.0"))

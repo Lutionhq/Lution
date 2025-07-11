@@ -1,0 +1,10 @@
+[Desktop Entry]
+Name=Lution
+Comment=A description of your Lution application
+Exec=/usr/bin/python3 /usr/local/lib/python3.13/site-packages/Lution/main.py
+Icon=org.wookhq.Lution
+Terminal=false
+Type=Application
+Categories=Utility;
+StartupNotify=true
+ApplicationID=org.wookhq.Lution

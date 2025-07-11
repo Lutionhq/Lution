@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<interface>
+  <requires lib="gtk" version="4.0"/>
+  <requires lib="Adw" version="1.0"/>
+
+  <template class="LutionWindow" parent="AdwApplicationWindow">
+    <property name="title" translatable="yes">Lution</property>
+    <property name="default-width">800</property>
+    <property name="default-height">600</property>
+
+    <child>
+      <object class="AdwToolbarView">
+        <child type="top">
+          <object class="AdwHeaderBar">
+            <child type="end">
+              <object class="GtkMenuButton">
+                <property name="primary">True</property>
+                <property name="icon-name">open-menu-symbolic</property>
+                <property name="tooltip-text" translatable="yes">Main Menu</property>
+                <property name="menu-model">primary_menu</property>
+              </object>
+            </child>
+          </object>
+        </child>
+
+        <child>
+          <object class="AdwOverlaySplitView" id="split_view">
+            <child type="sidebar">
+              <object class="GtkBox" id="sidebar_box">
+                <property name="orientation">vertical</property>
+
+                <child>
+                  <object class="GtkButton" id="home_button">
+                    <property name="label" translatable="yes">Home</property>
+                    <signal name="clicked" handler="on_home_clicked"/>
+                  </object>
+                </child>
+
+                <child>
+                  <object class="GtkButton" id="fflag_button">
+                    <property name="label" translatable="yes">FFlags</property>
+                    <signal name="clicked" handler="on_fflag_clicked"/>
+                  </object>
+                </child>
+
+              </object>
+            </child>
+
+            <child type="content">
+              <object class="AdwViewStack" id="view_stack"/>
+            </child>
+          </object>
+        </child>
+      </object>
+    </child>
+  </template>
+
+  <menu id="primary_menu">
+    <section>
+      <item>
+        <attribute name="label" translatable="yes">_Preferences</attribute>
+        <attribute name="action">app.preferences</attribute>
+      </item>
+      <item>
+        <attribute name="label" translatable="yes">_Keyboard Shortcuts</attribute>
+        <attribute name="action">win.show-help-overlay</attribute>
+      </item>
+      <item>
+        <attribute name="label" translatable="yes">_About Lution</attribute>
+        <attribute name="action">app.about</attribute>
+      </item>
+    </section>
+  </menu>
+</interface>

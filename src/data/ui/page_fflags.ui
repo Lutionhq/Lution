@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<interface>
+  <requires lib="gtk" version="4.0"/>
+  <requires lib="Adw" version="1.0"/>
+
+  <!-- The root object for the fflags page, with the ID "page_fflags" -->
+  <object class="AdwBin" id="page_fflags">
+    <property name="halign">center</property>
+    <property name="valign">center</property>
+    <property name="margin-start">24</property>
+    <property name="margin-end">24</property>
+    <property name="margin-top">24</property>
+    <property name="margin-bottom">24</property>
+    <child>
+      <object class="GtkBox">
+        <property name="orientation">vertical</property>
+        <property name="spacing">18</property>
+        <property name="halign">center</property>
+        <child>
+          <object class="GtkLabel">
+            <property name="label" translatable="yes">Feature Flags Configuration</property>
+            <property name="wrap">true</property>
+            <property name="max-width-chars">40</property>
+            <property name="css-classes">title-1</property>
+          </object>
+        </child>
+        <child>
+          <object class="GtkBox">
+            <property name="orientation">horizontal</property>
+            <property name="spacing">12</property>
+            <child>
+              <object class="GtkLabel">
+                <property name="label" translatable="yes">Enable Beta Features:</property>
+              </object>
+            </child>
+            <child>
+              <object class="GtkSwitch">
+                <property name="active">false</property>
+              </object>
+            </child>
+          </object>
+        </child>
+        <child>
+          <object class="GtkBox">
+            <property name="orientation">horizontal</property>
+            <property name="spacing">12</property>
+            <child>
+              <object class="GtkLabel">
+                <property name="label" translatable="yes">Use Experimental UI:</property>
+              </object>
+            </child>
+            <child>
+              <object class="GtkSwitch">
+                <property name="active">true</property>
+              </object>
+            </child>
+          </object>
+        </child>
+        <child>
+          <object class="GtkButton">
+            <property name="label" translatable="yes">Apply Changes</property>
+            <property name="css-classes">accent</property>
+          </object>
+        </child>
+      </object>
+    </child>
+  </object>
+</interface>
