@@ -170,11 +170,3 @@ class LutionWindow(Adw.ApplicationWindow):
 
 
     # END
-
-    @Gtk.Template.Callback()
-    def on_home_clicked(self, button):
-        self.view_stack.set_visible_child_name("home")
-
-    @Gtk.Template.Callback()
-    def on_fflag_clicked(self, button):
-        self.view_stack.set_visible_child_name("fflags")
