@@ -35,8 +35,8 @@
                 <property name="title" translatable="yes">Core FFlags</property>
                 <child>
                   <object class="AdwSwitchRow" id="oof_toggle">
-                    <property name="title" translatable="yes">Bring Back OOF</property>
-                    <property name="subtitle" translatable="yes">Re-enables the classic OOF sound.</property>
+                    <property name="title" translatable="yes">Replace Ouch With Oof</property>
+                    <property name="subtitle" translatable="yes">Re-enables the classic OG oof sound.</property>
                     <property name="activatable">true</property>
                     <property name="vexpand">false</property>
                   </object>
