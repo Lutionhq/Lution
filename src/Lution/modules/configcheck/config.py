@@ -8,7 +8,6 @@ import shutil
 import os
 import subprocess
 import platform
-import streamlit as st
 import json
 
 def ApplyChanges(fpslimit, lightingtech, oof1, rpc1, rendertech, bbchat, fontsize, useoldrobloxsounds, disableprsh, texturequa, msaa):
@@ -232,7 +231,7 @@ def UpdateCursor(cursortype):
         )
         UpdateLutionConfig("CursorType", "Old 2013 Cursor")
     else:
-        st.error("Invalid cursor type selected.")
+        print("Invalid cursor type selected.")
 
 
 def ReadLutionMarketplaceConfig(key, filename="Marketplace.json", default=None):
