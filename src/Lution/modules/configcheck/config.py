@@ -77,10 +77,8 @@ def ApplyChanges(
     if disableprsh is not None:
         if disableprsh:
             UpdateFflags("FIntRenderShadowIntensity", "0")
-            UpdateLutionConfig("disableplayersh", True)
         else:
             UpdateFflags("FIntRenderShadowIntensity", "75")
-            UpdateLutionConfig("disableplayersh", False)
 
     if rendertech:
         if rendertech == "OpenGL":
@@ -89,7 +87,7 @@ def ApplyChanges(
             UpdateSoberConfig("use_opengl", False)
 
     if bbchat is not None:
-        UpdateSoberConfig("FFlagEnableBubbleChatFromChatService", bbchat)
+        UpdateFflags("FFlagEnableBubbleChatFromChatService", bbchat)
 
     if fontsize is not None:
         UpdateFflags("FIntFontSizePadding", fontsize)
