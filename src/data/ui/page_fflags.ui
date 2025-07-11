@@ -3,63 +3,250 @@
   <requires lib="gtk" version="4.0"/>
   <requires lib="Adw" version="1.0"/>
 
-  <!-- The root object for the fflags page, with the ID "page_fflags" -->
+  <!-- Root object for the FFlags page -->
   <object class="AdwBin" id="page_fflags">
-    <property name="halign">center</property>
-    <property name="valign">center</property>
-    <property name="margin-start">24</property>
-    <property name="margin-end">24</property>
-    <property name="margin-top">24</property>
-    <property name="margin-bottom">24</property>
+    <property name="halign">fill</property>
+    <property name="valign">fill</property>
     <child>
-      <object class="GtkBox">
-        <property name="orientation">vertical</property>
-        <property name="spacing">18</property>
-        <property name="halign">center</property>
-        <child>
-          <object class="GtkLabel">
-            <property name="label" translatable="yes">Feature Flags Configuration</property>
-            <property name="wrap">true</property>
-            <property name="max-width-chars">40</property>
-            <property name="css-classes">title-1</property>
-          </object>
-        </child>
+      <object class="GtkScrolledWindow">
+        <property name="hscrollbar-policy">never</property>
+        <property name="vscrollbar-policy">automatic</property>
         <child>
           <object class="GtkBox">
-            <property name="orientation">horizontal</property>
-            <property name="spacing">12</property>
+            <property name="orientation">vertical</property>
+            <property name="spacing">18</property>
+            <property name="margin-start">24</property>
+            <property name="margin-end">24</property>
+            <property name="margin-top">24</property>
+            <property name="margin-bottom">24</property>
+
+            <!-- Header: st.header(LANG["lution.tab.fflags"]) -->
             <child>
               <object class="GtkLabel">
-                <property name="label" translatable="yes">Enable Beta Features:</property>
+                <property name="label" translatable="yes">Feature Flags</property>
+                <property name="halign">start</property>
+                <property name="css-classes">title-1</property>
               </object>
             </child>
+
+            <!-- Main Feature Flags Section -->
             <child>
-              <object class="GtkSwitch">
-                <property name="active">false</property>
+              <object class="AdwPreferencesGroup">
+                <property name="title" translatable="yes">Core FFlags</property>
+                <child>
+                  <object class="AdwSwitchRow" id="oof_toggle">
+                    <property name="title" translatable="yes">Bring Back OOF</property>
+                    <property name="subtitle" translatable="yes">Re-enables the classic OOF sound.</property>
+                    <property name="activatable">true</property>
+                    <property name="vexpand">false</property>
+                  </object>
+                </child>
+                <child>
+                  <object class="AdwSwitchRow" id="rpc_toggle">
+                    <property name="title" translatable="yes">Enable Rich Presence (RPC)</property>
+                    <property name="subtitle" translatable="yes">Show game activity on Discord/other platforms.</property>
+                    <property name="activatable">true</property>
+                    <property name="vexpand">false</property>
+                  </object>
+                </child>
+                <child>
+                  <object class="AdwEntryRow" id="fpslimit_entry">
+                    <property name="title" translatable="yes">FPS Limit</property>
+                    <property name="input-purpose">number</property>
+                    <property name="width-chars">5</property>
+                    <property name="max-width-chars">3</property>
+                  </object>
+                </child>
+                <child>
+                  <object class="AdwPreferencesRow">
+                    <property name="title" translatable="yes">Render Engine</property>
+                    <child type="end">
+                      <object class="GtkDropDown" id="render_dropdown">
+                        <property name="model">
+                          <object class="GtkStringList">
+                            <items>
+                              <item translatable="yes">OpenGL</item>
+                              <item translatable="yes">Vulkan</item>
+                            </items>
+                          </object>
+                        </property>
+                      </object>
+                    </child>
+                  </object>
+                </child>
+                <child>
+                  <object class="AdwPreferencesRow">
+                    <property name="title" translatable="yes">Lighting Technology</property>
+                    <child type="end">
+                      <object class="GtkDropDown" id="lightingtech_dropdown">
+                        <property name="model">
+                          <object class="GtkStringList">
+                            <items>
+                              <item translatable="yes">Voxel Lighting (Phase 1)</item>
+                              <item translatable="yes">Shadowmap Lighting (Phase 2)</item>
+                              <item translatable="yes">Future Lighting (Phase 3)</item>
+                            </items>
+                          </object>
+                        </property>
+                      </object>
+                    </child>
+                  </object>
+                </child>
               </object>
             </child>
-          </object>
-        </child>
-        <child>
-          <object class="GtkBox">
-            <property name="orientation">horizontal</property>
-            <property name="spacing">12</property>
+
+            <!-- FFlags Presets Section -->
             <child>
-              <object class="GtkLabel">
-                <property name="label" translatable="yes">Use Experimental UI:</property>
+              <object class="AdwPreferencesGroup">
+                <property name="title" translatable="yes">FFlags Presets</property>
+                <child>
+                  <object class="AdwSwitchRow" id="disablechat_toggle">
+                    <property name="title" translatable="yes">Disable Chat</property>
+                    <property name="subtitle" translatable="yes">Disables the in-game chat system.</property>
+                    <property name="activatable">true</property>
+                  </object>
+                </child>
+                <child>
+                  <object class="AdwSwitchRow" id="disableplayersh_toggle">
+                    <property name="title" translatable="yes">Disable Player Shadows</property>
+                    <property name="subtitle" translatable="yes">Turns off shadows cast by player characters.</property>
+                    <property name="activatable">true</property>
+                  </object>
+                </child>
+                <child>
+                  <object class="AdwEntryRow" id="fontsize_entry">
+                    <property name="title" translatable="yes">Font Size</property>
+                    <property name="input-purpose">number</property>
+                    <property name="width-chars">5</property>
+                    <property name="max-width-chars">2</property>
+                  </object>
+                </child>
+                <child>
+                  <object class="AdwPreferencesRow">
+                    <property name="title" translatable="yes">MSAA (Multisample Anti-Aliasing)</property>
+                    <child type="end">
+                      <object class="GtkDropDown" id="msaa_dropdown">
+                        <property name="model">
+                          <object class="GtkStringList">
+                            <items>
+                              <item translatable="yes">Off</item>
+                              <item translatable="yes">Auto</item>
+                              <item translatable="yes">x1</item>
+                              <item translatable="yes">x2</item>
+                              <item translatable="yes">x4</item>
+                            </items>
+                          </object>
+                        </property>
+                      </object>
+                    </child>
+                  </object>
+                </child>
+                <child>
+                  <object class="GtkLabel">
+                    <property name="label" translatable="yes">NOTE : Not all devices respect MSAA, and some GPUs may still auto-adjust. The flag works best on Windows with Direct3D.</property>
+                    <property name="wrap">true</property>
+                    <property name="halign">start</property>
+                    <property name="css-classes">caption</property>
+                    <property name="margin-start">12</property>
+                    <property name="margin-end">12</property>
+                  </object>
+                </child>
+                <child>
+                  <object class="AdwPreferencesRow">
+                    <property name="title" translatable="yes">Texture Quality</property>
+                    <child type="end">
+                      <object class="GtkDropDown" id="texturequality_dropdown">
+                        <property name="model">
+                          <object class="GtkStringList">
+                            <items>
+                              <item translatable="yes">Off</item>
+                              <item translatable="yes">Level 0 (potato)</item>
+                              <item translatable="yes">Level 1 (Low)</item>
+                              <item translatable="yes">Level 2 (Medium)</item>
+                              <item translatable="yes">Level 3 (High)</item>
+                              <item translatable="yes">Level 4 (Ultra)</item>
+                            </items>
+                          </object>
+                        </property>
+                      </object>
+                    </child>
+                  </object>
+                </child>
               </object>
             </child>
+
+            <!-- Advanced Section -->
             <child>
-              <object class="GtkSwitch">
-                <property name="active">true</property>
+              <object class="AdwPreferencesGroup">
+                <property name="title" translatable="yes">Advanced</property>
+                <child>
+                  <object class="GtkButton" id="reseteditor_button">
+                    <property name="label" translatable="yes">Reset FFlags Editor</property>
+                    <property name="halign">start</property>
+                    <property name="css-classes">flat</property>
+                  </object>
+                </child>
+                <child>
+                  <object class="GtkLabel">
+                    <property name="label" translatable="yes">FFlags Editor</property>
+                    <property name="halign">start</property>
+                    <property name="css-classes">heading</property>
+                  </object>
+                </child>
+                <child>
+                  <object class="GtkScrolledWindow">
+                    <property name="hscrollbar-policy">automatic</property>
+                    <property name="vscrollbar-policy">automatic</property>
+                    <property name="min-content-height">200</property> 
+                    <property name="hexpand">true</property>
+                    <property name="vexpand">true</property>
+                    <child>
+                      <object class="GtkTextView" id="fflags_textarea">
+                        <property name="wrap-mode">word</property>
+                        <property name="monospace">true</property>
+                        <property name="margin-start">6</property>
+                        <property name="margin-end">6</property>
+                        <property name="margin-top">6</property>
+                        <property name="margin-bottom">6</property>
+                      </object>
+                    </child>
+                  </object>
+                </child>
+                <child>
+                  <object class="GtkLabel">
+                    <property name="label" translatable="yes">The fflags editor slow to update with the config, recommend restart lution then try again</property>
+                    <property name="wrap">true</property>
+                    <property name="halign">start</property>
+                    <property name="css-classes">caption</property>
+                    <property name="margin-start">12</property>
+                    <property name="margin-end">12</property>
+                  </object>
+                </child>
+                <child>
+                  <object class="GtkButton" id="applyfflags_button">
+                    <property name="label" translatable="yes">Apply FFlags</property>
+                    <property name="css-classes">suggested-action</property>
+                    <property name="halign">center</property>
+                    <property name="hexpand">true</property>
+                  </object>
+                </child>
               </object>
             </child>
-          </object>
-        </child>
-        <child>
-          <object class="GtkButton">
-            <property name="label" translatable="yes">Apply Changes</property>
-            <property name="css-classes">accent</property>
+
+            <!-- Misc Section -->
+            <child>
+              <object class="AdwPreferencesGroup">
+                <property name="title" translatable="yes">Miscellaneous</property>
+                <child>
+                  <object class="GtkButton" id="setupoverlay_button">
+                    <property name="label" translatable="yes">Setup Overlay</property>
+                    <property name="halign">start</property>
+                    <property name="css-classes">flat</property>
+                  </object>
+                </child>
+              </object>
+            </child>
+
           </object>
         </child>
       </object>
