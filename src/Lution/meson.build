@@ -1,13 +1,12 @@
-# File: /run/media/chip/fd781af7-611c-4356-ad15-3f6bf2cbcfca/the gibhub/Lution/src/Lution/meson.build
 gnome = import('gnome')
-python = import('python').find_installation() # Ensure python is imported here
+python = import('python').find_installation()
 
 gres = custom_target(
     'org.wookhq.Lution.gresource',
     input: 'org.wookhq.Lution.gresource.xml',
     output: 'org.wookhq.Lution.gresource',
     command: [find_program('glib-compile-resources'),
-              '--sourcedir=' + meson.current_source_dir() / '../data/ui', # Adjust if your UI files are elsewhere
+              '--sourcedir=' + meson.current_source_dir() / '../data/ui', 
               '@INPUT@',
               '--target=@OUTPUT@'],
     install: true,
@@ -19,11 +18,8 @@ python.install_sources(
   subdir: 'Lution'
 )
 
-# --- ADD THIS BLOCK HERE ---
-# Install the 'modules' directory as a Python package
-# 'modules' is now relative to src/Lution/meson.build, which is correct
+
 install_subdir(
-    'modules', # Source directory is 'modules' relative to this meson.build
-    install_dir: python.get_install_dir() # Install directly into site-packages
+    'modules', 
+    install_dir: python.get_install_dir() 
 )
-# --- END OF ADDED BLOCK ---

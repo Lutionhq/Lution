@@ -1,4 +1,3 @@
-# File: /run/media/chip/fd781af7-611c-4356-ad15-3f6bf2cbcfca/the gibhub/Lution/src/meson.build
 project('Lution',
           version: '1.2.3',
     meson_version: '>= 1.0.0',
