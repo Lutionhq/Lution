@@ -17,7 +17,7 @@ def main():
     browser = QWebEngineView()
     browser.resize(1500, 768)
     browser.setWindowTitle("Lution - Windwon")
-    browser.load(QUrl("http://localhost:8501"))
+    browser.load(QUrl("http://localhost:8507"))
     browser.show()
     sys.exit(app.exec())
 
